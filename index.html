@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SendIT</title>
+    <!-- <link href="css/sendit.css" rel="stylesheet"> -->
+    <link href="css/basic.css rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+  </head>
+  <body>
+     <nav  id="site_navbar">
+        <ul class="container">
+            <li><a class="site_heading">Send-IT</a></li>
+            <li class="home" id="site_home"><a href="#" class="active">Home</a></li>
+            <li><a href="#" id="register" >SignUp</a></li>
+            <li id="enter_account"><a href="#" >Login</a></li>
+        </ul> 
+        <ul class="smaller_screen">
+            <li>
+                <img  src="images/Hamburger_icon.svg.png" onclick="DropDown()" class="dropbtn">
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="#">Home</a>
+                    <a href="#">SignUp</a>
+                    <a href="#">Login</a>
+                </div>
+          </li>
+        </ul>
+     </nav> 
+ 
+     
+     <section  id="site_section" class="sec1">
+        <div class="centered">
+          <div class="show_text_on_top_of_image">
+            <h1 align="center">Your Welcome</h1>
+            <h1 align="center">To</h1>
+            <h1 align="center">SendIT</h1>
+            <br>
+            <p align="center" class="slogan">Don't text chat Bae , Suprise Them</p> 
+          </div>
+        </div>
+     </section>
+     <br>
+     <br>
+     <div class="container-1" id="services_cards">
+            <div class="left">
+                <div class="thumb" style="background-image: url(images/image1.jpg);"></div>
+                <h3 align="center" class="dive_headers"><b>Choose Your Favorite</b></h3>
+                <hr>
+                <p align="center" class="style_paragraphs">
+                    Choose your favorite meals and order online using our Web Application.
+                     It's easy to customize your order.
+                </p>
+            </div>
+            
+            <div class="left">
+                <div class="thumb" style="background-image: url(images/image2.jpg);"></div>
+                <h3 align="center" class="dive_headers"><b>We Deliver Your Meals</b></h3>
+                <hr>
+                <p align="center" class="style_paragraphs">
+                    We deliver meals at your door any time of the day, whichever part of the country.
+                    <!-- Make your order to us,we assure dependency all the time -->
+                </p>
+            </div>
+           
+            <div class="left">
+                <div class="thumb" style="background-image: url(images/image3.jpeg);"></div>
+                <h3 align="center" class="dive_headers"><b> Eat and Enjoy </b></h3>
+                <hr>
+                <p align="center" class="style_paragraphs">
+                        No shooping, no cooking, no counting and no cleaning. 
+                        Enjoy your healthy meals with your family.
+                        Always reliable and dependable  to you ,we save time
+                </p>
+            </div>
+        </div>
+     <!-- login form -->
+     <div class="loginBox" id="site_login_form">
+      <h1 class="login_header">Login Here</h1>
+      <form>
+          <p>Email Address</p>
+          <input type="email" name="" id="user_email" placeholder="Enter Email Address" required>
+          <p>Password</p>
+          <input type="password" id="user_password" name="" placeholder="Enter Password" required>
+          
+      </form>
+      <button class="submit_button" onclick="authenticateusers()">Login</button>
+       <br>
+       
+      <p align="center"><a href="#">Lost Your Password ?</a></p><<br>
+      <p align="center"><a href="#">Dont Have An Account ?</a></p>
+    </div>
+    <!-- login form -->
+     </body>
+  <script src="js/sendit.js" ></script>
+</html>
