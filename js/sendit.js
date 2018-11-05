@@ -66,34 +66,10 @@ function ManageOrders(){
     customer_orders.style.display="block";
 }
 //function to delete fast-food-fast items
-function ItemDeleted(){
-    alert("Item deleted");
+function CancelOrder(){
+    alert("Order Cancelled !! ");
 }
-//function to edit fast-food-items
-function EditItem(){
-    var EditItem = document.getElementById("EditItem");
-    var addItem = document.getElementById("addItem");
-    var food_items = document.getElementById("food_items");
-    var customer_orders = document.getElementById("customer_orders");
-    var edit_item_name = document.getElementById("edit_item_name");
-    var edit_item_price = document.getElementById("edit_item_price");
-    addItem.style.display ="none";
-    food_items.style.display="none";
-    customer_orders.style.display="none";
-    edit_item_name.value = "Pizza";
-    edit_item_price.value ="40000";
-    EditItem.style.display ="block";
 
-}
-//adding a food item
-function AddNewItem(){
-    var addItem = document.getElementById("addItem");
-    var food_items = document.getElementById("food_items");
-    var customer_orders = document.getElementById("customer_orders");
-    food_items.style.display="none";
-    customer_orders.style.display="none";
-    addItem.style.display = "block";
-}
 //authenticating admins
 function authenticateadmins(){
     var user_email = document.getElementById("user_email").value;
@@ -268,6 +244,15 @@ if (!event.target.matches('.imagedropbtn')) {
     }
     }
 }
+}
+
+// function to execute when a user clicks on order details option on navbar
+function OrderDetails(){
+    var deliver_order = document.getElementById("delivery_order");
+    var order_details = document.getElementById("order_details");
+
+    deliver_order.style.display = "none";
+    order_details.style.display ="block";
 }
 
 

@@ -13,7 +13,7 @@
         <ul class="container">
             <li><a class="site_heading">Send-IT</a></li>
             <li class="home" id="site_home"><a href="#" class="active">Home</a></li>
-            <li><a href="#" id="register" >Order Details</a></li>
+            <li><a href="#" onclick="OrderDetails()" >Order Details</a></li>
             <li>
                 <img height="50px" width="50px"  class="imagedropbtn" onclick="viewNotifications()" src="images/noti.png"/>
                 <ul class="notifications" id="view_notifications">
@@ -61,6 +61,7 @@
         </ul>
     
      </nav> 
+     <br>
     
     <!-- make order form -->
     <div class="delivery_order" id="delivery_order">
@@ -97,7 +98,88 @@
         </fieldset>
       </div>
     <!-- make order  form -->
-    
+    <!-- order details -->
+    <div class="order_details" id="order_details">
+        <header class="table_header">
+            All Orders
+            <div class="search_div">
+                <form>
+                    <input type="text" name="" placeholder="Search For Order">
+                    <button type="submit" class="search_button">search</button>
+                </form>
+            </div>
+
+        </header>
+        <article class="table_main">
+                <br>
+                <table class="items_table">
+                    <tr>
+                    <th>Order Name</th>	
+                    <th>Order Status</th>
+                    <th>Order Details</th>
+                    <th>Cancel</th>
+                    </tr>
+                    <tr>
+                    <td>Pizza</td>
+                    <td>New</td>		
+                    <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
+                    <td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button></td>
+                    </tr>
+                    <tr>
+                    <td>Iphone X</td>
+                    <td>Delivered</td>		
+                    <td><button class="order_details_button" onclick="">Order Details</button></td>
+                    <td><button  onclick="CancelOrder()">X</button></td>
+                    </tr>
+                    
+                </table>
+                <!-- customer orders -->
+        </article>
+        <aside class="aside aside-1"></aside>
+        <aside class="aside aside-2"></aside>
+    </div>
+    <!-- order details -->
+   
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <div>
+                 <header class="header">Pizza  delivery order Details</header>
+              </div>
+              <div>
+                  <p style="float:left;">Pick Up Location : <b>Nalukolongo</b></p>
+              </div>
+              <div>
+                <p style="float:left;">Destination Location : <b id="place">Ntinda</b></p>
+                <br>
+                <input type="text" id="newdestination" placeholder="Enter New Destination" class="destination_input"/>
+                <button class="save_button" id="save_button_destination">Save</button>
+                <button class="cancle_button" id="cancel_buttton_destination">Cancel</button>
+                <button id="destination" onclick="changeDestination()" class="destination">change destination</button>
+             </div>
+             <div>
+               <p>Date : <b>04/11/2018</b></p>
+             </div>
+            </div> 
+        </div>
+
+        <!-- The receivers Modal -->
+    <div id="GoogleModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content_map">
+              <span class="close2 close_map">&times;</span>
+                <div>
+                    <header class="header">Order Route Direction</header>
+                </div>
+                <div>
+                    <p align="center"><img src="images/maps.jpg" height="400px" width="400px"></p>
+                </div>
+              </div>
+            
+            </div> 
+        </div>
   </body>
   <script src="js/sendit.js" ></script>
 </html>
