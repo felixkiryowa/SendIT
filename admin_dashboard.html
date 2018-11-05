@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SendIT admin dashboard</title>
+    <!-- <link href="css/sendit.css" rel="stylesheet"> -->
+    <link href="css/basic.css rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+  </head>
+  <body>
+     <nav  id="site_navbar">
+        <ul class="container">
+            <li><a class="site_heading">Send-IT</a></li>
+            <li class="logout" id="enter_account"><a href="#" >Logout<b class="logged_user">(Stella)</b></a></li>
+        </ul> 
+        <ul class="smaller_screen">
+            <li>
+                <img  src="images/Hamburger_icon.svg.png" onclick="DropDown()" class="dropbtn">
+                <div id="myDropdown" class="dropdown-content">
+                    <a id="site_home" href="#">Home</a>
+                    <a id="register" href="#">SignUp</a>
+                    <a id="enter_account" href="#">Login</a>
+                </div>
+          </li>
+        </ul>
+
+     </nav> 
+     <br>
+     <div class="statistics">
+        <div class="stat">
+           ADMIN DASHBOARD
+        </div>
+     </div>
+     <br>
+    <!-- order details -->
+    <div class="admin_order_details" id="">
+        <header class="table_header">
+            All Received  Orders
+            <div class="search_div">
+                <form>
+                    <input type="text" name="" placeholder="Search For Order">
+                    <button type="submit" class="search_button">search</button>
+                </form>
+            </div>
+
+        </header>
+        <article class="table_main">
+                <br>
+                <table class="items_table">
+                    <tr>
+                    <th>Order Name</th>	
+                    <th>Weight(kg)</th>
+                    <th>Price(shs)</th>
+                    <th>Order Date / Time</th>
+                    <th>Order Status</th>
+                    <th>Order Location</th>
+                    <th>Pickup Address Details</th>
+                    <th>Destination Address Details</th>
+                    <th>Update Order Status</th>
+                    <th>Update Order Location</th>
+                    </tr>
+                    <tr>
+                        <td>Pizzas</td>
+                        <td>4</td>
+                        <td>40000</td>
+                        <td>02/07/2018 09:20 am</td>
+                        <td>New</td>
+                        <td>Kabuusu</td>		
+                        <td><button class="order_admin_button" onclick="SendersDetails()">View more</button></td>
+                        <td><button class="order_admin_button" onclick="ReceiversDetails()">View more</button></td>
+                        <td><button class="order_admin_button" onclick="updateOrderStatus()">Update status</button></td>
+                        <td><button class="order_admin_button" onclick="UpdateOrderLocation()">Update location</button></td>
+                   </tr>
+                    <tr>
+                        <td>Iphone X</td>
+                        <td>3</td>
+                        <td>60000</td>
+                        <td>02/09/2018 09:20 pm</td>
+                        <td>New</td>
+                        <td>Kibuye</td>		
+                        <td><button class="order_admin_button" onclick="SendersDetails()">View more</button></td>
+                        <td><button class="order_admin_button" onclick="ReceiversDetails()">View more</button></td>
+                        <td><button class="order_admin_button" onclick="updateOrderStatus()">Update status</button></td>
+                        <td><button class="order_admin_button" onclick="UpdateOrderLocation()">Update location</button></td>
+                       
+                    </tr>
+                    
+                </table>
+                <!-- customer orders -->
+        </article>
+        <aside class="aside aside-1"></aside>
+        <aside class="aside aside-2"></aside>
+    </div>
+    <!-- order details -->
+     <!-- The senders modal -->
+     <div id="sendersModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close1">&times;</span>
+            <div>
+                <header class="header">Sender's Details</header>
+            </div>
+            <div class="senders_div_height">
+                <b>Address</b> : Nalukolongo-Lubaga, plot 203</br>
+            </div>
+            <div class="senders_div_height">
+                <b>Email</b> : franciskiryowa68@gmail.com</br>
+            </div>
+            <div class="senders_div_height">
+                <b>Phone</b> : +256700162509</br>
+            </div>
+          </div>
+        
+        </div> 
+    </div>
+
+    <!-- The receivers Modal -->
+    <div id="receiversModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close2">&times;</span>
+                <div>
+                    <header class="header">Recivers's Details</header>
+                </div>
+                <div class="receivers_div_height">
+                    <b>Address</b> : Kajjansi, plot 203</br>
+                </div>
+                <div class="receivers_div_height">
+                    <b>Phone</b> : +256700162576</br>
+                </div>
+                <div class="receivers_div_height">
+                    <b>Name</b>  :Juliet Nakimbugwe<br>
+                </div>
+              </div>
+            
+            </div> 
+        </div>
+
+        <!-- The update order status Modal -->
+    <div id="updateOrderStatusModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close3">&times;</span>
+                <div>
+                    <header class="header">Update Order Status</header>
+                </div>
+                <div class="order_status_div_height">
+                    <form>
+                        <input type="text" name="" placeholder="Enter Order Status">
+                        <button type="submit" class="order_admin_button">Update</button>
+                    </form>
+                </div>
+              </div>
+            
+            </div> 
+        </div>
+
+        
+
+  
+  </body>
+  <script src="js/admin.js" ></script>
+</html>
