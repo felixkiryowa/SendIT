@@ -123,6 +123,7 @@ document.getElementById("enter_account").addEventListener("click",function(){
     var cards = document.getElementById('services_cards');
     var login_user_form = document.getElementById('site_login_form');
     var site_signup_form = document.getElementById('site_signup_form');
+    document.body.style.backgroundImage="url(images/image3.jpg)";
     var i;
     for (i = 0; i < all_sections.length; i++) {
         all_sections[i].style.display = "none";
@@ -194,6 +195,7 @@ function GoogleMap() {
 span.onclick = function() {
     modal.style.display = "none";
 }
+
 close2.onclick = function() {
     GoogleModal.style.display = "none";
 }
