@@ -7,7 +7,7 @@
     <link href="css/basic.css rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
   </head>
-  
+
   <body>
      <nav  id="site_navbar">
         <ul class="container">
@@ -46,7 +46,7 @@
                         </li>
                     </ul>
                 </li>
-            <li><a href="#" id="register" >Order History</a></li>
+            <li><a href="#" onclick="OrderHistory()" >Order History</a></li>
             <li class="" id="enter_account"><a href="#" >Logout<b class="logged_user">(Francis)</b></a></li>
         </ul> 
         <ul class="smaller_screen">
@@ -61,8 +61,7 @@
         </ul>
     
      </nav> 
-     <br>
-    
+     
     <!-- make order form -->
     <div class="delivery_order" id="delivery_order">
         <fieldset>
@@ -123,13 +122,12 @@
                     <td>Pizza</td>
                     <td>New</td>		
                     <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
-                    <!-- users can be able to cancel an order -->
                     <td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button></td>
                     </tr>
                     <tr>
                     <td>Iphone X</td>
                     <td>Delivered</td>		
-                    <td><button class="order_details_button" onclick="">Order Details</button></td>
+                    <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
                     <td><button  onclick="CancelOrder()">X</button></td>
                     </tr>
                     
@@ -140,7 +138,92 @@
         <aside class="aside aside-2"></aside>
     </div>
     <!-- order details -->
-   
+    <!-- order history -->
+    <div class="order_history" id="order_history">
+            <header class="table_history_header">
+                <h4 align="center">Francis Kiryowa Ordering History</h4>
+            </header>
+            <article class="table_main">
+                    <br>
+                    <div id="invoice-POS">
+                        <center id="top">
+                            <div class="info1"> 
+                             <h2 align="center">SendIT</h2>
+                            </div><!--End Info-->
+                        </center><!--End InvoiceTop-->
+                        
+                        <div id="mid">
+                            <div class="info">
+                            <h2><b>Order Name :</b> Pizza</h2>
+                            <h2>Sender's Contact Information</h2>
+                            <p> 
+                                <b>Address</b> : Nalukolongo-Lubaga, plot 203</br>
+                                <b>Email</b> : franciskiryowa68@gmail.com</br>
+                                <b>Phone</b> : +256700162509</br>
+                                <b>Date</b>  :02/07/2018 09:20 am<br>
+                            </p>
+                            </div>
+                        </div><!--End Invoice Mid-->
+                        <br>
+                        <div id="bot">
+                                <h2>Receiver Contact Information</h2>
+                                <p> 
+                                    <b>Address</b> : Ntinda-Kisasi, plot 203</br>
+                                    <b>Phone</b> : +256700162509</br>
+                                    <b>Name</b>  : Hope Naluwo<br>
+                                </p>
+                                
+                                <br>
+                                <br>
+                                <p class="legal"><strong>Thank you for Ordering with SendIT!</strong></p>
+                                <br>
+                                <br>
+                    
+                            </div><!--End InvoiceBot-->
+                          </div><!--End Invoice-->
+                          <!-- second invoice -->
+                          <div id="invoice-POS">
+                                <center id="top">
+                                    <div class="info1"> 
+                                      <h2 align="center">SendIT</h2>
+                                    </div><!--End Info-->
+                                </center><!--End InvoiceTop-->
+                                
+                                <div id="mid">
+                                    <div class="info">
+                                    <h2><b>Order Name :</b> Mac Book Pro</h2>
+                                    <h2>Sender's Contact Info</h2>
+                                    <p> 
+                                        <b>Address</b> : Nalukolongo-Lubaga, plot 203</br>
+                                        <b>Email</b> : franciskiryowa68@gmail.com</br>
+                                        <b>Phone</b> : +256700162509</br>
+                                        <b>Date</b>  :06/07/2018 07:90 am<br>
+                                    </p>
+                                    </div>
+                                </div><!--End Invoice Mid-->
+                                <br>
+                                <div id="bot">
+                                        <h2>Receiver Contact Information</h2>
+                                        <p> 
+                                            <b>Address</b> : Kajjansi, plot 203</br>
+                                            <b>Phone</b> : +256700162576</br>
+                                            <b>Name</b>  :Juliet Nakimbugwe<br>
+                                        </p>
+                                        <br>
+                                        <br>
+                                        <p class="legal"><strong>Thank you for Ordering with SendIT!</strong></p>
+                                        <br>
+                                        <br>
+                            
+                                    </div><!--End InvoiceBot-->
+                                  </div><!--End Invoice-->
+                          <!-- second invoice -->
+                    <!-- customer orders -->
+            </article>
+            <aside class="aside aside-1"></aside>
+            <aside class="aside aside-2"></aside>
+        </div>
+    <!-- order history -->
     <!-- The Modal -->
     <div id="myModal" class="modal">
             <!-- Modal content -->

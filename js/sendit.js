@@ -250,10 +250,23 @@ if (!event.target.matches('.imagedropbtn')) {
 function OrderDetails(){
     var deliver_order = document.getElementById("delivery_order");
     var order_details = document.getElementById("order_details");
-
+    var order_history = document.getElementById("order_history");
     deliver_order.style.display = "none";
+    order_history.style.display="none";
     order_details.style.display ="block";
 }
+// function to execute when a user clicks on order history menu
+function OrderHistory() {
+    var deliver_order = document.getElementById("delivery_order");
+    var order_details = document.getElementById("order_details");
+    var order_history = document.getElementById("order_history");
+
+    deliver_order.style.display = "none";
+    order_details.style.display ="none";
+    order_history.style.display="block";
+}
+
+
 
 
 
