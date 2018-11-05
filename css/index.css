@@ -1,3 +1,5 @@
+ /* notifications*/
+ /* notifications */
  /* Dropdown Button */
  .dropbtn {
   background-color: #fff;
@@ -35,9 +37,26 @@
   text-decoration: none;
   display: block;
 }
+.dropdown-content div {
+  color: black;
+  height: 70px;
+  text-decoration: none;
+  display: block;
+}
+
+.location {
+  color:#630c1b;
+  font-size: 10px;
+}
+.place {
+  font-style: italic;
+  font-size: 10px;
+}
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content a:hover {
+  background-color: #630c1b;
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;} 
@@ -47,6 +66,10 @@
   width: 13px;
 }
 nav .smaller_screen {
+  display: none;
+}
+
+nav .notifications {
   display: none;
 }
 
@@ -86,6 +109,9 @@ section.sec1 {
 }
 
 .home {
+  margin-left: auto;
+}
+.logout {
   margin-left: auto;
 }
 .container li  a {
@@ -140,6 +166,10 @@ h1 {
 nav ul li a.active,nav ul li a:hover{
   color: #fff;
   background-color: #630c1b;
+}
+
+nav ul .logout a b:hover {
+ color: #000;
 }
 
 /* sticky css */
@@ -348,7 +378,7 @@ nav ul li a.active,nav ul li a:hover{
    line-height: 20px;
    color:#000;
 }
-/* trial css */
+/* wrapper css */
 .wrapper {
   display: flex;  
   flex-flow: row wrap;
@@ -404,5 +434,403 @@ legend {
 
 
 /* trial css */
+/* make parcel delivery order */
+
+.delivery_order {
+  display: flex;  
+  flex-flow: row wrap;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  display:block;
+}
+.delivery_order > * {
+  padding: 10px;
+  flex: 1 100%;
+}
 
 
+.delivery_order article p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #444;
+}
+.delivery_order article div input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* make parcel delivery order */
+/* logged in user  */
+.logged_user {
+  color: #630c1b;
+}
+/* logged in user  */
+
+/* table css */
+.order_details {
+  display: flex;  
+  flex-flow: row wrap;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  display:none;
+  height: 500px;
+  overflow: scroll;
+}
+.order_details > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+
+.order_details article p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #444;
+}
+.order_details article div input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.table_main {
+  display: flex;
+  flex-flow: row wrap;
+  /* justify-content: center; */
+}
+.table_header {
+  display: flex;
+  margin: 0;
+  padding-top:10px;
+  font-size: 22px;
+  color:#630c1b;
+  
+}
+.table_history_header {
+  display: flex;
+  margin: 0;
+  padding-top:10px;
+  font-size: 22px;
+  color:#630c1b;
+  justify-content: center;
+  
+}
+
+@media screen and(max-width:768px) {
+  .table_header {
+    flex-wrap: row wrap;
+  }
+}
+.search_div {
+  display: flex;
+  margin-left: auto;
+}
+.items_table {
+ width: 100%;
+}
+table {
+  border-collapse: collapse;
+}
+table tr:nth-child(odd) td {
+   background-color: #e7edf0;
+}
+table th {
+  text-align: center;
+  background-color: #3a6070;
+  color: #fff;
+  padding: 4px 30px 4px 8px;
+}
+table td {
+  text-align: center;
+  border: 1px solid #e3e3e3;
+  padding: 5px 15px;
+}
+
+.order_details_button {
+  background-color:#4caf50;
+  align-content: center;
+  border:0;
+  width: 120px;
+  height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.order_admin_button {
+  background-color:#4caf50;
+  align-content: center;
+  border:0;
+  width: 120px;
+  height: 34px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.senders_div_height {
+  height: 50px;
+  margin-top: 23px;
+}
+
+.receivers_div_height {
+  height: 50px;
+  margin-top: 23px;
+}
+.order_status_div_height{
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  margin-top: 23px;
+}
+
+.order_cancel_button {
+  background-color:red;
+  border:0;
+  width: 120px;
+  height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.search_button {
+  background-color:#630c1b;
+  border:0;
+  width: 90px;
+  height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+/* table css */
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 140px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  padding-left: 50px;
+  border: 1px solid #888;
+  overflow: hidden;
+  width: 50%;
+}
+.modal-content_map {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+  margin: auto;
+  padding: 20px;
+  padding-left: 50px;
+  border: 1px solid #888;
+  overflow: hidden;
+  width: 60%;
+}
+
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close_map {
+  color: #aaaaaa;
+  margin-left:auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-content span {
+  margin-left: auto;
+}
+.modal-content div {
+  display: flex;
+  /* justify-content: center; */
+  border-bottom: 2px solid #aaaaaa;
+
+}
+.modal-content .destination {
+  margin-left: auto;
+  background-color:#4caf50;
+  border:0;
+  width: 150px;
+  height: 30px;
+  color: #fff;
+  border-radius: 3px;
+  margin-top: 10px;
+
+}
+.modal-content div  p b {
+ color:#630c1b;
+}
+
+.destination_input {
+  margin-left: auto;
+  display:none;
+}
+
+.save_button {
+  margin-left: auto;
+  margin-top: 10px;
+  display:none;
+  background-color:#4c93af;
+  border:0;
+  width: 80px;
+  height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+.cancle_button {
+  margin-left: auto;
+  margin-top: 10px;
+  display:none;
+  background-color:red;
+  border:0;
+  padding: 10px;
+  width: 90px;
+  height: 30px;
+  color: #fff;
+  border-radius: 3px;
+}
+
+/* order history */
+.order_history {
+  display: flex;  
+  flex-flow: row wrap;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  display:none;
+  height: 500px;
+  overflow: scroll;
+}
+.order_history > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+
+.order_history article p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #444;
+}
+/* order history */
+
+#invoice-POS{
+  box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
+  padding-left:60px;
+  margin: 0 auto;
+  width: 700px;
+  background-color:#fff;
+
+
+}
+  
+
+h3{
+  font-size: 1.2em;
+  font-weight: 300;
+  line-height: 2em;
+}
+.paragraphs{
+  font-size: .7em;
+  color: #666;
+  line-height: 1.2em;
+}
+ 
+#top, #mid,#bot{ /* Targets all id with 'col-' */
+  border-bottom: 1px solid #EEE;
+}
+
+#top{
+  min-height: 100px;
+}
+#mid{
+    min-height: 80px;
+  } 
+#bot{ min-height: 50px;}
+
+.info{
+  display: block;
+  margin-left: 0;
+}
+.info1 {
+  display: flex;
+  justify-content: center;
+}
+.title{
+  float: right;
+}
+.title p{text-align: right;} 
+.service{border-bottom: 1px solid #EEE;}
+.item{width: 24mm;}
+.itemtext{
+    font-size:10px;
+    color: #666; 
+  }
+
+#legalcopy{
+  margin-top: 5mm;
+}
+
+.statistics {
+  display:flex;justify-content: center;
+}
+
+.stat {
+  background-color: #630c1b;
+  padding: 10px;border-right: #000;
+  color:white;
+}
+
+
+/* orders by admnin */
+.admin_order_details {
+  display: flex;  
+  flex-flow: row wrap;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  display:block;
+  height: 500px;
+  overflow: scroll;
+}
+.admin_order_details > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+
+.admin_order_details article p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #444;
+}
+.admin_order_details article div input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+/* orders by admin */

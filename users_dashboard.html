@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SendIT users dashboard</title>
+    <!-- <link href="css/sendit.css" rel="stylesheet"> -->
+    <link href="css/basic.css rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+  </head>
+  
+  <body>
+     <nav  id="site_navbar">
+        <ul class="container">
+            <li><a class="site_heading">Send-IT</a></li>
+            <li class="home" id="site_home"><a href="#" class="active">Home</a></li>
+            <li><a href="#" id="register" >Order Details</a></li>
+            <li>
+                <img height="50px" width="50px"  class="imagedropbtn" onclick="viewNotifications()" src="images/noti.png"/>
+                <ul class="notifications" id="view_notifications">
+                        <li>
+                            <div id="notifications_drop_down" class="dropdown-content" style="width:200px;">
+                                <div class="email_notifications">
+                                    <p><b class="location">Order Delivery Location Now: </b><b class="place">Kamwokya</b></p>
+                                    <p>
+                                        <b class="location">Date:04/11/2018 </b>/<b class="place">Time :05:22pm</b>
+                                        <img onclick="GoogleMap()" src="images/map.png" width="30px" height="30px"/>
+                                    </p>
+                                </div>
+                                <hr>
+                                <div class="email_notifications">
+                                    <p><b class="location">Order Delivery Location Now: </b><b class="place">Wandegeya</b></p>
+                                    <p>
+                                        <b class="location">Date:04/11/2018 </b>/<b class="place">Time :05:22pm</b>
+                                        <img src="images/map.png" width="30px" height="30px"/>
+                                    </p>
+                                </div>
+                                <hr>
+                                <div class="email_notifications">
+                                        <p><b class="location">Order Delivery Location Now: </b><b class="place">Makerere</b></p>
+                                        <p>
+                                            <b class="location">Date:04/11/2018 </b>/<b class="place">Time :05:22pm</b>
+                                            <img src="images/map.png" width="30px" height="30px"/>
+                                        </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            <li><a href="#" id="register" >Order History</a></li>
+            <li class="" id="enter_account"><a href="#" >Logout<b class="logged_user">(Francis)</b></a></li>
+        </ul> 
+        <ul class="smaller_screen">
+            <li>
+                <img  src="images/Hamburger_icon.svg.png" onclick="DropDown()" class="dropbtn">
+                <div id="myDropdown" class="dropdown-content">
+                    <a id="site_home" href="#">Home</a>
+                    <a id="register" href="#">SignUp</a>
+                    <a id="enter_account" href="#">Login</a>
+                </div>
+          </li>
+        </ul>
+    
+     </nav> 
+    
+    <!-- make order form -->
+    <div class="delivery_order" id="delivery_order">
+        <fieldset>
+                <legend>Order:</legend>
+                <header class="header">Create a parcel delivery order</header>
+                <article class="main">
+                    <div>
+                        <p>Sender's Names</p>
+                        <input type="text" name="" placeholder="Enter Sender's Names" required>
+                        <p>Sender's Contact</p>
+                        <input type="text" name="" placeholder="Enter Sender's Contact" required>
+                        <p>Sender's Email</p>
+                        <input type="email" name="" placeholder="Enter Sender's Email" required>
+                        <p>Pickup Address</p>
+                        <input type="text" name="" placeholder="Enter Pick up address" required>
+                    </div>
+                    <div>
+                        <p>Destination Address</p>
+                        <input type="text" name="" placeholder="Enter Destination Address" required>
+                        <p>Receiver's Names</p>
+                        <input type="text" name="" placeholder="Enter Receiver's Names" required>
+                        <p>Receivers Contact</p>
+                        <input type="text" name="" placeholder="Enter Receiver's Contact" required>
+                        <p>Weight</p>
+                        <input type="text" name="" placeholder="Enter Parcel Weight" required>
+                    </div>
+                </article>
+                <aside class="aside aside-1"></aside>
+                <aside class="aside aside-2"></aside>
+                <footer class="footer">
+                    <p align="center"><button class="signup_submit_button" type="submit">Make Order</button></p>   
+                </footer>
+        </fieldset>
+      </div>
+    <!-- make order  form -->
+    
+  </body>
+  <script src="js/sendit.js" ></script>
+</html>
