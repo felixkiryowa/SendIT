@@ -1,121 +1,243 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
-nav {
-    /* position: fixed; */
-    top:0;
-    left: 0;
+ /* notifications*/
+ /* notifications */
+ /* Dropdown Button */
+ .dropbtn {
+    background-color: #fff;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Dropdown button on hover & focus */
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: #fff;
+  }
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .dropdown-content div {
+    color: black;
+    height: 70px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .location {
+    color:#630c1b;
+    font-size: 10px;
+  }
+  .place {
+    font-style: italic;
+    font-size: 10px;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {
+    background-color: #630c1b;
+  }
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;} 
+  
+  .dropbtn {
+    height: 13px;
+    width: 13px;
+  }
+  nav .smaller_screen {
+    display: none;
+  }
+  
+  nav .notifications {
+    display: none;
+  }
+  
+  @media (max-width: 600px) {
+    nav .container     { display: none; }
+  
+    nav .smaller_screen { 
+      display: inline-block;
+      display: flex;
+      justify-content: flex-start;
+     }
+     nav .site_heading_small_device { 
+      justify-content: flex-end;
+      display: inline-block;
+     }
+  }
+  @media (max-width: 400px) {
+    nav {
+        display: flex;
+        flex-wrap: row wrap;
+    }
+    nav .container li a { 
+      font-size:10px;
+
+     }
+  }
+  body {
+      background: hsl(0, 0%, 90%);
+  }
+
+  /* putting a section background image */
+  section.sec1 {
     width: 100%;
-    height: 100px;
-    padding: 10px 100px;
-    box-sizing: border-box;
-    transition: .5s;
-    position:absolute; 
-    z-index:1;
-}
-
-nav .logo {
-    float: left;
-}
-
-nav ul {
+    height: 100%;
+    background-image: url("../images/image2.jpg");
+    background-size: cover;
+  }
+  #site_navbar {
+    border: 2px solid #630c1b;
+    background-color: #000;
+    width: 100%;
+  }
+  
+  .content {
+   display: flex;
+   justify-content: space-evenly;
     
-    float: right;
-    margin: 0;
-    padding: 0;
+  }  
+  .container {
     display: flex;
-}
-
-nav ul li {
-    list-style: none;
-}
-
-nav ul li a {
-    line-height: 80px;
+    
+  }
+  
+  .home {
+    margin-left: auto;
+  }
+  .logout {
+    margin-left: auto;
+  }
+  .container li  a {
     color: #fff;
-    padding: 5px 50px;
+    padding: 7px 13px;
     text-decoration: none;
     text-transform: uppercase;
     transition: .5s;
-}
-
-nav ul li a.active,nav ul li a:hover{
-   color: #fff;
-   background-color: #f00;
-}
-
-section.sec1 {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    background-image: url("../images/image2.jpg");
-    background-size: cover;
-}
-
-section.sec2 {
-    width: 100%;
-    height: 100vh;
-    background-image: url("../images/chicken-chips.jpg");
-    background-size: cover;
-}
-
-.centered {
+    line-height: 50px;
+    /* padding: 7px; */
+    text-align: center;
+    box-sizing: border-box;
+    
+  } 
+  .container > li {
+    list-style-type: none;
+  }
   
+  @media  (max-width:768px) {
+    .container {
+      flex-wrap: wrap;
+    }
+  }
+  
+  .container > li {
+    /* color: #fff; */
+    flex: 1 1 50;
+  }
+  
+  /* css to apply opacity on the body area */
+  .centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgb(0, 0, 0); /* Fallback color */
     background: rgba(0, 0, 0, 0.6); /* Black background with 0.5 opacity */
     color: #f1f1f1;
     width: 100%;
     height: 100vh;
     
-}
-.show_text_on_top_of_image {
-    position: absolute;
-    top: 50%;left: 50%;
-    transform: translate(-50%, -50%);
-}
-.slogan {
-    font-weight: bold;
-}
-h1 {
+  }
+  /* css for h1 html tags */
+  h1 {
     font-size: 48px;
     color: #fff;
-}
-h4 {
-    color: #ffffff;
-}
-h2{
+  }
+  
+  .site_heading {
+    font-size: 2em;
+  }
+  .site_heading_small_device {
+    font-size: 13px;
+    float:right;
     color: #fff;
-}
-
-.my_container {
-    padding-top: 30px;
-    /* background-color: #fff; */
-    /* border-style: double; */
-    width: 800px;
-    height: 100px;;
-}
-
-/* card css */
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    margin: 5px;
-    width: 200px;
-    float: left;
-    z-index: 9999999;
-}
-
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-    padding: 2px 16px;
-}
-/* card css */
-.loginBox {
+    list-style-type: none;
+    display: none;
+  }
+  .hamberger {
+    justify-content: flex-end;
+  }
+  
+  nav ul li a.active,nav ul li a:hover{
+    color: #fff;
+    background-color: #630c1b;
+  }
+  
+  nav ul .logout a b:hover {
+   color: #000;
+  }
+  
+  /* sticky css */
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  .sticky + .content {
+    padding-top: 102px;
+  }
+  
+  @media (min-width:768px) {
+    .container-1 {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+  
+  .container-1 div {
+    border: 1px solid #ccc;
+    background: white;
+    color: #444;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  .container-1 div:hover {
+    top: -2px;
+    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+  }
+  .container-1 .thumb {
+    padding-bottom: 60%;
+    background-size: cover;
+    background-position: center center;
+  }
+  
+  .left {
+    flex-basis: 20%;
+  }
+  /* login css */
+  .loginBox {
     width: 320px;
     height: 420px;
     background:white;
@@ -128,34 +250,34 @@ h2{
     padding: 70px 30px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     display: none;
-}
-.avarta {
+  }
+  .avarta {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     position: absolute;
     top: -50px;
     left:  110px;
-}
-
-.login_header {
+  }
+  
+  .login_header {
     margin: 0;
     padding: 0 0 20px;
     text-align: center;
     font-size: 22px;
-    color: #000;
-}
-
-.loginBox p {
+    color: #630c1b;
+  }
+  
+  .loginBox p {
     margin: 0;
     padding: 0;
     font-weight: bold;
-}
-.loginBox input {
+  }
+  .loginBox input {
     width: 100%;
     margin-bottom: 20px;
-}
-.loginBox input[type="email"],input[type="password"],input[type="text"]{
+  }
+  .loginBox input[type="email"],input[type="password"],input[type="text"]{
     border: none;
     border-bottom: 1px solid gray;
     background: transparent;
@@ -163,74 +285,111 @@ h2{
     height: 40px;
     color: #000;
     font-size: 16px;
-}
-.submit_button {
+  }
+  .submit_button {
    border: none;
    outline: none;
    height: 40px;
    width: 100%;
-   background: #fb2525;
+   background: #630c1b;
    color: #fff;
    font-size: 18px;
-}
-.submit_button:hover {
+  }
+  .submit_button:hover {
     cursor: pointer;
     background: #87007c;
     color: #fff;
-
- }
-
- .loginBox a {
+  
+  }
+  
+  /* sign up button  */
+  .signup_submit_button {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 40%;
+    background: #630c1b;
+    color: #fff;
+    font-size: 18px;
+   }
+   .signup_submit_button:hover {
+     cursor: pointer;
+     background: #87007c;
+     color: #fff;
+   
+   }
+  /* sign up button */
+  
+  /* sign up button  */
+  .save_order_submit_button {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 60%;
+    background: #630c1b;
+    color: #fff;
+    font-size: 18px;
+    float: right;
+   }
+   .save_order_submit_button:hover {
+     cursor: pointer;
+     background: #87007c;
+     color: #fff;
+   
+   }
+  /* sign up button */
+  
+  .loginBox a {
      text-decoration: none;
      font-size: 12px;
      line-height: 20px;
      color:#000;
- }
-
- /* signup form */
- .signupBox {
-    width: 700px;
-    height: 550px;
+  }
+  /* login css */
+  
+   /* signup form */
+   .signupBox {
+  
+    display: flex;
+    flex-direction: row;
+    border: 2px solid red;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+  }
+  .form_content {
+    border: 2px solid blue;
+    padding: 10px;
+    width: 20%;
+    height: 100%;
     background:white;
-    color: #fff;
-    top: 60%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%,-50%);
+    justify-content: space-evenly;
     box-sizing: border-box;
     padding: 70px 30px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    display: none;
-    background: rgb(0, 0, 0); /* Fallback color */
-    background: rgba(0, 0, 0, 0.6); /* Black background with 0.5 opacity */
-}
-.avarta2 {
+  }
+  .avarta2 {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     position: absolute;
     top: -50px;
     left:  305px;
-}
-
-.signup_header {
-    margin: 0;
-    padding: 0 0 20px;
-    text-align: center;
-    font-size: 22px;
-    color: #000;
-}
-
-.signupBox p {
+  }
+  
+  
+  
+  .wrapper article p {
     margin: 0;
     padding: 0;
     font-weight: bold;
-}
-.signupBox input {
+    color: #444;
+  }
+  .wrapper article div input {
     width: 100%;
     margin-bottom: 20px;
-}
-.main input[type="email"],input[type="password"],input[type="text"]{
+  }
+  .main input[type="email"],input[type="password"],input[type="text"]{
     border: none;
     border-bottom: 1px solid gray;
     background: transparent;
@@ -238,77 +397,277 @@ h2{
     height: 40px;
     color: #000;
     font-size: 16px;
-}
-.signupBox input[type="submit"] {
+  }
+  .main div {
+    padding: 10px;
+  }
+  .signupBox input[type="submit"] {
    border: none;
    outline: none;
    height: 40px;
    background: #fb2525;
    color: #fff;
    font-size: 18px;
-}
-.signupBox input[type="submit"]:hover {
+  }
+  .signupBox input[type="submit"]:hover {
     cursor: pointer;
     background: #000;
     color: #fff;
-
- }
-
- .signupBox a {
+  
+  }
+  
+  .signupBox a {
      text-decoration: none;
      font-size: 12px;
      line-height: 20px;
      color:#000;
- }
- /* signup form */
- /* user dashboard navbar css */
- .user_dasboard_nav {
-     background-color: #000;
- }
- /* user dashboard navbar css */
- /* submit order css */
- .bg-img {
-    /* The image used */
-    /* background-image: url("../images/drinks.jpg"); */
-    /* background-color: green; */
-    height: 460px;
-    width:500px;
+  }
+  /* wrapper css */
+  .wrapper {
+    display: flex;  
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     display: none;
-    left:480px;
-    /* Center and scale the image nicely */
-    position: absolute;
-    padding-left: 20px;
-}
-.make_order_form {
-    /* position: absolute; */
-    /* right: 0; */
-    margin: 20px;
-    max-width: 300px;
-    /* padding: 16px; */
-    background-color: white;
-}
-
-.shopping_cart{
-    background-color: #87007c;
-    color:#fff;
-}
-
-/* Create two equal columns that floats next to each other */
-.column456 {
-    float: left;
-    width: 600px;
-    height: 450px; /* Should be removed. Only for demonstration */
-}
-
-/* Clear floats after the columns */
-.row456:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-/* The Modal (background) */
-.modal {
+  }
+  .wrapper > * {
+    padding: 10px;
+    flex: 1 100%;
+  }
+  .header {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0 0 20px;
+    font-size: 22px;
+    color:#630c1b;
+  }
+  
+  legend {
+    color:#630c1b;
+  }
+  
+  .main {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  
+  }
+  
+  @media all and (min-width: 600px) {
+    .aside { flex: 1 auto; }
+  }
+  
+  @media all and (min-width: 768px) {
+    .main    { flex-wrap: wrap }
+    .aside-1 { order: 1; } 
+    .main    { order: 2; }
+    .aside-2 { order: 3; }
+    .footer  { order: 4; }
+  }
+  
+  @media (min-width: 768px) {
+    .main  div   { flex-wrap: wrap }
+  }
+  
+  
+  /* trial css */
+  /* make parcel delivery order */
+  
+  .delivery_order {
+    display: flex;  
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    display:block;
+  }
+  .delivery_order > * {
+    padding: 10px;
+    flex: 1 100%;
+  }
+  
+  
+  .delivery_order article p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #444;
+  }
+  .delivery_order article div input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* make parcel delivery order */
+  /* logged in user  */
+  .logged_user {
+    color: #630c1b;
+  }
+  /* logged in user  */
+  
+  /* table css */
+  .order_details {
+    display: flex;  
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    display:none;
+    height: 500px;
+    overflow: scroll;
+  }
+  .order_details > * {
+    padding: 10px;
+    flex: 1 100%;
+  }
+  
+  
+  .order_details article p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #444;
+  }
+  .order_details article div input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .table_main {
+    display: flex;
+    flex-wrap: row wrap;
+    /* justify-content: center; */
+  }
+  .table_main_history {
+      display: flex;
+      flex-wrap: row wrap;
+      flex-direction: column;
+  }
+  .table_header {
+    display: flex;
+    margin: 0;
+    padding-top:10px;
+    font-size: 22px;
+    color:#630c1b;
+    
+  }
+  .table_history_header {
+    display: flex;
+    margin: 0;
+    padding-top:10px;
+    font-size: 22px;
+    color:#630c1b;
+    justify-content: center;
+    
+  }
+  
+  @media screen and(max-width:400px) {
+    .table_header {
+      flex-wrap: row wrap;
+    }
+    .order_details .table_header .all_orders_heading {
+      font-size: 5px;
+    }
+    .modal-content .destination {
+      margin-left: auto;
+      background-color:#4caf50;
+      border:0;
+      width: 170px;
+      height: 30px;
+      color: #fff;
+      border-radius: 3px;
+      margin-top: 10px;
+    
+    }
+  
+  }
+  .search_div {
+    display: flex;
+    margin-left: auto;
+  
+  }
+  .items_table {
+   width: 100%;
+  }
+  table {
+    border-collapse: collapse;
+  }
+  table tr:nth-child(odd) td {
+     background-color: #e7edf0;
+  }
+  table th {
+    text-align: center;
+    background-color: #3a6070;
+    color: #fff;
+    padding: 4px 30px 4px 8px;
+  }
+  table td {
+    text-align: center;
+    border: 1px solid #e3e3e3;
+    padding: 5px 15px;
+  }
+  
+  .order_details_button {
+    background-color:#4caf50;
+    align-content: center;
+    border:0;
+    width: 120px;
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
+  }
+  
+  .order_admin_button {
+    background-color:#4caf50;
+    align-content: center;
+    border:0;
+    width: 120px;
+    height: 34px;
+    color: #fff;
+    border-radius: 3px;
+  }
+  
+  .senders_div_height {
+    height: 50px;
+    margin-top: 23px;
+  }
+  
+  .receivers_div_height {
+    height: 50px;
+    margin-top: 23px;
+  }
+  .order_status_div_height{
+    display: flex;
+    justify-content: center;
+    height: 150px;
+    margin-top: 23px;
+  }
+  
+  .order_cancel_button {
+    background-color:red;
+    border:0;
+    width: 120px;
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
+  }
+  
+  .search_button {
+    background-color:#630c1b;
+    border:0;
+    width: 90px;
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
+  }
+  
+  /* table css */
+  /* The Modal (background) */
+  .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -320,313 +679,142 @@ h2{
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
     margin: auto;
     padding: 20px;
     padding-left: 50px;
     border: 1px solid #888;
-    width: 80%;
-}
-
-.manage_orders {
-    background-color: #87007c;
-    color:#fff;
-    padding: 16px;
-    border-radius: 8px;
-}
-
-/* The Close Button */
-.close {
+    overflow: hidden;
+    width: 50%;
+  }
+  .modal-content_map {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    padding-left: 50px;
+    border: 1px solid #888;
+    overflow: hidden;
+    width: 60%;
+  }
+  
+  .close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
+  }
+  
+  .close_map {
+    color: #aaaaaa;
+    margin-left:auto;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
-}
-
-
-/* Set a style for the submit button */
-.btn {
-    background-color:#fb2525;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-
-/* Add styles to the form container */
-.container_form {
-    position: absolute;
-    right: 0;
-    margin: 20px;
-    max-width: 300px;
-    padding: 16px;
-    background-color: white;
-}
- /* submit ordet css */
-
- h2 {
-     color: #fff;
- }
- /* put columns */
- /* Create two equal columns that floats next to each other */
-.column {
-    float: left;
-    width: 300px;
-    padding: 10px;
-    height: 300px; /* Should be removed. Only for demonstration */
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
- /* put columns */
- 
-
-/* center name  */
-.center_name {
-    color: #fff;
-    padding-top:20px;
-}
-/* center name */
-/* hr css */
-.horizontal_line_div{
-   /* background-color: green; */
-   width: 1100px;
-   position: absolute;
-   left: 150px;
-}
-/* products_container */
-.products_container{
-    width: 1000px;
-    padding-left: 50px;
-    position: absolute;
-    left: 160px;
-    padding-top: 20px; 
-    /* background-color: gray; */
-}
-
-/* products_container */
-/* dropdown css */
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    right: 0;
-    display: none;
-    position: fixed;
-    background-color: #fff;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    box-sizing: border-box;
-    z-index: 9999999;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown-content a:hover {
-    background-color: #ddd;
-    color: #000;
-}
-
-.dropdown:hover .dropdown-content {display: block;}
-
-/* drop down css */
-/* food gallery css */
-div.gallery {
-    margin: 5px;
-    border: 1px solid #ccc;
-    float: left;
-    width: 200px;
-}
-
-
-div.gallery:hover {
-    border-style: double;
-    border-color: #87007c;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    border: 1px solid #777;
-}
-
-div.gallery img {
-    width: 100%;
-    height: auto;
-}
-
-div.desc {
-    padding: 15px;
-    color: #87007c;
-    background-color: #ffffff;
-    text-align: center;
-}
-/* foood gallery css */
-/* make order button */
-.make_order {
-    background-color: red;
-    color:#fff;
+  }
+  .modal-content span {
+    margin-left: auto;
+  }
+  .modal-content div {
+    display: flex;
+    /* justify-content: center; */
+    border-bottom: 2px solid #aaaaaa;
+  
+  }
+  .modal-content .destination {
+    margin-left: auto;
+    background-color:#4caf50;
+    border:0;
+    width: 150px;
     height: 30px;
-    width: 100px;
-    border: 0;
-    font-size: 14px;
-    border-radius: 4px;
-}
-.make_order:hover {
-    background-color:#fff;
-    color: black;
-    border: 3px solid red;
-}
-/* make order button */
-/* search field */
-.search_div {
-    width:400px;
-    height:50px;
-    float: right;
-}
-/* search field */
-/* card css */
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    margin: 5px;
-    width: 200px;
-    float: left;
-    z-index: 9999999;
-}
-
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.container {
-    padding: 2px 16px;
-}
-/* card css */
-/* product paginations */
-.pagination {
-    padding-left: 300px;
-    display: inline-block;
-}
-
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-}
-
-.pagination a.active {
-    background-color: #87007c;
-    color: white;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}
-/* product paginations */
-
-/* sticky navbar */
-  body .content{
-      padding-left: 200px;
+    color: #fff;
+    border-radius: 3px;
+    margin-top: 10px;
+  
+  }
+  .modal-content div  p b {
+   color:#630c1b;
   }
   
-  .top-container {
-    background-color: #f1f1f1;
-    padding: 30px;
-    text-align: center;
+  .destination_input {
+    margin-left: auto;
+    display:none;
   }
   
-  
-  .content {
-    /* left: 150px; */
-    position: absolute;
-    /* left: 100px; */
-    height: 500px;
-    padding-left: 0px;
-    width: 1100px;
-    padding-top:20px;
-    
+  .save_button {
+    margin-left: auto;
+    margin-top: 10px;
+    display:none;
+    background-color:#4c93af;
+    border:0;
+    width: 80px;
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
   }
-  .holder {
-    left: 150px;
-    position: absolute;
-    left: 200px;
-    height: 540px;
-    padding-left: 14px;
-    width: 880px;
-    
-  }
-  .site_name {
-    color:white;
-  }
-  .my_history {
-    position: absolute;
-    left: 230px;
-    height: 540px;
-    padding-left: 14px;
-    width: 900px;
-    /* background: rgba(0, 0, 0, 0.5); */
-    display: none;
-    overflow:scroll; 
+  .cancle_button {
+    margin-left: auto;
+    margin-top: 10px;
+    display:none;
+    background-color:red;
+    border:0;
+    padding: 10px;
+    width: 90px;
+    height: 30px;
+    color: #fff;
+    border-radius: 3px;
   }
   
-  .sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-  }
-  
-  .sticky + .content {
-    padding-top: 102px;
-  }
-
-  /* add search for product */
-  
-
-  .topnav input[type=text] {
-    float: right;
-    padding: 6px;
-    margin-top: 8px;
-    margin-right: 16px;
-    border: none;
-    width: 200px;
-    font-size: 13px;
-    border-style: groove;
-    
-  }
-  
-  /* add search for product */
-
   /* order history */
+  .order_history {
+    display: flex;  
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    display:none;
+    height: 500px;
+    overflow: scroll;
+  }
+  .order_history > * {
+    padding: 10px;
+    flex: 1 100%;
+  }
+  
+  
+  .order_history article p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #444;
+  }
+  /* order history */
+  
   #invoice-POS{
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);
     padding-left:60px;
     margin: 0 auto;
     width: 700px;
     background-color:#fff;
+  
+  
+  }
     
-
+  
   h3{
     font-size: 1.2em;
     font-weight: 300;
@@ -642,41 +830,26 @@ div.desc {
     border-bottom: 1px solid #EEE;
   }
   
-  #top{min-height: 100px;}
+  #top{
+    min-height: 100px;
+  }
   #mid{
       min-height: 80px;
     } 
   #bot{ min-height: 50px;}
-
+  
   .info{
     display: block;
     margin-left: 0;
+  }
+  .info1 {
+    display: flex;
+    justify-content: center;
   }
   .title{
     float: right;
   }
   .title p{text-align: right;} 
-
-  table {
-    border-collapse: collapse;
-  }
-  table tr:nth-child(odd) td {
-     background-color: #e7edf0;
-  }
-  table th {
-    text-align: left;
-    background-color: #3a6070;
-    color: #fff;
-    padding: 4px 30px 4px 8px;
-  }
-  table td {
-    border: 1px solid #e3e3e3;
-    padding: 5px 15px;
-  }
-  .tabletitle{
-    font-size: .5em;
-    background: #EEE;
-  }
   .service{border-bottom: 1px solid #EEE;}
   .item{width: 24mm;}
   .itemtext{
@@ -688,24 +861,50 @@ div.desc {
     margin-top: 5mm;
   }
   
-    
-    
+  .heading {
+    font-size: 15px;
   }
-
-  /* order history for the customers*/
-  .left{
-      float:left; 
-      width:300px;
-      height: 250px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-      margin: 10px;
-    }
-    .style_paragraphs {
-       color: red;
-       font-size: 14px;
-    }
-    .dive_headers {
-        color: #f18705;
-    }
-
+  .slogan {
+    font-weight: bold;
+  }
   
+  .statistics {
+    display:flex;justify-content: space-between;
+  }
+  
+  .stat {
+    background-color: #630c1b;
+    padding: 10px;border-right: #000;
+    color:white;
+  }
+  
+  .admin{
+    display:flex;justify-content: center;
+  }
+  /* orders by admnin */
+  .admin_order_details {
+    display: flex;  
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    display:block;
+    height: 600px;
+    overflow: scroll;
+  }
+  .admin_order_details > * {
+    padding: 10px;
+    flex: 1 100%;
+  }
+  
+  
+  .admin_order_details article p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #444;
+  }
+  .admin_order_details article div input {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  /* orders by admin */

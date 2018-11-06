@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>SendIT users dashboard</title>
-    <!-- <link href="css/sendit.css" rel="stylesheet"> -->
-    <link href="css/basic.css rel="stylesheet">
-    <link href="css/index.css" rel="stylesheet">
+    <link href="css/sendit.css" rel="stylesheet">
   </head>
 
   <body>
@@ -47,7 +45,7 @@
                     </ul>
                 </li>
             <li><a href="#" onclick="OrderHistory()" >Customer Profile</a></li>
-            <li class="" id="enter_account"><a href="#" >Logout<b class="logged_user">(Francis)</b></a></li>
+            <li  id="enter_account"><a href="#" >Logout<b class="logout">(Francis)</b></a></li>
         </ul> 
         <h4 class="site_heading_small_device">Send-IT</h4>
         <ul class="smaller_screen">
@@ -109,13 +107,18 @@
                 <aside class="aside aside-2"></aside>
                 
         </fieldset>
-        
+        <br>
+        <br>
+        <br>
+
+        <br>
+
       </div>
     <!-- make order  form -->
     <!-- order details -->
     <div class="order_details" id="order_details">
         <header class="table_header">
-            All Orders
+            <h4 class="all_orders_heading">All Orders</h4>
             <div class="search_div">
                 <form>
                     <input type="text" name="" placeholder="Search For Order">
@@ -140,10 +143,22 @@
                     <td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button></td>
                     </tr>
                     <tr>
-                    <td>Iphone X</td>
-                    <td>Delivered</td>		
-                    <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
-                    <td><button  onclick="CancelOrder()">X</button></td>
+                        <td>Iphone X</td>
+                        <td>Delivered</td>		
+                        <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
+                        <td><button  onclick="CancelOrder()">X</button></td>
+                    </tr>
+                    <tr>
+                        <td>Iphone X</td>
+                        <td>Delivered</td>		
+                        <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
+                        <td><button  onclick="CancelOrder()">X</button></td>
+                    </tr>
+                    <tr>
+                        <td>Iphone X</td>
+                        <td>Delivered</td>		
+                        <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
+                        <td><button  onclick="CancelOrder()">X</button></td>
                     </tr>
                     
                 </table>
@@ -158,14 +173,14 @@
             <header class="table_history_header">
                 <h4 align="center">Francis Kiryowa Ordering History</h4>
             </header>
-            <article class="table_main">
+            <article class="table_main_history">
                     <br>
                     <div id="invoice-POS">
                         <center id="top">
                             <div class="info1"> 
                             </div><!--End Info-->
                         </center><!--End InvoiceTop-->
-                        
+
                         <div id="mid">
                             <div class="info">
                             <h4 class="heading"><b>Order Name :</b> Pizza</h4>
@@ -248,15 +263,15 @@
               <div>
                   <p style="float:left;">Pick Up Location : <b>Nalukolongo</b></p>
               </div>
-              <div>
-                <p style="float:left;">Destination Location : <b id="place">Ntinda</b></p>
+              <div style="height:50px;">
+                <p id="destination_location" style="float:left;">Destination Location : <b id="place">Ntinda</b></p>
                 <br>
                 <!-- User is able to change the destination they had specified ealier for the parcel order from here -->
                 <input type="text" id="newdestination" placeholder="Enter New Destination" class="destination_input"/>
                 <button class="save_button" id="save_button_destination">Save</button>
-                <button class="cancle_button" id="cancel_buttton_destination">Cancel</button>
                 <button id="destination" onclick="changeDestination()" class="destination">change destination</button>
-             </div>
+                <br>
+            </div>
              <div>
                <p>Date : <b>04/11/2018</b></p>
              </div>

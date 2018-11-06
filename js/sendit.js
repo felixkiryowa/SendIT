@@ -44,18 +44,7 @@ function ViewHistory(){
     content_holder.style.display ="none";
     order_history.style.display = "block"
 }
-//manage fast-food-items
-function ManageItems(){
-    var EditItem = document.getElementById("EditItem");
-    var addItem = document.getElementById("addItem");
-    var food_items = document.getElementById("food_items");
-    var customer_orders = document.getElementById("customer_orders");
-    addItem.style.display ="none";
-    customer_orders.style.display="none";
-    EditItem.style.display="none";
-    food_items.style.display="block";
 
-}
 //manage orders
 function ManageOrders(){
     var EditItem = document.getElementById("EditItem");
@@ -67,7 +56,7 @@ function ManageOrders(){
     EditItem.style.display="none";
     customer_orders.style.display="block";
 }
-//function to delete fast-food-fast items
+//function to cancel an order
 function CancelOrder(){
     alert("Order Cancelled !! ");
 }
@@ -87,17 +76,13 @@ function authenticateadmins(){
 }
 //authenticating users
 function authenticateusers(){
-    var user_email = document.getElementById("user_email").value;
-    var user_password = document.getElementById("user_password").value;
-    
-    if(user_email === "user@gmail.com" && user_password === "user123"){
-        //redirecting to user dashboard
-         window.location.href="user_dashboard.html";
-        //console.log("Fine");
-    }else{
-         //window.location.href="user_dashboard.html";
-         alert("Invalid Email or Password!");
-    }
+//redirecting to user dashboard
+    window.location.href="users_dashboard.html"; 
+}
+
+// function when user clicks on signup
+function signUpUser() {
+    window.location.href="index.html"; 
 }
 
 //defining what happens when a user clicks the signup button
@@ -106,6 +91,7 @@ document.getElementById("register").addEventListener("click",function(){
     var all_sections = document.querySelectorAll("section");
     var login_user_form = document.getElementById('site_login_form');
     var site_signup_form = document.getElementById('site_signup_form');
+    var space_liner = document.getElementById("space_liner");
     document.body.style.backgroundImage="url(images/image3.jpg)";
 
     var i;
@@ -115,6 +101,7 @@ document.getElementById("register").addEventListener("click",function(){
     
     login_user_form.style.display = "none";
     cards.style.display = "none";
+    space_liner.style.display ="none";
     site_signup_form.style.display = "block";
      
 });
@@ -125,6 +112,7 @@ document.getElementById("enter_account").addEventListener("click",function(){
     var cards = document.getElementById('services_cards');
     var login_user_form = document.getElementById('site_login_form');
     var site_signup_form = document.getElementById('site_signup_form');
+    var space_liner = document.getElementById("space_liner");
     document.body.style.backgroundImage="url(images/image3.jpg)";
     var i;
     for (i = 0; i < all_sections.length; i++) {
@@ -132,6 +120,7 @@ document.getElementById("enter_account").addEventListener("click",function(){
     }
     cards.style.display = "none";
     site_signup_form.style.display="none";
+    space_liner.style.display ="none";
     login_user_form.style.display = "block";
 
      
@@ -236,15 +225,18 @@ window.onclick = function(event) {
 // function to allow user to change destination
 function changeDestination() {
     var destination = document.getElementById("destination");
+    var destination_location = document.getElementById("destination_location");
     var place = document.getElementById("place");
     var newdestination = document.getElementById("newdestination");
     var save_button_destination = document.getElementById("save_button_destination");
     var cancel_buttton_destination =  document.getElementById("cancel_buttton_destination");
     destination.style.display = "none";
     place.style.display="none";
+    destination_location.style.display = "none";
     newdestination.style.display = "block";
     save_button_destination.style.display = "block";
     cancel_buttton_destination.style.display="block";
+
     
 }
 
