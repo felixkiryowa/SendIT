@@ -1,5 +1,7 @@
-window.onscroll = function() {myFunction()};
- var header = document.getElementById("site_navbar");
+window.onscroll = function() {
+    myFunction()
+};
+var header = document.getElementById("site_navbar");
 var sticky = header.offsetTop;
  function myFunction() {
   if (window.pageYOffset > sticky) {  
@@ -156,6 +158,9 @@ function DropDown() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
+function DropDownUserDashboard() {
+    document.getElementById("myDropdownUserDashboard").classList.toggle("show"); 
+}
 // Close the dropdown menu if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
@@ -174,6 +179,8 @@ window.onclick = function(event) {
 // Get the modal
 var modal = document.getElementById('myModal');
 var GoogleModal = document.getElementById("GoogleModal");
+var deliveredOrdersModal = document.getElementById("deliveredOrdersModal");
+var NotYetDeliveredOrdersModal = document.getElementById("NotYetDeliveredOrdersModal");
 
 
 // Get the button that opens the modal
@@ -182,7 +189,8 @@ var btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 var close2  = document.getElementsByClassName("close2")[0];
-
+var close6  = document.getElementsByClassName("close6")[0];
+var close7  = document.getElementsByClassName("close7")[0];
 function MakeOrder1(){
     modal.style.display = "block";
 }
@@ -191,6 +199,12 @@ function GoogleMap() {
   GoogleModal.style.display ="block";
 }
 
+function DeliveredOrders() {
+ deliveredOrdersModal.style.display ="block";
+}
+function NotDeliveredOrders() {
+    NotYetDeliveredOrdersModal.style.display = "block";
+}
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
     modal.style.display = "none";
@@ -200,13 +214,22 @@ close2.onclick = function() {
     GoogleModal.style.display = "none";
 }
 
-
+close6.onclick = function() {
+    deliveredOrdersModal.style.display = "none";
+}
+close7.onclick = function() {
+    NotYetDeliveredOrdersModal.style.display = "none";
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }else if(event.target == GoogleModal) {
         GoogleModal.style.display = "none";
+    }else if(event.target == deliveredOrdersModal){
+        deliveredOrdersModal.style.display ="none";
+    }else if(event.target == NotYetDeliveredOrdersModal){
+        NotYetDeliveredOrdersModal.style.display ="none";
     }
 }
 

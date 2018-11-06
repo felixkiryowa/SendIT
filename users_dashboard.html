@@ -46,13 +46,14 @@
                         </li>
                     </ul>
                 </li>
-            <li><a href="#" onclick="OrderHistory()" >Order History</a></li>
+            <li><a href="#" onclick="OrderHistory()" >Customer Profile</a></li>
             <li class="" id="enter_account"><a href="#" >Logout<b class="logged_user">(Francis)</b></a></li>
         </ul> 
+        <h4 class="site_heading_small_device">Send-IT</h4>
         <ul class="smaller_screen">
             <li>
-                <img  src="images/Hamburger_icon.svg.png" onclick="DropDown()" class="dropbtn">
-                <div id="myDropdown" class="dropdown-content">
+                <img  src="images/Hamburger_icon.svg.png" onclick="DropDownUserDashboard()" class="dropbtn">
+                <div id="myDropdownUserDashboard" class="dropdown-content">
                     <a id="site_home" href="#">Home</a>
                     <a id="register" href="#">SignUp</a>
                     <a id="enter_account" href="#">Login</a>
@@ -63,11 +64,11 @@
      </nav> 
      <br>
      <div class="statistics">
-        <div class="stat">
-           Delivered : 4
+        <div class="stat" onclick="DeliveredOrders()">
+           Delivered Orders: 4
         </div>
-        <div class="stat">
-           Not Yet Delivered : 1
+        <div class="stat" onclick="NotDeliveredOrders()" >
+           Not Yet Delivered Orders: 1
         </div>
      </div>
      <br>
@@ -97,14 +98,18 @@
                         <input type="text" name="" placeholder="Enter Receiver's Contact" required>
                         <p>Weight</p>
                         <input type="text" name="" placeholder="Enter Parcel Weight" required>
+                        <br>
+                        <br>
+                        <button class="save_order_submit_button" type="submit">Make Order</button>
                     </div>
+                          
                 </article>
+               
                 <aside class="aside aside-1"></aside>
                 <aside class="aside aside-2"></aside>
-                <footer class="footer">
-                    <p align="center"><button class="signup_submit_button" type="submit">Make Order</button></p>   
-                </footer>
+                
         </fieldset>
+        
       </div>
     <!-- make order  form -->
     <!-- order details -->
@@ -158,14 +163,13 @@
                     <div id="invoice-POS">
                         <center id="top">
                             <div class="info1"> 
-                             <h2 align="center">SendIT</h2>
                             </div><!--End Info-->
                         </center><!--End InvoiceTop-->
                         
                         <div id="mid">
                             <div class="info">
-                            <h2><b>Order Name :</b> Pizza</h2>
-                            <h2>Sender's Contact Information</h2>
+                            <h4 class="heading"><b>Order Name :</b> Pizza</h4>
+                            <h4 class="heading">Sender's Contact Information</h4>
                             <p> 
                                 <b>Address</b> : Nalukolongo-Lubaga, plot 203</br>
                                 <b>Email</b> : franciskiryowa68@gmail.com</br>
@@ -176,7 +180,7 @@
                         </div><!--End Invoice Mid-->
                         <br>
                         <div id="bot">
-                                <h2>Receiver Contact Information</h2>
+                                <h2 class="heading">Receiver Contact Information</h2>
                                 <p> 
                                     <b>Address</b> : Ntinda-Kisasi, plot 203</br>
                                     <b>Phone</b> : +256700162509</br>
@@ -195,14 +199,13 @@
                           <div id="invoice-POS">
                                 <center id="top">
                                     <div class="info1"> 
-                                      <h2 align="center">SendIT</h2>
                                     </div><!--End Info-->
                                 </center><!--End InvoiceTop-->
                                 
                                 <div id="mid">
                                     <div class="info">
-                                    <h2><b>Order Name :</b> Mac Book Pro</h2>
-                                    <h2>Sender's Contact Info</h2>
+                                    <h4 class="heading"><b>Order Name :</b> Mac Book Pro</h4>
+                                    <h4 class="heading">Sender's Contact Info</h4>
                                     <p> 
                                         <b>Address</b> : Nalukolongo-Lubaga, plot 203</br>
                                         <b>Email</b> : franciskiryowa68@gmail.com</br>
@@ -213,7 +216,7 @@
                                 </div><!--End Invoice Mid-->
                                 <br>
                                 <div id="bot">
-                                        <h2>Receiver Contact Information</h2>
+                                        <h2 class="heading">Receiver Contact Information</h2>
                                         <p> 
                                             <b>Address</b> : Kajjansi, plot 203</br>
                                             <b>Phone</b> : +256700162576</br>
@@ -260,7 +263,7 @@
             </div> 
         </div>
 
-        <!-- The receivers Modal -->
+    <!-- The Google Modal -->
     <div id="GoogleModal" class="modal">
             <!-- Modal content -->
             <div class="modal-content_map">
@@ -269,12 +272,49 @@
                     <header class="header">Order Route Direction</header>
                 </div>
                 <div>
-                    <p align="center"><img src="images/maps.jpg" height="400px" width="400px"></p>
+                    <p align="center"><img src="images/new-google-maps1.0.0.png" height="300px" width="400px"></p>
                 </div>
               </div>
             
             </div> 
-        </div>
+    </div>
+     <!-- The delivered Orders Modal -->
+     <div id="deliveredOrdersModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close6">&times;</span>
+            <div>
+                <header class="header">Your Delivered Orders</header>
+            </div>
+            <div class="receivers_div_height">
+                1. <b> Pizza</b>
+            </div>
+            <div class="receivers_div_height">
+                2. <b> Birthday Cake</b> 
+            </div>
+            <div class="receivers_div_height">
+                3. <b> Text Books</b>  
+            </div>
+          </div>
+        
+        </div> 
+    </div>
+    <!-- The Not yet delivered Orders Modal -->
+    <div id="NotYetDeliveredOrdersModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close7">&times;</span>
+            <div>
+                <header class="header">Your Not Yet Delivered Orders</header>
+            </div>
+            <div class="receivers_div_height">
+                1.  <b> Laptops</b>
+            </div>
+          </div>
+        
+        </div> 
+    </div>
+
   </body>
   <script src="js/sendit.js" ></script>
 </html>
