@@ -1,3 +1,6 @@
+Travis
+[![Build Status](https://travis-ci.org/felixkiryowa/SendIT.svg?branch=develop)](https://travis-ci.org/felixkiryowa/SendIT)
+
 #  SendIT
  SendIT is a aparcel delivery website for SendIT company dealing in delivering different parcel as orders from their customers.
 
