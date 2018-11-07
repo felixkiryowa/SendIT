@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/felixkiryowa/SendIT.svg?branch=develop)](https://travis-ci.org/felixkiryowa/SendIT)
 
-#Maintainability
+# Maintainability
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/83fbc29f2b74f182296d/maintainability)](https://codeclimate.com/github/felixkiryowa/SendIT/maintainability)
 
-#Coverage
-[![Coverage Status](https://coveralls.io/repos/github/felixkiryowa/SendIT/badge.svg?branch=master)](https://coveralls.io/github/felixkiryowa/SendIT?branch=master)
+# Coverage
+[![Coverage Status](https://coveralls.io/repos/github/felixkiryowa/SendIT/badge.svg?branch=develop)](https://coveralls.io/github/felixkiryowa/SendIT?branch=develop)
 
 #  SendIT
  SendIT is a aparcel delivery website for SendIT company dealing in delivering different parcel as orders from their customers.
