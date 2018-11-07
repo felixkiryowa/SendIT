@@ -1,37 +1,42 @@
-Name of project  : SendIT
+#  SendIT
+ SendIT is a aparcel delivery website for SendIT company dealing in delivering different parcel as orders from their customers.
 
+# Features
+- Users can create an account and log in.
+- Users can create a parcel delivery order.
+- Users can change the destination of a parcel delivery order.
+- Users can cancel a parcel delivery order.
+- Users can see the details of a delivery order.
+- Admin can change the status and present location of a parcel delivery order.
+ 
+## Click here to view the project demo pages
+[SendIT](https://felixkiryowa.github.io/SendIT/)
+When one visits that link they will be displayed with a site dashboard which welcomes them.
+At the top they can choose to login if they have an account already or they can click on signup and register for an account.
 
-Project Overview
+But for now to login a user can type in 
+    Click on the login button and you will be displayed with the users dashboard where the user can interact more with the system.
 
-   SendIT is a aparcel delivery website for SendIT company dealing in delivering different parcel as orders from their customers.
-   
-   Its a challenge from andela as i prepare for my bootcamp.It is important because it has taught me to work around with raw css than using frameworks like bootstrap and as well as putting on some level in javascript.
-   It has been created from 31/10/2018 to 06/11/2018
+On top  there are navifgation menus which the user can use to perform their desired tasks on the website.
 
-   The app can be found live using the link https://felixkiryowa.github.io/SendIT/
+On the Administrator side 
+They go to this link  https://felixkiryowa.github.io/SendIT/admin_dashboard.html
+They are able to perform all their actions on the website using that dashboard.
 
-   How does one go about using it live or within their own project?
+## Built Using
+- [HTML](https://html.com/) - Markup language
+- [CSS](https://css-tricks.com/) - Style sheet language 
+- [JavaScript](https://www.javascript.com/) - High-level, interpreted programming language
 
-   When one visits that link they will be displayed with a site dashboard which welcomes them.
-    At the top they can choose to login if they have an account already or they can click on signup and register for an account.
+## Known Bugs
+This website has no database so it may not store data sent to it.
 
-    But for now to login a user can type in 
-        Click on the login button and you will be displayed with the users dashboard where the user can interact more with the system.
+## Authors
+- [felixkiryowa](https://github.com/felixkiryowa/)
 
-    On top  there are navifgation menus which the user can use to perform their desired tasks on the website.
-
-    On the Administrator side 
-    They go to this link  https://felixkiryowa.github.io/SendIT/admin_dashboard.html
-    They are able to perform all their actions on the website using that dashboard.
-
-    A list of files included
-    css files are included into the css folder
-    js file is in the js folder
-    and others html files are not in any folder
-
-    Contact me 
-    email:franciskiryowa68@gmail.com
-    Phone Number:+256700162509
-
-
- We are on branch gh-pages
+## Acknowlegments
+ - [W3schools](https://www.w3schools.com/) Online Web Tutorials
+ 
+## Contact me 
+- Email:franciskiryowa68@gmail.com
+- Phone Number:+256700162509
