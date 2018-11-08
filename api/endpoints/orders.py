@@ -29,12 +29,12 @@ class OrdersApi(MethodView):
         """function to get a single order or to get all the orders"""
         if order_id is None:
             # return a list of orders
-            return jsonify({'all orders':[order.__dict__ for order in self.orders]})
+            return jsonify({'all orders':[order.__dict__ for order in self.orders]}),200
         specific_order = [
             order.__dict__ for order in self.orders
             if order.__dict__["order_id"] == order_id
         ]
-        return jsonify({'order':specific_order[0]})
+        return jsonify({'order':specific_order[0]}),200
    
     def post(self):
         """funtion to place a new order"""

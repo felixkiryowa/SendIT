@@ -9,15 +9,3 @@ def create_app(config_name):
     
     return app
 
-
-
-# from api.views.auth_view import UserAutherizationUrls
-# from api.views.menu_views import MenuUrls
-# from api.views.order_view import OrderUrls
-# from api.views.order_history_view import OrderHistoryUrls
-
-
-# OrderUrls.order_management_urls(app)
-# MenuUrls.fetch_menu_urls(app)
-# OrderHistoryUrls.order_history_urls(app)
-# UserAutherizationUrls.fetch_authorization_urls(app)
