@@ -17,3 +17,8 @@ class GetOrderApiUrls:
             '/api/v1/parcels', defaults={'order_id': None},
             view_func=order_view, methods=['GET',]
         )
+        app.add_url_rule(
+            '/api/v1/parcels/<int:order_id>',
+             view_func=order_view, methods=['GET', 'PUT', 'DELETE']
+        )
+        app.add_url_rule('/api/v1/parcels', view_func=order_view, methods=['POST',])

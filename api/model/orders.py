@@ -3,7 +3,7 @@
 class Orders:
     """This is orders class"""
 
-    def __init__(self, user_id, order_id, order_name, senders_names, senders_contact, parcel_pickup_address, parcel_destination_address, receivers_names, receivers_contact, parcel_wieght, price, date):
+    def __init__(self, user_id, order_id, order_name, senders_names, senders_contact, parcel_pickup_address, parcel_destination_address, receivers_names, receivers_contact, parcel_weight, price, date):
         """This is orders class constructor"""
 
         self.user_id = user_id
@@ -15,6 +15,6 @@ class Orders:
         self.parcel_destination_address = parcel_destination_address
         self.receivers_names = receivers_names
         self.receivers_contact = receivers_contact
-        self.parcel_wieght = parcel_wieght
+        self.parcel_weight = parcel_weight
         self.price = price
         self.date = date
