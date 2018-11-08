@@ -27,19 +27,20 @@ class OrdersApi(MethodView):
 
     def get(self, order_id):
         """function to get a single order or to get all the orders"""
-        if order_id is None:
-            # return a list of orders
-            return jsonify({'all orders':[order.__dict__ for order in self.orders]}),200
-        specific_order = [
-            order.__dict__ for order in self.orders
-            if order.__dict__["order_id"] == order_id
-        ]
-        return jsonify({'order':specific_order[0]}),200
+        if not isinstance(order_id,(float,bool,str,list,tuple)):
+            if order_id is None:
+                # return a list of orders
+                return jsonify({'all orders':[order.__dict__ for order in self.orders]}),200
+            specific_order = [
+                order.__dict__ for order in self.orders
+                if order.__dict__["order_id"] == order_id
+            ]
+            return jsonify({'order':specific_order[0]}),200
+        raise ValueError
    
     def post(self):
         """funtion to place a new order"""
         get_todays_date = datetime.datetime.now()
-        print(get_todays_date)
         price_to_be_paid = request.json['parcel_weight'] * 30000
         order = Orders(
             request.json['user_id'], len(self.orders) + 1, request.json['order_name'],
@@ -49,14 +50,14 @@ class OrdersApi(MethodView):
             request.json['parcel_weight'], price_to_be_paid, get_todays_date, request.json['order_status']
         )
         self.orders.append(order)
-        return jsonify(order.__dict__)
+        return jsonify(order.__dict__),201
 
     def put(self, parcel_id):
         order = [order.__dict__ for order in self.orders if order.__dict__['order_id'] == parcel_id]
-        if not order: 
+        if  order: 
             for order in self.orders:
                 if order.__dict__["order_id"] == parcel_id:
                     order.__dict__['order_status'] = request.json['order_status']
-            return jsonify({'orders':[order.__dict__ for order in self.orders]})
-        return jsonify({'Message':'No Order Found with Specified Route Parameter'})
+            return jsonify({'orders':[order.__dict__ for order in self.orders]}),200
+        return jsonify({'Message':'No Order Found with Specified Route Parameter'}),404
            

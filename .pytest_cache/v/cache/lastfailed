@@ -1,6 +1,6 @@
 {
-  "env/Lib/site-packages/astroid/test_utils.py": true, 
-  "env/Lib/site-packages/more_itertools/tests/test_more.py": true, 
-  "env/Lib/site-packages/more_itertools/tests/test_recipes.py": true, 
+  "env/Lib/site-packages/astroid/test_utils.py": true,
+  "env/Lib/site-packages/more_itertools/tests/test_more.py": true,
+  "env/Lib/site-packages/more_itertools/tests/test_recipes.py": true,
   "env/Lib/site-packages/nose2/tests/unit/test_testclass_loader.py::TestClassLoader::()": true
 }

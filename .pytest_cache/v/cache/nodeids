@@ -1,3 +1,7 @@
 [
-  "tests/test_api_endpoints.py::SendAPITests::test_get_all_orders"
+  "tests/test_api_endpoints.py::SendAPITests::test_get_all_orders",
+  "tests/test_api_endpoints.py::SendAPITests::test_get_specific_order",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_data_posted_is_in_form_of_json",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_value_order_is_not_string",
+  "tests/test_api_endpoints.py::SendAPITests::test_update_specific_order"
 ]
