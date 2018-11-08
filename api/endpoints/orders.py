@@ -27,10 +27,36 @@ class OrdersApi(MethodView):
 
     def get(self, order_id):
         """function to get a single order or to get all the orders"""
+        if order_id is None:
+            # return a list of orders
+            return jsonify({'all orders':[order.__dict__ for order in self.orders]})
         specific_order = [
             order.__dict__ for order in self.orders
             if order.__dict__["order_id"] == order_id
         ]
         return jsonify({'order':specific_order[0]})
    
-    
+    def post(self):
+        """funtion to place a new order"""
+        get_todays_date = datetime.datetime.now()
+        print(get_todays_date)
+        price_to_be_paid = request.json['parcel_weight'] * 30000
+        order = Orders(
+            request.json['user_id'], len(self.orders) + 1, request.json['order_name'],
+            request.json['senders_names'], request.json['senders_contact'], 
+            request.json['parcel_pickup_address'], request.json['parcel_destination_address'], 
+            request.json['receivers_names'], request.json['receivers_contact'], 
+            request.json['parcel_weight'], price_to_be_paid, get_todays_date, request.json['order_status']
+        )
+        self.orders.append(order)
+        return jsonify(order.__dict__)
+    def put(self, parcel_id):
+        order = [order.__dict__ for order in self.orders if order.__dict__['order_id']==parcel_id] 
+        for order in self.orders:
+            if order.__dict__["order_id"] == parcel_id:
+                order_json = request.get_json()
+                order.__dict__['order_status'] = order_json['order_status']
+        return jsonify({'orders':[order.__dict__ for order in self.orders]})
+
+        # return jsonify({'Message':'No Order Found with Specified Route Parameter'})
+           
