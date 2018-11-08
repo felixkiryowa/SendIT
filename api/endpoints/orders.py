@@ -50,13 +50,13 @@ class OrdersApi(MethodView):
         )
         self.orders.append(order)
         return jsonify(order.__dict__)
-
     def put(self, parcel_id):
-        order = [order.__dict__ for order in self.orders if order.__dict__['order_id'] == parcel_id]
-        if not order: 
-            for order in self.orders:
-                if order.__dict__["order_id"] == parcel_id:
-                    order.__dict__['order_status'] = request.json['order_status']
-            return jsonify({'orders':[order.__dict__ for order in self.orders]})
-        return jsonify({'Message':'No Order Found with Specified Route Parameter'})
+        order = [order.__dict__ for order in self.orders if order.__dict__['order_id']==parcel_id] 
+        for order in self.orders:
+            if order.__dict__["order_id"] == parcel_id:
+                order_json = request.get_json()
+                order.__dict__['order_status'] = order_json['order_status']
+        return jsonify({'orders':[order.__dict__ for order in self.orders]})
+
+        # return jsonify({'Message':'No Order Found with Specified Route Parameter'})
            
