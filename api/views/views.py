@@ -28,3 +28,7 @@ class GetOrderApiUrls:
             '/api/v1/users/<int:user_id>/parcels',
              view_func=user_specific_orders_view, methods=['GET',]
         )
+        app.add_url_rule(
+            '/api/v1/parcels/<int:parcel_id>/cancel', view_func=order_view, 
+            methods=['PUT',]
+        )
