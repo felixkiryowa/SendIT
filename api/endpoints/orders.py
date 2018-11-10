@@ -3,10 +3,10 @@ This module defines api views
 
 """
 import datetime
-from flask import jsonify, request
+from flask import jsonify, request, Response , json
 from flask.views import MethodView
 from api.model.orders import Orders
-from api.validators.validate import check_empty_list, check_if_there_no_orders
+from api.validators.validate import check_empty_list, check_if_there_no_orders, validate_posted_data
 
 
 class OrdersApi(MethodView):
@@ -40,22 +40,12 @@ class OrdersApi(MethodView):
    
     def post(self):
         """funtion to place a new order"""
-        get_todays_date = datetime.datetime.now()
-        price_to_be_paid = request.json['parcel_weight'] * 30000
-        order = Orders(
-            request.json['user_id'], len(self.orders) + 1, request.json['order_name'],
-            request.json['senders_names'], request.json['senders_contact'], 
-            request.json['parcel_pickup_address'], request.json['parcel_destination_address'], 
-            request.json['receivers_names'], request.json['receivers_contact'], 
-            request.json['parcel_weight'], price_to_be_paid, get_todays_date, request.json['order_status']
-        )
-        self.orders.append(order)
-        return jsonify(order.__dict__),201
+        new_parcel_order = request.get_json()
+        return validate_posted_data(new_parcel_order, self.orders)
 
     def put(self, parcel_id):
         """function to update the order status"""
         order = Order_object.select_specific_order('order_id', parcel_id)
-        print(order)
         if  order: 
             for order in self.orders:
                 if order.__dict__["order_id"] == parcel_id:
