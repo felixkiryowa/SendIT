@@ -2,7 +2,13 @@
 omit =
     */python?.?/*
     */__pycache__/*
+    */api/__init__.py *
+    */api/endpoints/__init__.py
+    */api/model/__init__.py
+    */api/validators/__init__.py 
+    */api/views/__init__.py
+    */tests/__init__.py 
+    */api/validators/*
+    */api/views/views.py
     *.pyc
-    */env/*
-    *.vscode/*
-    *.pytest_cache*
+    
