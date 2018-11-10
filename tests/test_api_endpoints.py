@@ -11,6 +11,19 @@ class SendAPITests(unittest.TestCase):
         self.app = app
         self.client = app.test_client
         self.order = OrdersApi()
+        self.user_orders = UserSpecificOrders()
+        self.order_data = {
+                "order_name": "phones",
+                "order_status":"pending",
+                "parcel_destination_address": "Mpigi",
+                "parcel_pickup_address": "Kamwokya",
+                "parcel_weight": 6,
+                "receivers_contact": "070786543",
+                "receivers_names": "mariat candance",
+                "senders_contact": "0700978789",
+                "senders_names": "Namyalo Agnes",
+                "user_id": 4
+            }
     
     # Test get all orders
     def test_get_all_orders(self):
@@ -24,18 +37,7 @@ class SendAPITests(unittest.TestCase):
         """
         result = self.client().post(
             '/api/v1/parcels', content_type='application/json',
-             data=json.dumps({
-                "order_name": "phones",
-                "order_status":"pending",
-                "parcel_destination_address": "Mpigi",
-                "parcel_pickup_address": "Kamwokya",
-                "parcel_weight": 6,
-                "receivers_contact": "070786543",
-                "receivers_names": "mariat candance",
-                "senders_contact": "0700978789",
-                "senders_names": "Namyalo Agnes",
-                "user_id": 4
-            }))
+             data=json.dumps(self.order_data))
         self.assertEqual(result.status_code, 201)
         # Json data
         order_data = json.loads(result.data)
@@ -72,5 +74,36 @@ class SendAPITests(unittest.TestCase):
         result = self.client().get('/api/v1/parcels/1')
         self.assertEqual(result.status_code, 200)
 
-    def test_if_value_order_is_not_string(self):
+    def test_if_value_order_id_is_not_string(self):
         with self.assertRaises(ValueError):self.order.get("one")
+    def test_if_value_order_id_is_not_an_empty_string(self):
+        with self.assertRaises(ValueError):self.order.get("")
+    def test_if_value_order_id_is_not_a_complex_number(self):
+        with self.assertRaises(ValueError):self.order.get(2j+1)
+    def test_if_value_order_id_is_not_a_float_point_number(self):
+        with self.assertRaises(ValueError):self.order.get(3.90)
+
+    def test_if_args_passed_to_select_specific_order_are_not_numbers(self):
+        with self.assertRaises(ValueError):self.order.select_specific_order(2,2)
+    
+    def test_select_specific_order(self):
+        self.assertTrue(self.order.select_specific_order("order_id", 1))
+
+    # def test_if_select_specific_order_returns_valid_response(self):
+    #     # self.assertEqual(self.order.select_specific_order('order_id', 1),True)
+    #     self.assertDictEqual(self.order.select_specific_order('order_id', 1),self.order)
+
+    def test_get_orders_of_specific_user(self):
+        result = self.client().get('/api/v1/users/1/parcels')
+        self.assertEqual(result.status_code, 200)
+
+    def test_arg_passed_get_single_user_orders_is_not_a_string(self):
+        with self.assertRaises(ValueError):self.user_orders.get("two")
+    def test_arg_passed_get_single_user_orders_is_an_empty_string(self):
+        with self.assertRaises(ValueError):self.user_orders.get("")
+    def test_arg_passed_get_single_user_orders_is_a_complex_number(self):
+        with self.assertRaises(ValueError):self.user_orders.get(2j)
+
+
+if __name__ == '__main__':
+    unittest.main()

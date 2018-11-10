@@ -1,7 +1,16 @@
 [
+  "tests/test_api_endpoints.py::SendAPITests::test_arg_passed_get_single_user_orders_is_a_complex_number",
+  "tests/test_api_endpoints.py::SendAPITests::test_arg_passed_get_single_user_orders_is_an_empty_string",
+  "tests/test_api_endpoints.py::SendAPITests::test_arg_passed_get_single_user_orders_is_not_a_string",
   "tests/test_api_endpoints.py::SendAPITests::test_get_all_orders",
+  "tests/test_api_endpoints.py::SendAPITests::test_get_orders_of_specific_user",
   "tests/test_api_endpoints.py::SendAPITests::test_get_specific_order",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_args_passed_to_select_specific_order_are_not_numbers",
   "tests/test_api_endpoints.py::SendAPITests::test_if_data_posted_is_in_form_of_json",
-  "tests/test_api_endpoints.py::SendAPITests::test_if_value_order_is_not_string",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_value_order_id_is_not_a_complex_number",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_value_order_id_is_not_a_float_point_number",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_value_order_id_is_not_an_empty_string",
+  "tests/test_api_endpoints.py::SendAPITests::test_if_value_order_id_is_not_string",
+  "tests/test_api_endpoints.py::SendAPITests::test_select_specific_order",
   "tests/test_api_endpoints.py::SendAPITests::test_update_specific_order"
 ]

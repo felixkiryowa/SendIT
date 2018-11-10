@@ -14,5 +14,7 @@ class UserSpecificOrders(MethodView):
  
     def get(self, user_id):
         """function to get a single order for a user"""
-        user_specific_orders = Order_object.select_specific_order('user_id', user_id)
-        return jsonify({'order':user_specific_orders})
+        if isinstance(user_id, int):
+            user_specific_orders = Order_object.select_specific_order('user_id', user_id)
+            return jsonify({'order':user_specific_orders})
+        raise ValueError('The user Id must be an integer')

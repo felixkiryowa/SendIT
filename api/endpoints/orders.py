@@ -35,7 +35,7 @@ class OrdersApi(MethodView):
                 return jsonify({'all orders':[order.__dict__ for order in self.orders]}),200
             specific_order = Order_object.select_specific_order('order_id', order_id)
             return jsonify({'order':specific_order[0]}),200
-        raise ValueError
+        raise ValueError('The order Id must be an int')
    
     def post(self):
         """funtion to place a new order"""
@@ -54,6 +54,7 @@ class OrdersApi(MethodView):
     def put(self, parcel_id):
         """function to update the order status"""
         order = Order_object.select_specific_order('order_id', parcel_id)
+        print(order)
         if  order: 
             for order in self.orders:
                 if order.__dict__["order_id"] == parcel_id:
@@ -64,7 +65,9 @@ class OrdersApi(MethodView):
   
     def select_specific_order(self, access_key , specific_id):
         """function to do logic of selecting a specific order using order_id or user_id"""
-        return [order.__dict__ for order in self.orders if order.__dict__[access_key] == specific_id]
+        if isinstance(access_key, str) and isinstance(specific_id, int):
+            return [order.__dict__ for order in self.orders if order.__dict__[access_key] == specific_id]
+        raise ValueError('The parameter passed should be an int and access key a string')
 
 # create an object of the class
 Order_object = OrdersApi()
