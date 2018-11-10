@@ -76,10 +76,13 @@ class SendAPITests(unittest.TestCase):
 
     def test_if_value_order_id_is_not_string(self):
         with self.assertRaises(ValueError):self.order.get("one")
+
     def test_if_value_order_id_is_not_an_empty_string(self):
         with self.assertRaises(ValueError):self.order.get("")
+
     def test_if_value_order_id_is_not_a_complex_number(self):
         with self.assertRaises(ValueError):self.order.get(2j+1)
+            
     def test_if_value_order_id_is_not_a_float_point_number(self):
         with self.assertRaises(ValueError):self.order.get(3.90)
 

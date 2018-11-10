@@ -6,6 +6,7 @@ import datetime
 from flask import jsonify, request
 from flask.views import MethodView
 from api.model.orders import Orders
+from api.validators.validate import check_empty_list, check_if_there_no_orders
 
 
 class OrdersApi(MethodView):
@@ -29,12 +30,12 @@ class OrdersApi(MethodView):
 
     def get(self, order_id):
         """function to get a single order or to get all the orders"""
+        if order_id is None:
+            # return a list of orders
+            return check_if_there_no_orders(self.orders)
         if not isinstance(order_id,(float,bool,str,list,tuple)):
-            if order_id is None:
-                # return a list of orders
-                return jsonify({'all orders':[order.__dict__ for order in self.orders]}),200
             specific_order = Order_object.select_specific_order('order_id', order_id)
-            return jsonify({'order':specific_order[0]}),200
+            return check_empty_list(specific_order, order_id)
         raise ValueError('The order Id must be an int')
    
     def post(self):
