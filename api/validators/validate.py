@@ -1,6 +1,8 @@
 import datetime
 from flask import jsonify, request, json
 from api.model.orders import Orders
+from validate_email import validate_email
+# is_valid = validate_email('example@example.com')
 
 
 def check_empty_list(check_list, order_id):
