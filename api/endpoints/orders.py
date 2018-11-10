@@ -25,16 +25,15 @@ class OrdersApi(MethodView):
 
     orders = [order1, order2, order3]
 
+    
+
     def get(self, order_id):
         """function to get a single order or to get all the orders"""
         if not isinstance(order_id,(float,bool,str,list,tuple)):
             if order_id is None:
                 # return a list of orders
                 return jsonify({'all orders':[order.__dict__ for order in self.orders]}),200
-            specific_order = [
-                order.__dict__ for order in self.orders
-                if order.__dict__["order_id"] == order_id
-            ]
+            specific_order = Order_object.select_specific_order('order_id', order_id)
             return jsonify({'order':specific_order[0]}),200
         raise ValueError
    
@@ -53,11 +52,19 @@ class OrdersApi(MethodView):
         return jsonify(order.__dict__),201
 
     def put(self, parcel_id):
-        order = [order.__dict__ for order in self.orders if order.__dict__['order_id'] == parcel_id]
+        """function to update the order status"""
+        order = Order_object.select_specific_order('order_id', parcel_id)
         if  order: 
             for order in self.orders:
                 if order.__dict__["order_id"] == parcel_id:
                     order.__dict__['order_status'] = request.json['order_status']
             return jsonify({'orders':[order.__dict__ for order in self.orders]}),200
         return jsonify({'Message':'No Order Found with Specified Route Parameter'}),404
-           
+        
+  
+    def select_specific_order(self, access_key , specific_id):
+        """function to do logic of selecting a specific order using order_id or user_id"""
+        return [order.__dict__ for order in self.orders if order.__dict__[access_key] == specific_id]
+
+# create an object of the class
+Order_object = OrdersApi()

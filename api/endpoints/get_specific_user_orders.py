@@ -5,8 +5,7 @@ This module defines api views
 import datetime
 from flask import jsonify, request
 from flask.views import MethodView
-from api.endpoints.orders import OrdersApi
-
+from api.endpoints.orders import OrdersApi, Order_object
 
 class UserSpecificOrders(MethodView):
     """Class to define an endpoint to get a specific user order"""
@@ -15,8 +14,5 @@ class UserSpecificOrders(MethodView):
  
     def get(self, user_id):
         """function to get a single order for a user"""
-        user_specific_orders = [
-            order.__dict__ for order in self.orders_list
-            if order.__dict__["user_id"] == user_id
-        ]
+        user_specific_orders = Order_object.select_specific_order('user_id', user_id)
         return jsonify({'order':user_specific_orders})
