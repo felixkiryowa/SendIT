@@ -6,7 +6,7 @@ import datetime
 from flask import jsonify, request, Response , json
 from flask.views import MethodView
 from api.model.orders import Orders
-from api.validators.validate import check_empty_list, check_if_there_no_orders, validate_posted_data
+from api.validators.validate import check_empty_list, check_if_there_no_orders, validate_posted_data, check_if_posted_order_status_is_string, check_if_posted_order_status_is_not_empty_string
 
 
 class OrdersApi(MethodView):
@@ -47,7 +47,7 @@ class OrdersApi(MethodView):
         """function to update the order status"""
         order = Order_object.select_specific_order('order_id', parcel_id)
         if  order:
-            return Order_object.update_specidfic_order_status_logic(order, parcel_id)   
+            return Order_object.update_specific_order_status_logic(order, parcel_id)   
         return jsonify({'Message':'No Order Found with Specified Route Parameter'}),404
         
   
@@ -57,11 +57,16 @@ class OrdersApi(MethodView):
             return [order.__dict__ for order in self.orders if order.__dict__[access_key] == specific_id]
         raise ValueError('The parameter passed should be an int and access key a string')
 
-    def update_specidfic_order_status_logic(self, order, parcel_id):
-        for order in self.orders:
-            if order.__dict__["order_id"] == parcel_id:
-                order.__dict__['order_status'] = request.json['order_status']
-        return jsonify({'orders':[order.__dict__ for order in self.orders]}),200
+    def update_specific_order_status_logic(self, order, parcel_id):
+        """
+        function to handle updating order status logic
+        """
+        if(check_if_posted_order_status_is_string() and check_if_posted_order_status_is_not_empty_string):
+            for order in self.orders:
+                if order.__dict__["order_id"] == parcel_id:
+                    order.__dict__['order_status'] = request.json['order_status']
+            return jsonify({'orders':[order.__dict__ for order in self.orders]}),200
+        return jsonify({'message':'The status order can only be a string'})
 
 # create an object of the class
 Order_object = OrdersApi()

@@ -2,6 +2,7 @@ import unittest
 from flask import json
 from api.endpoints.orders import OrdersApi
 from api.endpoints.get_specific_user_orders import UserSpecificOrders
+
 from run import app
 
 
@@ -102,8 +103,10 @@ class SendAPITests(unittest.TestCase):
 
     def test_arg_passed_get_single_user_orders_is_not_a_string(self):
         with self.assertRaises(ValueError):self.user_orders.get("two")
+
     def test_arg_passed_get_single_user_orders_is_an_empty_string(self):
         with self.assertRaises(ValueError):self.user_orders.get("")
+
     def test_arg_passed_get_single_user_orders_is_a_complex_number(self):
         with self.assertRaises(ValueError):self.user_orders.get(2j)
 

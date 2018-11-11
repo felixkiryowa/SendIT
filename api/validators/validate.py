@@ -22,15 +22,13 @@ def  check_if_no_user_orders(order_list, user_id):
         return jsonify({'message':message}),200
     return jsonify({'order':order_list[0]}),200
 
-
-
 def check_if_there_no_orders(all_orders_list):
     """
     function to check if there are no orders
     """
     if not all_orders_list:
         return jsonify({'message':'No Orders Found!!!'}),200
-    return jsonify({'all orders':[order.__dict__ for order in all_orders_list]}),200
+    return jsonify({'all_orders':[order.__dict__ for order in all_orders_list]}),200
 
 def check_order_object_keys(order_object):
     """
@@ -42,19 +40,51 @@ def check_order_object_keys(order_object):
     in order_object and 'receivers_names' in order_object and 'receivers_contact' 
     in order_object and 'parcel_weight' in order_object )
 
-def check_if_posted_data_are_strings():
+def check_if_posted_data_are_not_empty_strings():
+    """
+    function to check whether posted object has got no empty strings
+    """
     return (request.json['order_name'] != '' and request.json['senders_names'] != ''
     and request.json['senders_contact'] != '' and request.json['parcel_pickup_address'] != ''
     and request.json['parcel_destination_address'] != '' and  
-    request.json['receivers_names'] != '' and request.json['receivers_contact'] != '' 
-    and request.json['parcel_weight'] != '')
+    request.json['receivers_names'] != '' and request.json['receivers_contact'] != '' )
+
+def check_if_posted_data_are_strings():
+    """
+    function to check whether posted object string properties strings
+    """
+    return (isinstance(request.json['order_name'], str) and isinstance(request.json['senders_names'], str)
+    and isinstance(request.json['senders_contact'], str)  and isinstance(request.json['parcel_pickup_address'],str) 
+    and isinstance(request.json['parcel_destination_address'], str) and isinstance(request.json['receivers_names'], str) 
+    and isinstance(request.json['receivers_contact'], str))
+
+def check_if_posted_order_status_is_string():
+    """
+    function to check whether update order status object is a string
+    """
+    return (isinstance(request.json['order_status'], str))
+
+def check_if_posted_order_status_is_not_empty_string():
+    """
+    function to check whether a user status string is empty
+    """
+    return (request.json['order_status'] != '')
+
+
+def check_if_user_id_and_parcel_weight_are_integers():
+    """
+    function to check whether the parcel_weight and user_id are integers
+    """
+    return (isinstance(request.json['parcel_weight'], int) 
+    and isinstance(request.json['user_id'], int)) 
 
 
 def validate_posted_data(posted_order, orders_list):
     """
     function to validate user posted order object
     """
-    if check_order_object_keys(posted_order) and check_if_posted_data_are_strings():
+    if (check_order_object_keys(posted_order) and check_if_posted_data_are_not_empty_strings() 
+    and check_if_user_id_and_parcel_weight_are_integers() and check_if_posted_data_are_strings()):
         get_todays_date = datetime.datetime.now()
         order_status = 'pending'
         price_to_be_paid = request.json['parcel_weight'] * 30000
