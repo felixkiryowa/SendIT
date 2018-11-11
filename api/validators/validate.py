@@ -1,5 +1,5 @@
 import datetime
-from flask import jsonify, request, json
+from flask import jsonify, request, json, Response
 from api.model.orders import Orders
 from validate_email import validate_email
 # is_valid = validate_email('example@example.com')
@@ -31,19 +31,30 @@ def check_if_there_no_orders(all_orders_list):
     if not all_orders_list:
         return jsonify({'message':'No Orders Found!!!'}),200
     return jsonify({'all orders':[order.__dict__ for order in all_orders_list]}),200
-    
+
+def check_order_object_keys(order_object):
+    """
+    function to check for keys in users posted order object
+    """
+    return ('user_id' in order_object and 'order_name' in order_object
+    and 'senders_names' in order_object and 'senders_contact' in order_object
+    and 'parcel_pickup_address' in order_object and 'parcel_destination_address' 
+    in order_object and 'receivers_names' in order_object and 'receivers_contact' 
+    in order_object and 'parcel_weight' in order_object )
+
+def check_if_posted_data_are_strings():
+    return (request.json['order_name'] != '' and request.json['senders_names'] != ''
+    and request.json['senders_contact'] != '' and request.json['parcel_pickup_address'] != ''
+    and request.json['parcel_destination_address'] != '' and  
+    request.json['receivers_names'] != '' and request.json['receivers_contact'] != '' 
+    and request.json['parcel_weight'] != '')
+
 
 def validate_posted_data(posted_order, orders_list):
     """
     function to validate user posted order object
     """
-    if ('user_id' in posted_order and 'order_name' in posted_order and
-        'senders_names' in posted_order and 'senders_contact' in posted_order and
-        'parcel_pickup_address' in posted_order and 'parcel_destination_address' in posted_order and
-        'receivers_names' in posted_order and 'receivers_contact' in posted_order and
-        'parcel_weight' in posted_order
-    ):
-
+    if check_order_object_keys(posted_order) and check_if_posted_data_are_strings():
         get_todays_date = datetime.datetime.now()
         order_status = 'pending'
         price_to_be_paid = request.json['parcel_weight'] * 30000
@@ -56,7 +67,8 @@ def validate_posted_data(posted_order, orders_list):
         )
         orders_list.append(order)
         return jsonify(order.__dict__),201
-    parcel_order_object = "{'item_name': 'Greens','price':50000,'current_items':40}"
+    parcel_order_object = "{'order_name': 'phones','parcel_destination_address': 'Mpigi','parcel_pickup_address': 'Kamwokya','parcel_weight': 6,\
+    'receivers_contact': '070786543','receivers_names': 'Bagzie','senders_contact': '0700978789','senders_names': 'Namyalo Agnes','user_id': 4}"
     bad_order_object = {
     "error": "Bad Order Object",
     "help of the correct order object format":parcel_order_object

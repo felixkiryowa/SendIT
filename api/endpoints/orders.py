@@ -46,11 +46,8 @@ class OrdersApi(MethodView):
     def put(self, parcel_id):
         """function to update the order status"""
         order = Order_object.select_specific_order('order_id', parcel_id)
-        if  order: 
-            for order in self.orders:
-                if order.__dict__["order_id"] == parcel_id:
-                    order.__dict__['order_status'] = request.json['order_status']
-            return jsonify({'orders':[order.__dict__ for order in self.orders]}),200
+        if  order:
+            return Order_object.update_specidfic_order_status_logic(order, parcel_id)   
         return jsonify({'Message':'No Order Found with Specified Route Parameter'}),404
         
   
@@ -59,6 +56,12 @@ class OrdersApi(MethodView):
         if isinstance(access_key, str) and isinstance(specific_id, int):
             return [order.__dict__ for order in self.orders if order.__dict__[access_key] == specific_id]
         raise ValueError('The parameter passed should be an int and access key a string')
+
+    def update_specidfic_order_status_logic(self, order, parcel_id):
+        for order in self.orders:
+            if order.__dict__["order_id"] == parcel_id:
+                order.__dict__['order_status'] = request.json['order_status']
+        return jsonify({'orders':[order.__dict__ for order in self.orders]}),200
 
 # create an object of the class
 Order_object = OrdersApi()
