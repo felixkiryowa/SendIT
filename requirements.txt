@@ -28,7 +28,7 @@ pylint==2.1.1
 pytest==3.8.1
 pytest-cov==2.6.0
 report==0.0.1
-requests==2.19.1
+requests==2.20.1
 scandir==1.9.0
 six==1.11.0
 typed-ast==1.1.0
