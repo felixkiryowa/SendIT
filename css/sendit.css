@@ -652,11 +652,19 @@
   .senders_div_height {
     height: 50px;
     margin-top: 23px;
+    margin-left: 20%;
+    margin-right:20%;
+  }
+  .modal_header{
+    margin-left: 20%;
+    margin-right:20%;
   }
   
   .receivers_div_height {
     height: 50px;
     margin-top: 23px;
+    margin-left: 20%;
+    margin-right:20%;
   }
   .order_status_div_height{
     display: flex;
@@ -707,11 +715,13 @@
     background-color: #fff;
     margin: auto;
     padding: 20px;
-    padding-left: 50px;
     border: 1px solid #888;
     overflow: hidden;
     width: 50%;
+    margin-left: 20%;
+    margin-right: 20%;
   }
+
   .modal-content_map {
     display: flex;
     flex-direction: column;
