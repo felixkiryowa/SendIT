@@ -6,6 +6,7 @@ import datetime
 from flask import jsonify, request, Response , json
 from flask.views import MethodView
 from api.model.orders import Orders
+from api.token.token_required import token_required
 from api.validators.validate import check_empty_list, check_if_there_no_orders, validate_posted_data, check_if_posted_order_status_is_string, check_if_posted_order_status_is_not_empty_string
 
 
@@ -38,10 +39,13 @@ class OrdersApi(MethodView):
             return check_empty_list(specific_order, order_id)
         raise ValueError('The order Id must be an int')
    
-    def post(self):
+    @token_required
+    def post(self, current_user):
         """funtion to place a new order"""
         new_parcel_order = request.get_json()
-        return validate_posted_data(new_parcel_order, self.orders)
+        
+        user_id = current_user.__dict__['user_id']
+        return validate_posted_data(new_parcel_order, self.orders, user_id)
 
     def put(self, parcel_id):
         """function to update the order status"""
