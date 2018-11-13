@@ -6,7 +6,7 @@
     <link href="css/sendit.css" rel="stylesheet">
   </head>
 
-  <body>
+  <body class="users_page_body">
      <nav  id="site_navbar">
         <ul class="container">
             <li><a class="site_heading">Send-IT</a></li>
@@ -72,9 +72,7 @@
      <br>
      
     <!-- make order form -->
-    <div class="delivery_order" id="delivery_order">
-        <fieldset>
-                <legend>Order:</legend>
+    <div class="delivery_order create_order_div" id="delivery_order">
                 <header class="header">Create a parcel delivery order</header>
                 <article class="main">
                     <div>
@@ -95,25 +93,16 @@
                         <p>Receivers Contact</p>
                         <input type="text" name="" placeholder="Enter Receiver's Contact" required>
                         <p>Weight</p>
-                        <input type="text" name="" placeholder="Enter Parcel Weight" required>
-                        <br>
-                        <br>
-                        <button class="save_order_submit_button" type="submit">Make Order</button>
+                        <input type="text" name="" placeholder="Enter Parcel Weight" required> 
                     </div>
+                    <button class="save_order_submit_button" type="submit">Make Order</button>
                           
                 </article>
-               
-                <aside class="aside aside-1"></aside>
-                <aside class="aside aside-2"></aside>
-                
-        </fieldset>
         <br>
         <br>
-        <br>
-
-        <br>
-
+       
       </div>
+    
     <!-- make order  form -->
     <!-- order details -->
     <div class="order_details" id="order_details">
@@ -146,26 +135,24 @@
                         <td>Iphone X</td>
                         <td>Delivered</td>		
                         <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
-                        <td><button  onclick="CancelOrder()">X</button></td>
+                        <td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button></td>
                     </tr>
                     <tr>
                         <td>Iphone X</td>
                         <td>Delivered</td>		
                         <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
-                        <td><button  onclick="CancelOrder()">X</button></td>
+                        <td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button></td>
                     </tr>
                     <tr>
                         <td>Iphone X</td>
                         <td>Delivered</td>		
                         <td><button class="order_details_button" onclick="MakeOrder1()">Order Details</button></td>
-                        <td><button  onclick="CancelOrder()">X</button></td>
+                        <td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button></td>
                     </tr>
                     
                 </table>
                 <!-- customer orders -->
         </article>
-        <aside class="aside aside-1"></aside>
-        <aside class="aside aside-2"></aside>
     </div>
     <!-- order details -->
     <!-- order history -->

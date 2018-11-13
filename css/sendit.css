@@ -1,4 +1,22 @@
- /* notifications*/
+ /* signup form*/
+ .signup_div {
+  display: block;
+  width: 40%;
+  margin: auto;
+  float: none;
+  padding-top: 20px;
+  height: auto;
+ }
+ 
+ .create_order_div {
+  display: block;
+  width: 40%;
+  margin: auto;
+  float: none;
+  padding-top: 20px;
+  height: auto;
+ }
+ /* signup form */
  /* notifications */
  /* Dropdown Button */
  .dropbtn {
@@ -307,7 +325,7 @@
     border: none;
     outline: none;
     height: 40px;
-    width: 40%;
+    width: 80%;
     background: #630c1b;
     color: #fff;
     font-size: 18px;
@@ -325,7 +343,7 @@
     border: none;
     outline: none;
     height: 40px;
-    width: 60%;
+    width: 80%;
     background: #630c1b;
     color: #fff;
     font-size: 18px;
@@ -802,6 +820,10 @@
     font-weight: bold;
     color: #444;
   }
+
+  .users_page_body {
+    overflow: hidden;
+  }
   /* order history */
   
   #invoice-POS{
@@ -810,8 +832,7 @@
     margin: 0 auto;
     width: 700px;
     background-color:#fff;
-  
-  
+    margin-top: 15px;
   }
     
   
