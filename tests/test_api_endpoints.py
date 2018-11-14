@@ -22,7 +22,7 @@ class SendAPITests(unittest.TestCase):
                 "receivers_contact": "070786543",
                 "receivers_names": "mariat candance",
                 "senders_contact": "0700978789",
-                "senders_names": "Namyalo Agnes"
+                "senders_names": "Namyalo Agnes",
             }
 
         self.new_user = {
@@ -43,10 +43,10 @@ class SendAPITests(unittest.TestCase):
              data=json.dumps(self.new_user))
 
         user_login_result = self.client().post('/api/v1/users/login',content_type='application/json',
-         data=json.dumps(
-             self.login_credentials_user
-             )
+         data=json.dumps(dict(username=self.login_credentials_user['username'], password=self.login_credentials_user['password']))
+             
         )
+        
         self.result = json.loads(user_login_result.data)
         self.user_generated_token = self.result['token_generated']
         self.user_auth_header = {
@@ -88,9 +88,9 @@ class SendAPITests(unittest.TestCase):
         """
         result = self.client().put('/api/v1/parcels/1/cancel', content_type='application/json',
                             data=json.dumps(
-                                {"order_status":"Delivered"}
+                                {"order_status":"delivered"}
                                 ),headers=self.user_auth_header
-                )
+                                )
         self.assertEqual(result.status_code, 200)
         #fetch updated order to verify whether the order_status has changed to Delivered
         check_updated_order = self.client().get('/api/v1/parcels/1')

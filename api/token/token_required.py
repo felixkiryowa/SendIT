@@ -18,7 +18,7 @@ def token_required(f):
         if not token:
             return jsonify({'message':'Token is missing!'}),401
         try:
-            data = jwt.decode(token, secret_key )
+            data = jwt.decode(token, secret_key,  algorithm='HS256')
             user_username = data['username']
             logging.info(user_username)
             users_list = auth_users.users

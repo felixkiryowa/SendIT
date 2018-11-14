@@ -135,11 +135,12 @@ def validate_posted_user_data(users_list):
 
 def user_auth_logic(user_list, error_message):
         user_password = request.json['password']
-        secret_key = os.getenv('APP_SECRET_KEY')
+        # secret_key = os.getenv('APP_SECRET_KEY')
+        secret_key = 'thisisasceretkey'
         user_username = request.json['username']
         for user in user_list:
             if user_username == user.__dict__['username']:
                 if check_password_hash(user.__dict__['password'], user_password):
-                    token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key)
+                    token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key,  algorithm='HS256')
                     return jsonify({'token_generated':token.decode('UTF-8')}),200
                 return jsonify({"Message":"Wrong Username or Password!!"}),401
