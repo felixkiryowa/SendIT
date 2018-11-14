@@ -57,7 +57,15 @@ class SendAPITests(unittest.TestCase):
         """
         result = self.client().post(
             '/api/v1/parcels', content_type='application/json', headers={"token": self.user_generated_token},
-             data=json.dumps(self.order_data))
+             data=json.dumps(dict({"order_name": "phones",
+                "order_status":self.order_data["order_status"],
+                "parcel_destination_address":self.order_data["parcel_destination_address"],
+                "parcel_pickup_address":self.order_data["parcel_pickup_address"],
+                "parcel_weight":self.order_data["parcel_weight"],
+                "receivers_contact": self.order_data["receivers_contact"],
+                "receivers_names": self.order_data["receivers_names"],
+                "senders_contact": self.order_data["senders_contact"],
+                "senders_names": self.order_data["senders_names"]})))
         self.assertEqual(result.status_code, 201)
         # Json data
         order_data = json.loads(result.data)

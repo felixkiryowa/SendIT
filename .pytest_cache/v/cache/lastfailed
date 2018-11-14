@@ -3,6 +3,7 @@
   "env/Lib/site-packages/more_itertools/tests/test_more.py": true,
   "env/Lib/site-packages/more_itertools/tests/test_recipes.py": true,
   "env/Lib/site-packages/nose2/tests/unit/test_testclass_loader.py::TestClassLoader::()": true,
+  "tests/test_api_endpoints.py::SendAPITests": true,
   "tests/test_api_endpoints.py::SendAPITests::test_arg_passed_get_single_user_orders_is_a_aboolean": true,
   "tests/test_api_endpoints.py::SendAPITests::test_arg_passed_get_single_user_orders_is_an_aboolean": true,
   "tests/test_api_endpoints.py::SendAPITests::test_if_parameter_passed_to_check_if_there_no_order_function_is_a_list": true,
