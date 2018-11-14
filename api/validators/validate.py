@@ -2,7 +2,7 @@ import datetime
 import os
 import jwt
 import re
-from flask import jsonify, request, json, Response
+from flask import jsonify, request, json, Response, make_response
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
 from api.model.users import AuthUser

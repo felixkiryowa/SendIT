@@ -46,12 +46,9 @@ class SendAPITests(unittest.TestCase):
          data=json.dumps(dict(username=self.login_credentials_user['username'], password=self.login_credentials_user['password']))
              
         )
-        
         self.result = json.loads(user_login_result.data)
         self.user_generated_token = self.result['token_generated']
-        self.user_auth_header = {
-        'token': self.user_generated_token
-        }
+        
         
     # Tests for addng a new order 
     def test_if_data_posted_is_in_form_of_json(self):
@@ -59,8 +56,8 @@ class SendAPITests(unittest.TestCase):
         Method to check if the data is in json form.
         """
         result = self.client().post(
-            '/api/v1/parcels', content_type='application/json',
-             data=json.dumps(self.order_data), headers=self.user_auth_header)
+            '/api/v1/parcels', content_type='application/json', headers={"token": self.user_generated_token},
+             data=json.dumps(self.order_data))
         self.assertEqual(result.status_code, 201)
         # Json data
         order_data = json.loads(result.data)
@@ -86,11 +83,9 @@ class SendAPITests(unittest.TestCase):
         """
         Method to update an order status.
         """
-        result = self.client().put('/api/v1/parcels/1/cancel', content_type='application/json',
-                            data=json.dumps(
-                                {"order_status":"delivered"}
-                                ),headers=self.user_auth_header
-                                )
+        result = self.client().put('/api/v1/parcels/1/cancel', content_type='application/json', headers={"token": self.user_generated_token},
+                            data=json.dumps({"order_status":"delivered"})
+                     )
         self.assertEqual(result.status_code, 200)
         #fetch updated order to verify whether the order_status has changed to Delivered
         check_updated_order = self.client().get('/api/v1/parcels/1')
