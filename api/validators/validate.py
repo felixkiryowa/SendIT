@@ -2,12 +2,10 @@ import datetime
 import os
 import jwt
 import re
-from functools import wraps
 from flask import jsonify, request, json, Response
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
-from api.model.users import AuthUsers
-from validate_email import validate_email
+from api.model.users import AuthUser
 # is_valid = validate_email('example@example.com')
 #   def search_special_characters(self):
 #         regex = re.compile(r'[@_!#$%^&*()<>?/\|}{~:]')  
@@ -125,7 +123,7 @@ def validate_posted_user_data(users_list):
     """
     function to validate create new user object
     """
-    user  = AuthUsers(
+    user  = AuthUser(
         len(users_list) + 1, request.json['first_name'], request.json['last_name'],
         request.json['email'], request.json['contact'], request.json['username'], 
         generate_password_hash(request.json['password'], method='sha256')

@@ -1,6 +1,6 @@
 """This is users class defining the users class model constructor """
 
-class AuthUsers:
+class AuthUser:
     """ """
     def __init__(self, *args):
         """This is AuthUsers class constructor"""

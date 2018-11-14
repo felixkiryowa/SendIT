@@ -23,22 +23,44 @@ class SendAPITests(unittest.TestCase):
                 "receivers_names": "mariat candance",
                 "senders_contact": "0700978789",
                 "senders_names": "Namyalo Agnes",
-                "user_id": 4
             }
-    
-    # Test get all orders
-    def test_get_all_orders(self):
-        result = self.client().get('/api/v1/parcels')
-        self.assertEqual(result.status_code, 200)
+
+        self.new_user = {
+                "first_name":"francis", 
+                "last_name":"kiryowa", 
+                "email":"francis@gmail.com",
+                "contact":"0700162509", 
+                "username":"kiryowa22",
+                "password":"email@123"
+        }
+
+        self.login_credentials_user = {
+            "username":"kiryowa22",
+            "password":"email@123"
+        }
+        self.client().post(
+            '/api/v1/users/signup',content_type='application/json',
+             data=json.dumps(self.new_user))
+
+        user_login_result = self.client().post('/api/v1/users/login',content_type='application/json',
+         data=json.dumps(
+             self.login_credentials_user
+             )
+        )
+        self.result = json.loads(user_login_result.data)
+        self.user_generated_token = self.result['token_generated']
+        self.user_auth_header = {
+        'token': self.user_generated_token
+        }
         
-    # Tests for addng a new order #
+    # Tests for addng a new order 
     def test_if_data_posted_is_in_form_of_json(self):
         """
         Method to check if the data is in json form.
         """
         result = self.client().post(
             '/api/v1/parcels', content_type='application/json',
-             data=json.dumps(self.order_data))
+             data=json.dumps(self.order_data), headers=self.user_auth_header)
         self.assertEqual(result.status_code, 201)
         # Json data
         order_data = json.loads(result.data)
@@ -52,7 +74,12 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(order_data["receivers_names"], "mariat candance")
         self.assertEqual(order_data["senders_contact"], "0700978789")
         self.assertEqual(order_data["senders_names"], "Namyalo Agnes")
-        self.assertEqual(order_data["user_id"], 4)
+    
+    # Test get all orders
+    def test_get_all_orders(self):
+        result = self.client().get('/api/v1/parcels')
+        self.assertEqual(result.status_code, 200)
+       
 
     # Tests for updating order status 
     def test_update_specific_order(self):
@@ -62,14 +89,15 @@ class SendAPITests(unittest.TestCase):
         result = self.client().put('/api/v1/parcels/1/cancel', content_type='application/json',
                             data=json.dumps(
                                 {"order_status":"Delivered"}
-                                ))
+                                ),headers=self.user_auth_header
+                )
         self.assertEqual(result.status_code, 200)
         #fetch updated order to verify whether the order_status has changed to Delivered
         check_updated_order = self.client().get('/api/v1/parcels/1')
         self.assertEqual(check_updated_order.status_code, 200)
         json_data = json.loads(check_updated_order.data)
         #order_status value should now be Accepted
-        assert json_data['order']['order_status'] == "Delivered"
+        self.assertEqual(json_data['order']['order_status'], "delivered")
 
     def test_get_specific_order(self):
         result = self.client().get('/api/v1/parcels/1')
@@ -92,10 +120,6 @@ class SendAPITests(unittest.TestCase):
     
     def test_select_specific_order(self):
         self.assertTrue(self.order.select_specific_order("order_id", 1))
-
-    # def test_if_select_specific_order_returns_valid_response(self):
-    #     # self.assertEqual(self.order.select_specific_order('order_id', 1),True)
-    #     self.assertDictEqual(self.order.select_specific_order('order_id', 1),self.order)
 
     def test_get_orders_of_specific_user(self):
         result = self.client().get('/api/v1/users/1/parcels')
