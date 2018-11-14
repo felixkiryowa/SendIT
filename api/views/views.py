@@ -26,6 +26,7 @@ class GetOrderApiUrls:
              view_func=order_view, methods=['GET',]
         )
         app.add_url_rule('/api/v1/parcels', view_func=order_view, methods=['POST',])
+        
         app.add_url_rule(
             '/api/v1/users/<int:user_id>/parcels',
              view_func=user_specific_orders_view, methods=['GET',]

@@ -12,7 +12,8 @@ def token_required(f):
     @wraps(f)
     def decorated(self, *args, **kwargs):
         token = None
-        secret_key = os.getenv('APP_SECRET_KEY')
+        # secret_key = os.getenv('APP_SECRET_KEY')
+        secret_key = 'thisisasceretkey'
         if 'token' in request.headers:
             token = request.headers['token']
         if not token:
