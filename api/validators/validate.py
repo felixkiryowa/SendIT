@@ -2,6 +2,7 @@ import datetime
 import os
 import jwt
 import re
+from api import secret_key
 from flask import jsonify, request, json, Response, make_response
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
@@ -135,8 +136,7 @@ def validate_posted_user_data(users_list):
 
 def user_auth_logic(user_list, error_message):
         user_password = request.json['password']
-        # secret_key = os.getenv('APP_SECRET_KEY')
-        secret_key = 'thisisasceretkey'
+        
         user_username = request.json['username']
         for user in user_list:
             if user_username == user.__dict__['username']:

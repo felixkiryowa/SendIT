@@ -4,6 +4,7 @@ import logging
 from flask import request
 from flask import jsonify
 from functools import wraps 
+from api import secret_key
 from api.endpoints.users import AuthUsers
 
 auth_users = AuthUsers()
@@ -12,8 +13,6 @@ def token_required(f):
     @wraps(f)
     def decorated(self, *args, **kwargs):
         token = None
-        # secret_key = os.getenv('APP_SECRET_KEY')
-        secret_key = 'thisisasceretkey'
         if 'token' in request.headers:
             token = request.headers['token']
         if not token:

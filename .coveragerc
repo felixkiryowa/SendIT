@@ -11,4 +11,8 @@ omit =
     */api/config.py                                
     */api/validators/*
     */api/views/views.py
-    *.pyc   
+    *.pyc  
+    */run.py 
+    */api/token/__init__.py
+    */api/endpoints/orders.py
+    */api/token/token_required.py
