@@ -22,7 +22,7 @@ class SendAPITests(unittest.TestCase):
                 "receivers_contact": "070786543",
                 "receivers_names": "mariat candance",
                 "senders_contact": "0700978789",
-                "senders_names": "Namyalo Agnes",
+                "senders_names": "Namyalo Agnes"
             }
 
         self.new_user = {
