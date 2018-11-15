@@ -1,13 +1,7 @@
 .env
-.vscode/settings.json
-.pytest_cache/v/cache/nodeids
+.vscode/
+.pytest_cache/
 *.pyc 
 env/
-api/__pycache__
-api/endpoints/__pycache__/
-api/model/__pycache__/
-api/token/__pycache__/
-api/validators/__pycache__/
-app/views/__pycache__/
-tests/__pycache__/
+
 
