@@ -28,16 +28,23 @@ class OrdersApi(MethodView):
     orders = [order1, order2, order3]
 
     
-
-    def get(self, order_id):
+    @token_required
+    def get(self, current_user, parcel_order_id):
         """function to get a single order or to get all the orders"""
-        if order_id is None:
-            # return a list of orders
-            return check_if_there_no_orders(self.orders)
-        if not isinstance(order_id,(float,bool,str,list,tuple)):
+        user_type = current_user.__dict__['user_type']
+        #check if user is admin
+        if user_type == 'admin':
+            if parcel_order_id is None:
+                # return a list of orders
+                return check_if_there_no_orders(self.orders)
+            try:
+                order_id = int(parcel_order_id)
+            except:
+                return jsonify({'message':'Invalid Parcel Id'}), 400
             specific_order = Order_object.select_specific_order('order_id', order_id)
-            return check_empty_list(specific_order, order_id)
-        raise ValueError('The order Id must be an int')
+            return check_empty_list(specific_order, order_id) 
+        return jsonify({'message':'Cannot Perform That Function!'}),404
+        
    
     @token_required
     def post(self, current_user):
@@ -48,19 +55,27 @@ class OrdersApi(MethodView):
         return validate_posted_data(new_parcel_order, self.orders, user_id)
 
     @token_required
-    def put(self, current_user, parcel_id):
+    def put(self, current_user, order_parcel_id):
+        
         """function to update the order status"""
+        try:
+            parcel_id = int(order_parcel_id)
+           
+        except:
+            return jsonify({'message':'Invalid Parcel Id'}), 400
+
+        user_type = current_user.__dict__['user_type']
         order = Order_object.select_specific_order('order_id', parcel_id)
         get_order_status = Order_object.check_order_status_of_an_order(
             'order_status', 'delivered', 'order_id', parcel_id
         )
-        
-        if not get_order_status:
-            if  order:
-                return Order_object.update_specific_order_status_logic(order, parcel_id)
-            return jsonify({'message':'No Order Found with Specified Route Parameter'}),404
-        return jsonify({'message':'The Order has already been delivered so it cant be cancelled'})   
-        
+        if  user_type == "user":
+            if not get_order_status:
+                if  order:
+                    return Order_object.update_specific_order_status_logic(order, parcel_id)
+                return jsonify({'message':'No Order Found with Specified Route Parameter'}),404
+            return jsonify({'message':'The Order has already been delivered so it cant be cancelled'}) 
+        return jsonify({'message':'Cannot Perform That Function!'}),401
         
   
     def select_specific_order(self, access_key , specific_id):

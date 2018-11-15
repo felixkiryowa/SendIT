@@ -18,11 +18,11 @@ class GetOrderApiUrls:
         user_specific_orders_view = UserSpecificOrders.as_view('user_orders')
         auth_users_view = AuthUsers.as_view('user_auth')
         app.add_url_rule(
-            '/api/v1/parcels', defaults={'order_id': None},
+            '/api/v1/parcels', defaults={'parcel_order_id': None},
             view_func=order_view, methods=['GET',]
         )
         app.add_url_rule(
-            '/api/v1/parcels/<int:order_id>',
+            '/api/v1/parcels/<parcel_order_id>',
              view_func=order_view, methods=['GET',]
         )
         app.add_url_rule('/api/v1/parcels', view_func=order_view, methods=['POST',])
@@ -32,7 +32,7 @@ class GetOrderApiUrls:
              view_func=user_specific_orders_view, methods=['GET',]
         )
         app.add_url_rule(
-            '/api/v1/parcels/<int:parcel_id>/cancel', view_func=order_view, 
+            '/api/v1/parcels/<order_parcel_id>/cancel', view_func=order_view, 
             methods=['PUT',]
         )
         app.add_url_rule(

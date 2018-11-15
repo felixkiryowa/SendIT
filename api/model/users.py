@@ -11,6 +11,7 @@ class AuthUser:
         self.contact = args[4]
         self.username = args[5]
         self.password = args[6]
+        self.user_type = args[7]
 
 
 

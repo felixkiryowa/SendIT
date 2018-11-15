@@ -10,6 +10,7 @@ class SendAPITests(unittest.TestCase):
     
     def setUp(self):
         self.app = app
+        self.current_user = 'admin'
         self.client = app.test_client
         self.order = OrdersApi()
         self.user_orders = UserSpecificOrders()
@@ -31,7 +32,23 @@ class SendAPITests(unittest.TestCase):
                 "email":"francis@gmail.com",
                 "contact":"0700162509", 
                 "username":"kiryowa22",
-                "password":"email@123"
+                "password":"email@123",
+                "user_type":"user"
+        }
+
+        self.admin_user = {
+            "first_name":"noah", 
+            "last_name":"kal", 
+            "email":"noah@gmail.com",
+            "contact":"0700167865", 
+            "username":"noah22",
+            "password":"email@123",
+            "user_type":"admin"
+        }
+
+        self.login_credentials_admin = {
+            "username":"noah22",
+            "password":"email@123"
         }
 
         self.login_credentials_user = {
@@ -40,14 +57,50 @@ class SendAPITests(unittest.TestCase):
         }
         self.client().post(
             '/api/v1/users/signup',content_type='application/json',
-             data=json.dumps(self.new_user))
+             data=json.dumps(
+                  dict(
+                     first_name=self.new_user['first_name'], last_name=self.new_user['last_name'],
+                     email=self.new_user['email'], contact=self.new_user['contact'], 
+                     username=self.new_user['username'], password=self.new_user['password'],
+                     user_type=self.new_user['user_type'] 
+                     )
+                 )
+             )
+
+        self.client().post(
+            '/api/v1/users/signup',content_type='application/json',
+             data=json.dumps(
+                 dict(
+                     first_name=self.admin_user['first_name'], last_name=self.admin_user['last_name'],
+                     email=self.admin_user['email'], contact=self.admin_user['contact'], 
+                     username=self.admin_user['username'], password=self.admin_user['password'],
+                     user_type=self.admin_user['user_type'] 
+                     )
+                 )
+        ) 
 
         user_login_result = self.client().post('/api/v1/users/login',content_type='application/json',
-         data=json.dumps(dict(username=self.login_credentials_user['username'], password=self.login_credentials_user['password']))
+         data=json.dumps(
+             dict(
+                 username=self.login_credentials_user['username'], 
+                 password=self.login_credentials_user['password'])
+            )
+             
+        )
+
+        admin_login_result = self.client().post('/api/v1/users/login',content_type='application/json',
+         data=json.dumps(
+             dict(
+                 username=self.login_credentials_admin['username'], 
+                 password=self.login_credentials_admin['password']
+                 )
+            )
              
         )
         self.result = json.loads(user_login_result.data)
         self.user_generated_token = self.result['token_generated']
+        self.result2 = json.loads(admin_login_result.data)
+        self.admin_generated_token = self.result2['token_generated']
         
         
     # Tests for addng a new order 
@@ -82,7 +135,7 @@ class SendAPITests(unittest.TestCase):
     
     # Test get all orders
     def test_get_all_orders(self):
-        result = self.client().get('/api/v1/parcels')
+        result = self.client().get('/api/v1/parcels', headers={"token": self.admin_generated_token})
         self.assertEqual(result.status_code, 200)
        
 
@@ -96,46 +149,69 @@ class SendAPITests(unittest.TestCase):
                      )
         self.assertEqual(result.status_code, 200)
         #fetch updated order to verify whether the order_status has changed to Delivered
-        check_updated_order = self.client().get('/api/v1/parcels/1')
+        check_updated_order = self.client().get('/api/v1/parcels/1', headers={"token": self.admin_generated_token})
         self.assertEqual(check_updated_order.status_code, 200)
         json_data = json.loads(check_updated_order.data)
         #order_status value should now be Accepted
         self.assertEqual(json_data['order']['order_status'], "delivered")
 
     def test_get_specific_order(self):
-        result = self.client().get('/api/v1/parcels/1')
+        result = self.client().get('/api/v1/parcels/1', headers={"token": self.admin_generated_token})
+        self.assertEqual(result.status_code, 200)
+
+    def test_get_orders_of_specific_user(self):
+        result = self.client().get('/api/v1/users/1/parcels', headers={"token": self.user_generated_token})
         self.assertEqual(result.status_code, 200)
 
     def test_if_value_order_id_is_not_string(self):
-        with self.assertRaises(ValueError):self.order.get("one")
+        result = self.client().get('/api/v1/parcels/'+'one', headers={"token": self.admin_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
 
-    def test_if_value_order_id_is_not_an_empty_string(self):
-        with self.assertRaises(ValueError):self.order.get("")
-
+    def test_if_value_order_id_is_a_boolean(self):
+        result = self.client().get('/api/v1/parcels/True', headers={"token": self.admin_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+        
     def test_if_value_order_id_is_not_a_complex_number(self):
-        with self.assertRaises(ValueError):self.order.get(2j+1)
-            
-    def test_if_value_order_id_is_not_a_float_point_number(self):
-        with self.assertRaises(ValueError):self.order.get(3.90)
-
-    def test_if_args_passed_to_select_specific_order_are_not_numbers(self):
-        with self.assertRaises(ValueError):self.order.select_specific_order(2,2)
+        result = self.client().get('/api/v1/parcels/3.69', headers={"token": self.admin_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
     
-    def test_select_specific_order(self):
-        self.assertTrue(self.order.select_specific_order("order_id", 1))
+    def test_if_order_id_is_a_complex_number(self):
+        result = self.client().get('/api/v1/parcels/3+j', headers={"token": self.admin_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+    
+    # tests on user_id to cancel an order
+    def test_if_value_user_id_is_not_string(self):
+        result = self.client().put('/api/v1/parcels/one/cancel', headers={"token": self.user_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
 
-    def test_get_orders_of_specific_user(self):
-        result = self.client().get('/api/v1/users/1/parcels')
-        self.assertEqual(result.status_code, 200)
-
-    def test_arg_passed_get_single_user_orders_is_not_a_string(self):
-        with self.assertRaises(ValueError):self.user_orders.get("two")
-
-    def test_arg_passed_get_single_user_orders_is_an_empty_string(self):
-        with self.assertRaises(ValueError):self.user_orders.get("")
-
-    def test_arg_passed_get_single_user_orders_is_a_complex_number(self):
-        with self.assertRaises(ValueError):self.user_orders.get(2j)
+    def test_if_value_user_id_is_a_boolean(self):
+        result = self.client().put('/api/v1/parcels/True/cancel', headers={"token": self.user_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+        
+    def test_if_value_user_id_is_not_a_complex_number(self):
+        result = self.client().put('/api/v1/parcels/3.69/cancel', headers={"token": self.user_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+    
+    def test_if_user_id_is_a_complex_number(self):
+        result = self.client().put('/api/v1/parcels/3+j/cancel', headers={"token": self.user_generated_token})
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+    # tests on user_id to cancel an order
 
 
 if __name__ == '__main__':

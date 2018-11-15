@@ -127,7 +127,7 @@ def validate_posted_user_data(users_list):
     user  = AuthUser(
         len(users_list) + 1, request.json['first_name'], request.json['last_name'],
         request.json['email'], request.json['contact'], request.json['username'], 
-        generate_password_hash(request.json['password'], method='sha256')
+        generate_password_hash(request.json['password'], method='sha256'), request.json['user_type']
     )
     users_list.append(user)
     # return jsonify({'message':'successfully created an account'}),201
@@ -143,4 +143,5 @@ def user_auth_logic(user_list, error_message):
                 if check_password_hash(user.__dict__['password'], user_password):
                     token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key,  algorithm='HS256')
                     return jsonify({'token_generated':token.decode('UTF-8')}),200
-                return jsonify({"Message":"Wrong Username or Password!!"}),401
+                return jsonify({"message":"Wrong Username or Password!!"}),401
+            # return jsonify({"message":"Wrong Username or Password!!"}),401
