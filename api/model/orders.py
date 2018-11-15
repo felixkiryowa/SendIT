@@ -1,7 +1,9 @@
 """This is orders class defining the orders class model constructor """
 
 class Orders:
-    """ """
+    """
+    Class to define the attributes of a parcel order
+    """
     def __init__(self, *args):
         """This is orders class constructor"""
         self.user_id = args[0]
@@ -17,8 +19,3 @@ class Orders:
         self.price = args[10]
         self.date = args[11]
         self.order_status = args[12]
-
-
-
-
-    
