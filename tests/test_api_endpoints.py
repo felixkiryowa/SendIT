@@ -171,7 +171,7 @@ class SendAPITests(unittest.TestCase):
         check_updated_order = self.client().get('/api/v1/parcels/1', headers={"token": self.admin_generated_token})
         self.assertEqual(check_updated_order.status_code, 200)
         json_data = json.loads(check_updated_order.data)
-        #order_status value should now be Accepted
+        #order_status value should now be delivered
         self.assertEqual(json_data['order']['order_status'], "delivered")
 
     def test_get_specific_order(self):
