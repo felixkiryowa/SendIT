@@ -1,6 +1,7 @@
 .env
 .vscode
 .pytest_cache
+.gitignore
 __pycache__
 env
 api/__pycache__
