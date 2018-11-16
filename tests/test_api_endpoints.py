@@ -261,9 +261,9 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(result.status_code, 400)
         self.assertEqual(result_data['message'], 'Invalid Parcel Id')
 
-    def test_if_value_user_id_is_a_boolean(self):
+    def test_if_value_parcel_id_is_a_boolean(self):
         """
-        function to test whether passed user_id is a boolean
+        function to test whether passed parcel_id is a boolean
         """
         result = self.client().put(
             '/api/v1/parcels/True/cancel',
@@ -274,7 +274,7 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(result_data['message'], 'Invalid Parcel Id')
     def test_if_value_user_id_is_not_a_float_number(self):
         """
-        function to test whether passed user_id is a float number
+        function to test whether passed parcel_id is a float number
         """
         result = self.client().put(
             '/api/v1/parcels/3.69/cancel',
@@ -283,9 +283,9 @@ class SendAPITests(unittest.TestCase):
         result_data = json.loads(result.data)
         self.assertEqual(result.status_code, 400)
         self.assertEqual(result_data['message'], 'Invalid Parcel Id')
-    def test_if_user_id_is_a_complex_number(self):
+    def test_if_parcel_id_is_a_complex_number(self):
         """
-        function to test whether passed order_id is a complex number
+        function to test whether passed parcel_id is a complex number
         """
         result = self.client().put(
             '/api/v1/parcels/3+j/cancel',
@@ -295,6 +295,55 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(result.status_code, 400)
         self.assertEqual(result_data['message'], 'Invalid Parcel Id')
     # tests on user_id to cancel an order
+    #tests on user user_id to get orders of a specific user
+    def test_if_value_user_id_is_not_string(self):
+        """
+        function to test whether passed user_id is not a string
+        """
+        result = self.client().get(
+            '/api/v1/users/one/parcels',
+            headers={"token": self.user_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid User Id')
+
+    def test_if_value_user_id_is_a_boolean(self):
+        """
+        function to test whether passed user_id is a boolean
+        """
+        result = self.client().get(
+            '/api/v1/users/True/parcels',
+            headers={"token": self.user_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid User Id')
+    def test_if_value_user_id_is_not_a_float_number(self):
+        """
+        function to test whether passed user_id is a float number
+        """
+        result = self.client().get(
+            '/api/v1/users/3.69/parcels',
+            headers={"token": self.user_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid User Id')
+    def test_if_user_id_is_a_complex_number(self):
+        """
+        function to test whether passed order_id is a complex number
+        """
+        result = self.client().get(
+            '/api/v1/users/3+j/parcels',
+            headers={"token": self.user_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid User Id')
+
+    #tests on user user_id to get orders of a specific user
+
 
 if __name__ == '__main__':
     unittest.main()

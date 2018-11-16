@@ -3,18 +3,11 @@ import os
 import jwt
 import re
 from api import secret_key
+from validate_email import validate_email
 from flask import jsonify, request, json, Response, make_response
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
 from api.model.users import AuthUser
-# is_valid = validate_email('example@example.com')
-#   def search_special_characters(self):
-#         regex = re.compile(r'[@_!#$%^&*()<>?/\|}{~:]')  
-#         return (regex.search(self.username)) or (regex.search(self.name))
-
-#  def check_empty_space(self):
-#        if re.search(r'[\s]', self.name) or re.search(r'[\s]', self.username) or re.search(r'[\s]', self.password)  or re.search(r'[\s]', self.isAdmin):
-#           return True
 
 
 def check_empty_list(check_list, order_id):
@@ -30,9 +23,9 @@ def  check_if_no_user_orders(order_list, user_id):
     function to check whether there are orders for a specific user
     """
     if not order_list:
-        message = 'No Order Found with specified Id  ' + str(user_id)
+        message = 'No User Orders Found with specified User Id  ' + str(user_id)
         return jsonify({'message':message}),200
-    return jsonify({'order':order_list[0]}),200
+    return jsonify({'specific_user_orders':[order for order in order_list]}),200
 
 def check_if_there_no_orders(all_orders_list):
     """
@@ -70,6 +63,12 @@ def check_if_posted_user_data_are_not_empty_strings():
     and request.json['email'] != '' and request.json['contact'] != ''
     and request.json['username'] != '' and  
     request.json['password'] != '' and request.json['user_type'] != '' )
+
+def validating_email(user_email):
+    """
+    function to validate email of the user
+    """
+    return (validate_email(user_email))
 
 def check_if_posted_user_data_are_strings():
     """
@@ -152,15 +151,18 @@ def validate_posted_user_data(users_list, register_object):
     """
     function to validate create new user object
     """
-    if (check_if_posted_user_data_are_not_empty_strings() and check_if_posted_user_data_are_strings() and check_user_object_keys(register_object)):
-        user  = AuthUser(
-            len(users_list) + 1, request.json['first_name'], request.json['last_name'],
-            request.json['email'], request.json['contact'], request.json['username'], 
-            generate_password_hash(request.json['password'], method='sha256'), request.json['user_type']
-        )
-        users_list.append(user)
-        # return jsonify({'message':'successfully created an account'}),201
-        return jsonify({'message': [user.__dict__ for user in users_list]}),201
+    if (check_if_posted_user_data_are_not_empty_strings() and check_if_posted_user_data_are_strings() and 
+    check_user_object_keys(register_object)):
+        if (validating_email(request.json['email'])):
+            user  = AuthUser(
+                len(users_list) + 1, request.json['first_name'], request.json['last_name'],
+                request.json['email'], request.json['contact'], request.json['username'], 
+                generate_password_hash(request.json['password'], method='sha256'), request.json['user_type']
+            )
+            users_list.append(user)
+            # return jsonify({'message':'successfully created an account'}),201
+            return jsonify({'message': [user.__dict__ for user in users_list]}),201
+        return jsonify({'message':'Invalid email'}),400
     user_posted_object = "{'first_name': 'julius','last_name': 'kasagala','email': 'jk@gmail.com',\
     'contact': '070786543','username': 'kas1234','password': 'kas@123','user_type': 'user'}"
     bad_order_object = {
@@ -184,4 +186,4 @@ def user_auth_logic(user_list, error_message):
                     token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key,  algorithm='HS256')
                     return jsonify({'token_generated':token.decode('UTF-8')}),200
                 return jsonify({"message":"Wrong Username or Password!!"}),401
-            # return jsonify({"message":"Wrong Username or Password!!"}),401
+        return jsonify({"message":"Wrong Username or Password!!"}),401

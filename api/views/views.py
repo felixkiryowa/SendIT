@@ -27,13 +27,14 @@ class GetOrderApiUrls:
         )
         app.add_url_rule('/api/v1/parcels', view_func=order_view, methods=['POST',])
         app.add_url_rule(
-            '/api/v1/users/<int:user_id>/parcels',
+            '/api/v1/users/<specific_user_id>/parcels',
             view_func=user_specific_orders_view, methods=['GET',]
         )
         app.add_url_rule(
             '/api/v1/parcels/<order_parcel_id>/cancel', view_func=order_view,
             methods=['PUT',]
         )
+       
         app.add_url_rule(
             '/api/v1/users/signup', view_func=auth_users_view,
             methods=['POST',]
@@ -42,3 +43,4 @@ class GetOrderApiUrls:
             '/api/v1/users/login', view_func=auth_users_view,
             methods=['POST',]
         )
+
