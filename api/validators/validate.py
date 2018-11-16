@@ -178,12 +178,15 @@ def validate_posted_user_data(users_list, register_object):
 
 def user_auth_logic(user_list, error_message):
         user_password = request.json['password']
-        
         user_username = request.json['username']
-        for user in user_list:
-            if user_username == user.__dict__['username']:
-                if check_password_hash(user.__dict__['password'], user_password):
-                    token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key,  algorithm='HS256')
-                    return jsonify({'token_generated':token.decode('UTF-8')}),200
-                return jsonify({"message":"Wrong Username or Password!!"}),401
-        return jsonify({"message":"Wrong Username or Password!!"}),401
+        return refactor_auth_logic(user_list, user_password, user_username)
+        
+
+def refactor_auth_logic(user_list, user_password, user_username):
+    for user in user_list:
+        if user_username == user.__dict__['username']:
+            if check_password_hash(user.__dict__['password'], user_password):
+                token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key,  algorithm='HS256')
+                return jsonify({'token_generated':token.decode('UTF-8')}),200
+            return jsonify({"message":"Wrong Username or Password!!"}),401
+    return jsonify({"message":"Wrong Username or Password!!"}),401

@@ -52,15 +52,8 @@ class OrdersApi(MethodView):
         get_order_status = ORDER_OBJECT.check_order_status_of_an_order(
             'order_status', 'delivered', 'order_id', parcel_id
         )
-        if  user_type == "user":
-            if not get_order_status:
-                if  order:
-                    return ORDER_OBJECT.update_specific_order_status_logic(order, parcel_id)
-                return jsonify({'message':'No Order Found with Specified Route Parameter'}), 404
-            return jsonify(
-                {'message':'The Order has already been delivered so it cant be cancelled'}
-            )
-        return jsonify({'message':'Cannot Perform That Function!'}), 401
+        return ORDER_OBJECT.check_user_type_logic(user_type, get_order_status, order,parcel_id)
+        
 
     def select_specific_order(self, access_key, specific_id):
         """function to do logic of selecting a specific order using order_id or user_id"""
@@ -88,11 +81,25 @@ class OrdersApi(MethodView):
         """
         if(check_if_posted_order_status_is_string() and 
             check_if_posted_order_status_is_not_empty_string):
-            for order in self.orders:
-                if order.__dict__["order_id"] == parcel_id:
-                    order.__dict__['order_status'] = request.json['order_status']
-            return jsonify({'orders':[order.__dict__ for order in self.orders]}), 200
+            return ORDER_OBJECT.refactor_update_specific_order_logic(order, parcel_id)
         return jsonify({'message':'The status order can only be a string'})
+
+    def check_user_type_logic(self, user_type, get_order_status, order,parcel_id):
+        if  user_type == "user":
+            if not get_order_status:
+                if  order:
+                    return ORDER_OBJECT.update_specific_order_status_logic(order, parcel_id)
+                return jsonify({'message':'No Order Found with Specified Route Parameter'}), 404
+            return jsonify(
+                {'message':'The Order has already been delivered so it cant be cancelled'}
+            )
+        return jsonify({'message':'Cannot Perform That Function!'}), 401
+
+    def refactor_update_specific_order_logic(self, order, parcel_id ):
+        for order in self.orders:
+            if order.__dict__["order_id"] == parcel_id:
+                order.__dict__['order_status'] = request.json['order_status']
+        return jsonify({'orders':[order.__dict__ for order in self.orders]}), 200
 
 # create an object of the class
 ORDER_OBJECT = OrdersApi()
