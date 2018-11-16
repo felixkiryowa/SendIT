@@ -149,6 +149,12 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(order_data["senders_contact"], "0700978789")
         self.assertEqual(order_data["senders_names"], "Namyalo Agnes")
     
+    def test_receive_user_token(self):
+        """
+        function to check user generated token
+        """
+        self.assertNotEqual(self.user_generated_token,6)
+ 
     # Test get all orders
     def test_get_all_orders(self):
         """

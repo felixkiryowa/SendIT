@@ -52,6 +52,34 @@ def check_order_object_keys(order_object):
     in order_object and 'receivers_names' in order_object and 'receivers_contact' 
     in order_object and 'parcel_weight' in order_object )
 
+def check_user_object_keys(user_object):
+    """
+    function to check for keys in users posted order object
+    """
+    return ('first_name' in user_object
+    and 'last_name' in user_object and 'email' in user_object
+    and 'contact' in user_object and 'username' 
+    in user_object and 'password' in user_object and 'user_type' 
+    in user_object )
+
+def check_if_posted_user_data_are_not_empty_strings():
+    """
+    function to check whether posted object has got no empty strings
+    """
+    return (request.json['first_name'] != '' and request.json['last_name'] != ''
+    and request.json['email'] != '' and request.json['contact'] != ''
+    and request.json['username'] != '' and  
+    request.json['password'] != '' and request.json['user_type'] != '' )
+
+def check_if_posted_user_data_are_strings():
+    """
+    function to check whether posted object string properties strings
+    """
+    return (isinstance(request.json['first_name'], str) and isinstance(request.json['last_name'], str)
+    and isinstance(request.json['email'], str)  and isinstance(request.json['contact'],str) 
+    and isinstance(request.json['username'], str) and isinstance(request.json['password'], str) 
+    and isinstance(request.json['user_type'], str))
+
 def check_if_posted_data_are_not_empty_strings():
     """
     function to check whether posted object has got no empty strings
@@ -120,19 +148,31 @@ def validate_posted_data(posted_order, orders_list, user_id):
         )
     return response
 
-def validate_posted_user_data(users_list):
+def validate_posted_user_data(users_list, register_object):
     """
     function to validate create new user object
     """
-    user  = AuthUser(
-        len(users_list) + 1, request.json['first_name'], request.json['last_name'],
-        request.json['email'], request.json['contact'], request.json['username'], 
-        generate_password_hash(request.json['password'], method='sha256'), request.json['user_type']
-    )
-    users_list.append(user)
-    # return jsonify({'message':'successfully created an account'}),201
-    return jsonify({'message': [user.__dict__ for user in users_list]}),201
-    
+    if (check_if_posted_user_data_are_not_empty_strings() and check_if_posted_user_data_are_strings() and check_user_object_keys(register_object)):
+        user  = AuthUser(
+            len(users_list) + 1, request.json['first_name'], request.json['last_name'],
+            request.json['email'], request.json['contact'], request.json['username'], 
+            generate_password_hash(request.json['password'], method='sha256'), request.json['user_type']
+        )
+        users_list.append(user)
+        # return jsonify({'message':'successfully created an account'}),201
+        return jsonify({'message': [user.__dict__ for user in users_list]}),201
+    user_posted_object = "{'first_name': 'julius','last_name': 'kasagala','email': 'jk@gmail.com',\
+    'contact': '070786543','username': 'kas1234','password': 'kas@123','user_type': 'user'}"
+    bad_order_object = {
+    "error": "Bad Order Object",
+    "help of the correct order object format":user_posted_object
+    }
+    response = Response(
+        json.dumps(bad_order_object),
+        status=400, mimetype="application/json"
+        )
+    return response
+   
 
 def user_auth_logic(user_list, error_message):
         user_password = request.json['password']

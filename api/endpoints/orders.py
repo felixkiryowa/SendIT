@@ -15,19 +15,7 @@ from api.validators.validate import  check_if_posted_order_status_is_not_empty_s
 
 class OrdersApi(MethodView):
     """Class to define all the api end points"""
-    order1 = Orders(
-        1, 1, "pizza", "esther nakiganda", "0700978654", "Lubaga", "Ntinda", "kakembo adam",
-        "079234567", 4, 40000, "22/10/2018", "delivered"
-    )
-    order2 = Orders(
-        1, 2, "pizza", "esther nakiganda", "0700978654", "Lubaga", "Ntinda", "kakembo adam",
-        "079234567", 4, 40000, "22/10/2018", "pending"
-    )
-    order3 = Orders(
-        1, 3, "pizza", "esther nakiganda", "0700978654", "Lubaga", "Ntinda", "kakembo adam",
-        "079234567", 4, 40000, "22/10/2018", "processing"
-    )
-    orders = [order1, order2, order3]
+    orders = []
 
     @token_required
     def get(self, current_user, parcel_order_id):
