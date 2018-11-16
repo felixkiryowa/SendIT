@@ -87,9 +87,7 @@ class OrdersApi(MethodView):
     def check_user_type_logic(self, user_type, get_order_status, order,parcel_id):
         if  user_type == "user":
             if not get_order_status:
-                if  order:
-                    return ORDER_OBJECT.update_specific_order_status_logic(order, parcel_id)
-                return jsonify({'message':'No Order Found with Specified Route Parameter'}), 404
+               return ORDER_OBJECT.refactor_check_user_type_logic(order, parcel_id)
             return jsonify(
                 {'message':'The Order has already been delivered so it cant be cancelled'}
             )
@@ -100,6 +98,11 @@ class OrdersApi(MethodView):
             if order.__dict__["order_id"] == parcel_id:
                 order.__dict__['order_status'] = request.json['order_status']
         return jsonify({'orders':[order.__dict__ for order in self.orders]}), 200
+
+    def refactor_check_user_type_logic(self, order, parcel_id):
+        if  order:
+            return ORDER_OBJECT.update_specific_order_status_logic(order, parcel_id)
+        return jsonify({'message':'No Order Found with Specified Route Parameter'}), 404
 
 # create an object of the class
 ORDER_OBJECT = OrdersApi()
