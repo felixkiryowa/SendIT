@@ -5,6 +5,7 @@ import re
 from api import secret_key
 from validate_email import validate_email
 from flask import jsonify, request, json, Response, make_response
+from api.validators.validate_user_object import check_if_posted_user_data_are_not_empty_strings
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
 from api.model.users import AuthUser
@@ -54,15 +55,6 @@ def check_user_object_keys(user_object):
     and 'contact' in user_object and 'username' 
     in user_object and 'password' in user_object and 'user_type' 
     in user_object )
-
-def check_if_posted_user_data_are_not_empty_strings():
-    """
-    function to check whether posted object has got no empty strings
-    """
-    return (request.json['first_name'] != '' and request.json['last_name'] != ''
-    and request.json['email'] != '' and request.json['contact'] != ''
-    and request.json['username'] != '' and  
-    request.json['password'] != '' and request.json['user_type'] != '' )
 
 def validating_email(user_email):
     """
