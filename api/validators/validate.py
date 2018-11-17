@@ -5,7 +5,6 @@ import re
 from api import secret_key
 from validate_email import validate_email
 from flask import jsonify, request, json, Response, make_response
-from api.validators.validate_user_object import check_if_posted_user_data_are_not_empty_strings
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
 from api.model.users import AuthUser
