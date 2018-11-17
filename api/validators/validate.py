@@ -55,14 +55,14 @@ def check_user_object_keys(user_object):
     in user_object and 'password' in user_object and 'user_type' 
     in user_object )
 
-def check_if_posted_user_data_are_not_empty_strings():
-    """
-    function to check whether posted object has got no empty strings
-    """
-    return (request.json['first_name'] != '' and request.json['last_name'] != ''
-    and request.json['email'] != '' and request.json['contact'] != ''
-    and request.json['username'] != '' and  
-    request.json['password'] != '' and request.json['user_type'] != '' )
+# def check_if_posted_user_data_are_not_empty_strings():
+#     """
+#     function to check whether posted object has got no empty strings
+#     """
+#     return (request.json['first_name'] != '' and request.json['last_name'] != ''
+#     and request.json['email'] != '' and request.json['contact'] != ''
+#     and request.json['username'] != '' and  
+#     request.json['password'] != '' and request.json['user_type'] != '' )
 
 def validating_email(user_email):
     """
@@ -116,6 +116,15 @@ def check_if_parcel_weight_is_an_integer():
     """
     return (isinstance(request.json['parcel_weight'], int) )
 
+def check_for_keys_in_an_object(*args):
+    """
+    function to check whether posted object has got no empty strings
+    """
+    return (request.json[args[0]] != '' and request.json[args[1]] != ''
+    and request.json[args[2]] != '' and request.json[args[3]] != ''
+    and request.json[args[4]] != '' and  
+    request.json[args[5]] != '' and request.json[args[6]] != '')
+
 
 def validate_posted_data(posted_order, orders_list, user_id):
     """
@@ -151,7 +160,9 @@ def validate_posted_user_data(users_list, register_object):
     """
     function to validate create new user object
     """
-    if (check_if_posted_user_data_are_not_empty_strings() and check_if_posted_user_data_are_strings() and 
+    if (check_for_keys_in_an_object('first_name', 'last_name', 'email', 
+    'contact', 'username', 'password', 'user_type') 
+    and check_if_posted_user_data_are_strings() and 
     check_user_object_keys(register_object)):
         if (validating_email(request.json['email'])):
             user  = AuthUser(
