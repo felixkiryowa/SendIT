@@ -12,7 +12,7 @@
 #  SendIT API Endpoints
  SendIT is a aparcel delivery website for SendIT company dealing in delivering different parcel as orders from their customers.
 
-# Features
+# Features Required
 
 - Create a parcel delivery order
 - Get all parcel delivery orders
