@@ -90,14 +90,14 @@ def check_if_posted_data_are_not_empty_strings():
     and request.json['parcel_destination_address'] != '' and  
     request.json['receivers_names'] != '' and request.json['receivers_contact'] != '' )
 
-def check_if_posted_data_are_strings():
+def check_if_posted_data_are_strings(*args):
     """
     function to check whether posted object string properties strings
     """
-    return (isinstance(request.json['order_name'], str) and isinstance(request.json['senders_names'], str)
-    and isinstance(request.json['senders_contact'], str)  and isinstance(request.json['parcel_pickup_address'],str) 
-    and isinstance(request.json['parcel_destination_address'], str) and isinstance(request.json['receivers_names'], str) 
-    and isinstance(request.json['receivers_contact'], str))
+    return (isinstance(request.json[args[0]], str) and isinstance(request.json[args[1]], str)
+    and isinstance(request.json[args[2]], str)  and isinstance(request.json[args[3]],str) 
+    and isinstance(request.json[args[4]], str) and isinstance(request.json[args[5]], str) 
+    and isinstance(request.json[args[6]], str))
 
 def check_if_posted_order_status_is_string():
     """
@@ -133,7 +133,9 @@ def validate_posted_data(posted_order, orders_list, user_id):
     function to validate user posted order object
     """
     if (check_order_object_keys(posted_order) and check_if_posted_data_are_not_empty_strings() 
-    and check_if_parcel_weight_is_an_integer() and check_if_posted_data_are_strings()):
+    and check_if_parcel_weight_is_an_integer() and check_if_posted_data_are_strings('order_name', 'senders_names', 
+    'senders_contact', 'parcel_pickup_address', 'parcel_destination_address', 'receivers_names', 'receivers_contact'
+    )):
         get_todays_date = datetime.datetime.now()
         order_status = 'pending'
         price_to_be_paid = request.json['parcel_weight'] * 30000
