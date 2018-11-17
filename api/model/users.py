@@ -51,28 +51,25 @@ class AuthUser:
         # commit the changes to the database
         conn.commit()
         return jsonify({'Message':'You registered successfully.'}),201
-
-  
-
+    
+    @staticmethod  
+    def execute_user_login_auth(self, username, sent_password,error_message):
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM users WHERE username=%s",(username, ))
+        specific_user = cur.fetchall()
+        user_exist = cur.rowcount
+        if user_exist == 0:
+            return jsonify({"Message":error_message}),401
+        user_username = specific_user[0][5]
+        user_password = specific_user[0][6]
         
-    # def execute_user_login_auth(self, username, password,error_message):
-    #     cur = conn.cursor()
-    #     cur.execute("SELECT * FROM users WHERE username=%s",(username, ))
-    #     specific_user = cur.fetchall()
-    #     user_exist = cur.rowcount
-    #     if user_exist == 0:
-    #         return jsonify({"Message":error_message}),401
-    #     user_password = specific_user[0][3]
-    #     return generate_token(user_password, password, error_message)
-
-    # def generate_token(self, user_password, password, error_message):
-    #     if check_password_hash(user_password, password):
-    #         user_username = specific_user[0][2]
-    #         token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key)
-    #         return jsonify({'token_generated':token.decode('UTF-8')}),200
-    #     return jsonify({"Message":error_message}),401
-
-          
-     
+        return AuthUser.generate_token(self,user_username, user_password, sent_password, error_message, specific_user)
+   
+    @staticmethod
+    def generate_token(self,user_username,user_password, sent_password, error_message, specific_user):
+        if check_password_hash(user_password, sent_password):
+            token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key)
+            return jsonify({'token_generated':token.decode('UTF-8')}),200
+        return jsonify({"Message":error_message}),401
 
 

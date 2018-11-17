@@ -21,14 +21,16 @@ class AuthUsers(MethodView):
     def post(self):
         """funtion to register a new user"""
         rule = request.url_rule
-        could_not_verify = "Wrong Username and Password"
+        could_not_verify = "Invalid Username and Password"
         if 'signup' in rule.rule:
             AuthUser.create_users_table()
             new_user_data = request.get_json()
             user_type = 'user'
             return self.validate_posted_user_data(new_user_data, user_type)
-            # return jsonify({'Message':'You registered successfully.'}),2
-        return user_auth_logic(self.users, could_not_verify)
+        user_credentials = request.get_json()
+        return AuthUser.execute_user_login_auth(
+           self, user_credentials['username'], user_credentials['password'], could_not_verify
+        )
 
     def validate_posted_user_data(self, new_user_data, user_type):
         """
