@@ -6,7 +6,6 @@ from flask import jsonify
 from flask import request
 from flask.views import MethodView
 from api.endpoints.orders import OrdersApi, ORDER_OBJECT
-from api.token.token_required import token_required
 from api.validators.validate import check_if_no_user_orders
 from api.model.orders import Orders
 from api.token.token_required import token_required
