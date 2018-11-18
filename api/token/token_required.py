@@ -3,13 +3,13 @@ This module defines the user auth decorator function
 
 """
 from functools import wraps
+from api.db_connection import conn
 import jwt
 from flask import request
 from flask import jsonify
 from api import secret_key
 from api.endpoints.users import AuthUsers
 
-AUTH_USERS = AuthUsers()
 
 def token_required(f):
     """
@@ -23,12 +23,10 @@ def token_required(f):
         if not token:
             return jsonify({'message':'Token is missing!'}), 401
         try:
-            data = jwt.decode(token, secret_key, algorithm='HS256')
-            user_username = data['username']
-            users_list = AUTH_USERS .users
-            for user in users_list:
-                if user_username == user.__dict__['username']:
-                    current_user = user
+            data = jwt.decode(token, secret_key, algorithm='HS256' )
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM users WHERE user_id=%s",(data['user_id'], ))
+            current_user = cur.fetchall()
         except:
             return jsonify({'message':'Token is invalid!'}), 401
         return f(self, current_user, *args, **kwargs)

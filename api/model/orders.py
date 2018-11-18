@@ -1,21 +1,104 @@
 """This is orders class defining the orders class model constructor """
+from api.db_connection import conn
+from flask import jsonify
 
+cur = conn.cursor()
 class Orders:
     """
     Class to define the attributes of a parcel order
     """
     def __init__(self, *args):
         """This is orders class constructor"""
-        self.user_id = args[0]
-        self.order_id = args[1]
-        self.order_name = args[2]
-        self.senders_names = args[3]
-        self.senders_contact = args[4]
-        self.parcel_pickup_address = args[5]
-        self.parcel_destination_address = args[6]
-        self.receivers_names = args[7]
-        self.receivers_contact = args[8]
-        self.parcel_weight = args[9]
-        self.price = args[10]
-        self.date = args[11]
-        self.order_status = args[12]
+        self.senders_user_id = args[0]
+        self.order_name = args[1]
+        self.parcel_weight = args[2]
+        self.price = args[3]
+        self.parcel_pickup_address = args[4]
+        self.parcel_destination_address = args[5]
+        self.receivers_names = args[6]
+        self.receivers_contact = args[7]
+        self.location = args[8]
+
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS orders (
+            parcel_order_id SERIAL PRIMARY KEY,
+            senders_user_id INTEGER NOT NULL,
+            order_name VARCHAR(100) NOT NULL,
+            parcel_weight INTEGER NOT NULL,
+            price BIGINT NOT NULL,
+            parcel_pickup_address VARCHAR(100) NOT NULL,
+            parcel_destination_address VARCHAR(100) NOT NULL,
+            order_status VARCHAR(100)  DEFAULT 'pending',
+            receivers_names VARCHAR(100) NOT NULL,
+            receivers_contact VARCHAR(100) NOT NULL,
+            created_at TIMESTAMP DEFAULT NOW(),
+            ordering_time TIME DEFAULT NOW(),
+            location VARCHAR(100) NOT NULL,
+            FOREIGN KEY (senders_user_id)
+                REFERENCES users (user_id)
+                ON UPDATE CASCADE ON DELETE CASCADE
+        )
+        """
+    )
+    conn.commit()
+    
+    def execute_add_order_query(self):
+        sql = """INSERT INTO orders(senders_user_id,order_name,parcel_weight,price,parcel_pickup_address,
+        parcel_destination_address,receivers_names,receivers_contact,location)
+                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING parcel_order_id;"""
+        # create a new cursor
+        cur = conn.cursor()
+        # execute the INSERT statement
+        cur.execute(sql, (self.senders_user_id, self.order_name, self.parcel_weight, self.price, 
+        self.parcel_pickup_address, self.parcel_destination_address, self.receivers_names, 
+        self.receivers_contact,self.location))
+        # commit the changes to the database
+        conn.commit()
+
+    @staticmethod
+    def execute_query_get_all_orders(self,sql):
+        cur = conn.cursor()
+        cur.execute(sql)
+        returned_orders_data = cur.fetchall()
+        if not returned_orders_data:
+            return jsonify({"Message":"No Order Entries Found !!"}), 200
+        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names'
+        'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
+        results = []
+        for row in returned_orders_data:
+            results.append(dict(zip(columns, row)))
+        return jsonify({'All_orders':results})
+
+    @staticmethod 
+    def execute_query_get_specific_order(self, sql, order_id):
+            cur = conn.cursor()
+            cur.execute(sql,(order_id, ))
+            specific_order_data = cur.fetchall()
+            if not specific_order_data:
+                return jsonify({"Message":"No Order Found With Order Id Of"+ str(order_id)})
+            columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names'
+            'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
+            results = []
+            for row in specific_order_data:
+                results.append(dict(zip(columns, row)))
+            return jsonify({'Specific_order':results}),200 
+    
+    def update_order_status(self, order_id, new_order_status):
+        get_single_order_sql =  """
+                SELECT orders.order_id,menu.item_name,orders.price,orders.quantity,orders.order_status,orders.created_at,users.name,users.address,users.phone_number
+                FROM orders
+                INNER JOIN menu ON orders.item_id = menu.item_id
+                INNER JOIN users ON users.user_id = orders.user_id WHERE orders.order_id=%s
+                ORDER BY orders.order_id;
+            """
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM orders WHERE order_id=%s",(order_id, ))
+        check_order_exist = cur.rowcount
+        if check_order_exist == 0:
+            return jsonify({'Messsage':'No Order Found!!'})
+        cur.execute("UPDATE orders SET order_status=%s WHERE order_id=%s",(new_order_status, order_id,))
+        conn.commit()
+        return  self.execute_query_get_specific_order(get_single_order_sql,order_id)
+        
+        

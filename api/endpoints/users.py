@@ -21,7 +21,7 @@ class AuthUsers(MethodView):
     def post(self):
         """funtion to register a new user"""
         rule = request.url_rule
-        could_not_verify = "Invalid Username and Password"
+        could_not_verify = "Invalid Username or Password"
         if 'signup' in rule.rule:
             AuthUser.create_users_table()
             new_user_data = request.get_json()

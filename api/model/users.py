@@ -60,15 +60,18 @@ class AuthUser:
         user_exist = cur.rowcount
         if user_exist == 0:
             return jsonify({"Message":error_message}),401
-        user_username = specific_user[0][5]
+        user_id = specific_user[0][0]
         user_password = specific_user[0][6]
         
-        return AuthUser.generate_token(self,user_username, user_password, sent_password, error_message, specific_user)
+        return AuthUser.generate_token(self,user_id, user_password, sent_password, error_message, specific_user)
    
     @staticmethod
-    def generate_token(self,user_username,user_password, sent_password, error_message, specific_user):
+    def generate_token(self,user_id,user_password, sent_password, error_message, specific_user):
         if check_password_hash(user_password, sent_password):
-            token = jwt.encode({'username':user_username, 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},secret_key)
+            token = jwt.encode(
+                {'user_id':user_id, 
+                'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 
+                secret_key, algorithm='HS256')
             return jsonify({'token_generated':token.decode('UTF-8')}),200
         return jsonify({"Message":error_message}),401
 
