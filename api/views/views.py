@@ -5,6 +5,7 @@ This module handles view routes
 from api.endpoints.orders import OrdersApi
 from api.endpoints.get_specific_user_orders import UserSpecificOrders
 from api.endpoints.users import AuthUsers
+from api.endpoints.update_order_status import UpdateUserOrderStatus
 
 class GetOrderApiUrls:
 
@@ -17,6 +18,7 @@ class GetOrderApiUrls:
         order_view = OrdersApi.as_view('order_api')
         user_specific_orders_view = UserSpecificOrders.as_view('user_orders')
         auth_users_view = AuthUsers.as_view('user_auth')
+        update_order_status = UpdateUserOrderStatus.as_view('update_status')
         app.add_url_rule(
             '/api/v2/parcels', defaults={'parcel_order_id': None},
             view_func=order_view, methods=['GET',]
@@ -32,6 +34,10 @@ class GetOrderApiUrls:
         # )
         app.add_url_rule(
             '/api/v2/parcels/<order_parcel_id>/cancel', view_func=order_view,
+            methods=['PUT',]
+        )
+        app.add_url_rule(
+            '/api/v2/parcels/<parcel_id>/status', view_func=update_order_status,
             methods=['PUT',]
         )
 
