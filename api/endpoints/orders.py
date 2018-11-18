@@ -24,6 +24,7 @@ class OrdersApi(MethodView):
     @token_required
     def get(self, current_user, parcel_order_id):
         """function to get a single order or to get all the orders"""
+        #Here is the logic to get all orders and single order
         get_single_order_sql =  """
                     SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
                     orders.receivers_names,orders.receivers_contact,orders.created_at,
