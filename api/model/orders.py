@@ -63,7 +63,7 @@ class Orders:
         returned_orders_data = cur.fetchall()
         if not returned_orders_data:
             return jsonify({"Message":"No Order Entries Found !!"}), 200
-        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names'
+        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names',
         'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
         results = []
         for row in returned_orders_data:
@@ -77,28 +77,30 @@ class Orders:
             specific_order_data = cur.fetchall()
             if not specific_order_data:
                 return jsonify({"Message":"No Order Found With Order Id Of"+ str(order_id)})
-            columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names'
+            columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names',
             'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
             results = []
             for row in specific_order_data:
                 results.append(dict(zip(columns, row)))
-            return jsonify({'Specific_order':results}),200 
+            return jsonify({'Specific_order':results}), 200 
+
     
-    def update_order_status(self, order_id, new_order_status):
+    @staticmethod
+    def update_order_destination(self, parcel_order_id, new_order_destination):
         get_single_order_sql =  """
-                SELECT orders.order_id,menu.item_name,orders.price,orders.quantity,orders.order_status,orders.created_at,users.name,users.address,users.phone_number
-                FROM orders
-                INNER JOIN menu ON orders.item_id = menu.item_id
-                INNER JOIN users ON users.user_id = orders.user_id WHERE orders.order_id=%s
-                ORDER BY orders.order_id;
+                SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.order_status,orders.created_at,users.first_name,users.last_name,users.phone_contact
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.parcel_order_id=%s
+                ORDER BY orders.parcel_order_id;
             """
         cur = conn.cursor()
-        cur.execute("SELECT * FROM orders WHERE order_id=%s",(order_id, ))
+        cur.execute("SELECT * FROM orders WHERE parcel_order_id=%s",(parcel_order_id, ))
         check_order_exist = cur.rowcount
         if check_order_exist == 0:
-            return jsonify({'Messsage':'No Order Found!!'})
-        cur.execute("UPDATE orders SET order_status=%s WHERE order_id=%s",(new_order_status, order_id,))
+            return jsonify({"Message":"No Order Found With Order Id Of"+ str(parcel_order_id)}), 200
+        cur.execute("UPDATE orders SET parcel_destination_address=%s WHERE parcel_order_id=%s",(new_order_destination, parcel_order_id,))
         conn.commit()
-        return  self.execute_query_get_specific_order(get_single_order_sql,order_id)
+        return  Orders.execute_query_get_specific_order(self,get_single_order_sql,parcel_order_id)
         
         
