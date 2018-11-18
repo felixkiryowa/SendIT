@@ -28,13 +28,15 @@ class UserSpecificOrders(MethodView):
     def put(self,current_user, parcel_id):
         """function to enable a user to change the destination address of a specific order"""
         user_type = current_user[0][7]
+        user_id = current_user[0][0]
         #check if user is admin
         if user_type == 'user':
             try:
                 parcel_id = int(parcel_id)
             except:
                 return jsonify({'message':'Invalid Parcel Id'}), 400
-            return Orders.update_order_destination(self, parcel_id, request.json['parcel_destination_address'])
+            return Orders.update_order_destination(self, parcel_id, 
+            request.json['parcel_destination_address'], user_id)
         return jsonify({'message':'Cannot Perform That Function!'}), 404
 
     

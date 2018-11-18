@@ -86,7 +86,7 @@ class Orders:
 
     
     @staticmethod
-    def update_order_destination(self, parcel_order_id, new_order_destination):
+    def update_order_destination(self, parcel_order_id, new_order_destination, user_id):
         get_single_order_sql =  """
                 SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
                 orders.receivers_names,orders.receivers_contact,orders.created_at,
@@ -95,7 +95,7 @@ class Orders:
                 ORDER BY orders.parcel_order_id;
             """
         cur = conn.cursor()
-        cur.execute("SELECT * FROM orders WHERE parcel_order_id=%s",(parcel_order_id, ))
+        cur.execute("SELECT * FROM orders WHERE parcel_order_id=%s and senders_user_id =%s",(parcel_order_id, user_id, ))
         check_order_exist = cur.rowcount
         if check_order_exist == 0:
             return jsonify({"Message":"No Order Found With Order Id Of"+ str(parcel_order_id)}), 200
