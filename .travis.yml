@@ -1,19 +1,16 @@
 language: python
 python:
-
   - "3.6.1"
+
 services:
   - postgresql
+
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-  
-before_script:
   - psql -c 'create database SendIT;' -U postgres
 # command to run tests
 script: 
-- pytest  --cov=.
-- coverage
-- coverage report
+- pytest --cov=.
 after_success:
 - coveralls
