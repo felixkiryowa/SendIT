@@ -7,7 +7,7 @@ secret_key = 'thisisasceretkey'
 
 # creating an object of GetOrderApiUrls
 # conn = psycopg2.connect(database="SendIT",user="postgres",password="atagenda1@",host="localhost",port="5432")
-conn = psycopg2.connect(database="SendIT")
+# conn = psycopg2.connect(database="SendIT")
 
 from api.views.views import GetOrderApiUrls
 GetOrderApiUrls.get_api_urls(app)
