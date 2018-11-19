@@ -21,7 +21,7 @@
 
 ### Getting Started
 
-Clone the project using the [link](https://github.com/felixkiryowa/SendIT.git).
+Clone the project using this link to review [link](https://github.com/felixkiryowa/SendIT.git).
 
 ### Installing
 
