@@ -12,8 +12,8 @@ class GetOrderApiUrls:
     """
     class to define method to define all api endpoints routes
     """
-
-    def get_api_urls(self, app):
+    @staticmethod
+    def get_api_urls(app):
         """function defining all the api routes """
         order_view = OrdersApi.as_view('order_api')
         user_specific_orders_view = UserSpecificOrders.as_view('user_orders')

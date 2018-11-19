@@ -3,21 +3,11 @@ from api.db_connection import conn
 from flask import jsonify
 
 cur = conn.cursor()
+
 class Orders:
     """
     Class to define the attributes of a parcel order
     """
-    def __init__(self, *args):
-        """This is orders class constructor"""
-        self.senders_user_id = args[0]
-        self.order_name = args[1]
-        self.parcel_weight = args[2]
-        self.price = args[3]
-        self.parcel_pickup_address = args[4]
-        self.parcel_destination_address = args[5]
-        self.receivers_names = args[6]
-        self.receivers_contact = args[7]
-        self.location = args[8]
 
     cur.execute(
         """
@@ -36,12 +26,25 @@ class Orders:
             ordering_time TIME DEFAULT NOW(),
             location VARCHAR(100) NOT NULL,
             FOREIGN KEY (senders_user_id)
-                REFERENCES users (user_id)
+                REFERENCES users(user_id)
                 ON UPDATE CASCADE ON DELETE CASCADE
         )
         """
     )
-    conn.commit()
+    
+    def __init__(self, *args):
+        """This is orders class constructor"""
+        self.senders_user_id = args[0]
+        self.order_name = args[1]
+        self.parcel_weight = args[2]
+        self.price = args[3]
+        self.parcel_pickup_address = args[4]
+        self.parcel_destination_address = args[5]
+        self.receivers_names = args[6]
+        self.receivers_contact = args[7]
+        self.location = args[8]
+        
+    
     
     def execute_add_order_query(self):
         sql = """INSERT INTO orders(senders_user_id,order_name,parcel_weight,price,parcel_pickup_address,

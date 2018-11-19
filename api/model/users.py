@@ -8,8 +8,24 @@ import datetime
 
 
 
+cur = conn.cursor()
 
 class AuthUser:
+
+    cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS users  (
+                user_id SERIAL PRIMARY KEY,
+                first_name VARCHAR(200) NOT NULL,
+                last_name VARCHAR(200) NOT NULL,
+                email VARCHAR(200) NOT NULL,
+                phone_contact VARCHAR(200) NULL,
+                username VARCHAR(255) NOT NULL UNIQUE, 
+                user_password VARCHAR(255) NOT NULL,
+                user_type VARCHAR(200) NOT NULL
+            )
+            """
+    )
 
     def __init__(self, *args):
         """This is AuthUsers class constructor"""
@@ -21,24 +37,6 @@ class AuthUser:
         self.user_password = args[5]
         self.user_type = args[6]
 
-    @staticmethod
-    def create_users_table():
-        cur = conn.cursor()
-        cur.execute(
-              """
-               CREATE TABLE IF NOT EXISTS users  (
-                    user_id SERIAL PRIMARY KEY,
-                    first_name VARCHAR(200) NOT NULL,
-                    last_name VARCHAR(200) NOT NULL,
-                    email VARCHAR(200) NOT NULL,
-                    phone_contact VARCHAR(200) NULL,
-                    username VARCHAR(255) NOT NULL UNIQUE, 
-                    user_password VARCHAR(255) NOT NULL,
-                    user_type VARCHAR(200) NOT NULL
-                )
-                """
-        )
-        conn.commit()
     
     def execute_add_new_user_query(self):
         """ insert a new user into the users table """

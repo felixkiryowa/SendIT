@@ -23,41 +23,27 @@ class AuthUsers(MethodView):
         rule = request.url_rule
         could_not_verify = "Invalid Username or Password"
         if 'signup' in rule.rule:
-            AuthUser.create_users_table()
             new_user_data = request.get_json()
-            user_type = 'user'
-            return self.validate_posted_user_data(new_user_data, user_type)
+            return self.validate_posted_user_data(new_user_data)
         user_credentials = request.get_json()
         return AuthUser.execute_user_login_auth(
            self, user_credentials['username'], user_credentials['password'], could_not_verify
         )
 
-    def validate_posted_user_data(self, new_user_data, user_type):
+    def validate_posted_user_data(self, new_user_data):
         """
         function to validate create new user object
         """
-        if (check_for_empty_strings_in_reg_object('first_name', 'last_name', 'email', 
-        'phone_contact', 'username', 'user_password') and
-        check_user_object_keys(new_user_data)):
-            if (validating_email(new_user_data['email'])):
-                if (self.check_if_user_exists(new_user_data['username'], new_user_data['email'])):
-                    AuthUser(new_user_data['first_name'], new_user_data['last_name'], new_user_data['email'], 
-                    new_user_data['phone_contact'], new_user_data['username'], 
-                    generate_password_hash(new_user_data['user_password']), user_type
-                    ).execute_add_new_user_query()
-                    return jsonify({'Message':'You registered successfully.'}),201   
-                return jsonify({'Message':'User already exists'}),409
-            return jsonify({'message':'Invalid email'}),400
-        user_posted_object = "{'first_name': 'julius','last_name': 'kasagala','email': 'jk@gmail.com',\
-        'contact': '070786543','username': 'kas1234','password': 'kas@123'}"
-        bad_order_object = {
-        "Valid_user_object":user_posted_object
-        }
-        response = Response(
-            json.dumps(bad_order_object),
-            status=400, mimetype="application/json"
-            )
-        return response
+        if (validating_email(new_user_data['email'])):
+            if (self.check_if_user_exists(new_user_data['username'], new_user_data['email'])):
+                AuthUser(new_user_data['first_name'], new_user_data['last_name'], new_user_data['email'], 
+                new_user_data['phone_contact'], new_user_data['username'], 
+                generate_password_hash(new_user_data['user_password']), new_user_data['user_type']
+                ).execute_add_new_user_query()
+                return jsonify({'Message':'You registered successfully.'}),201   
+            return jsonify({'Message':'User already exists'}),409
+        return jsonify({'message':'Invalid email'}),400
+       
 
     def check_if_user_exists(self, username, email):
         # create a new cursor
