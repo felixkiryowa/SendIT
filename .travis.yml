@@ -3,11 +3,11 @@ python:
 
   - "3.6.1"
 services:
-  -postgres
+  - postgres
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-  -psql -c 'create database SendIT;' -U postgres
+  - psql -c 'create database SendIT;' -U postgres
 # command to run tests
 script: 
 - pytest  --cov=.
