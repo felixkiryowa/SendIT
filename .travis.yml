@@ -7,6 +7,8 @@ services:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
+  
+before_script:
   - psql -c 'create database SendIT;' -U postgres
 # command to run tests
 script: 
