@@ -1,5 +1,5 @@
 """This is orders class defining the orders class model constructor """
-from api.db_connection import conn
+from api import conn
 from flask import jsonify
 
 cur = conn.cursor()

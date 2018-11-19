@@ -3,7 +3,7 @@ This module defines the user auth decorator function
 
 """
 from functools import wraps
-from api.db_connection import conn
+from api import conn
 import jwt
 from flask import request
 from flask import jsonify

@@ -5,7 +5,7 @@ from flask import request
 from flask import jsonify
 from flask.views import MethodView
 from werkzeug.security import generate_password_hash
-from api.db_connection import conn
+from api import conn
 from api.model.users import AuthUser
 from api.validators.validate import user_auth_logic
 from api.validators.validate import  check_for_empty_strings_in_reg_object

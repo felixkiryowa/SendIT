@@ -5,7 +5,7 @@ import unittest
 import os
 from flask import json
 
-from run import app
+from api import app
 
 
 class SendAPITests(unittest.TestCase):

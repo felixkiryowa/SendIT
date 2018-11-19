@@ -1,5 +1,5 @@
 """This is users class defining the users class model constructor """
-from  api.db_connection import conn
+from  api import conn
 from api import secret_key
 from flask import jsonify
 from werkzeug.security import generate_password_hash ,check_password_hash
