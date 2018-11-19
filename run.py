@@ -1,8 +1,5 @@
 from api import create_app
 # from flask import Flask
-from api.model.users import AuthUser
-from api.model.orders import Orders
-
 from api.views.views import GetOrderApiUrls
 # creating an object of GetOrderApiUrls
 app_config = 'development'
