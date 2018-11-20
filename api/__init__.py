@@ -6,7 +6,9 @@ app =  Flask(__name__)
 secret_key = 'thisisasceretkey'
 
 # creating an object of GetOrderApiUrls
-conn = psycopg2.connect(database="SendIT",user="postgres",password="",host="localhost",port="5432")
+conn = psycopg2.connect(database="SendIT",user="postgres",password="atagenda1@")
+# conn = psycopg2.connect(database="d7to87pvcitck8",user="cydhaaqyvycwlm",password="7b0226b6a6d1acdde593d5c6b628ebfc3b4a6f6439dd2e89c72ae9c96dc45ee6",host="ec2-23-23-101-25.compute-1.amazonaws.com",port="5432")
+
 # conn = psycopg2.connect(database="SendIT")
 
 from api.views.views import GetOrderApiUrls

@@ -17,7 +17,6 @@ from flask import Response
 
 class AuthUsers(MethodView):
     """Class to define user auth end points"""
-    users = []
     def post(self):
         """funtion to register a new user"""
         rule = request.url_rule

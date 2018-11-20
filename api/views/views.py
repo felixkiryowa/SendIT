@@ -20,6 +20,15 @@ class GetOrderApiUrls:
         auth_users_view = AuthUsers.as_view('user_auth')
         update_order_status = UpdateUserOrderStatus.as_view('update_status')
         update_order_present_location = UpdateOrderPresentLocation.as_view('order_location')
+
+        app.add_url_rule(
+            '/api/v2/auth/signup', view_func=auth_users_view,
+            methods=['POST',]
+        )
+        app.add_url_rule(
+            '/api/v2/auth/login', view_func=auth_users_view,
+            methods=['POST',]
+        )
         app.add_url_rule(
             '/api/v2/parcels', defaults={'parcel_order_id': None},
             view_func=order_view, methods=['GET',]
@@ -53,12 +62,4 @@ class GetOrderApiUrls:
             view_func=update_order_present_location, methods=['PUT',]
         )
        
-        app.add_url_rule(
-            '/api/v2/auth/signup', view_func=auth_users_view,
-            methods=['POST',]
-        )
-        app.add_url_rule(
-            '/api/v2/auth/login', view_func=auth_users_view,
-            methods=['POST',]
-        )
 
