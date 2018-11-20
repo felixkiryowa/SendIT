@@ -174,7 +174,7 @@ class SendAPITests(unittest.TestCase):
 
     def test_get_specific_order(self):
         """
-        function to test getting a single order details
+        method to test getting a single order details
         """
         result = self.client().get(
             '/api/v2/parcels/1',
@@ -187,6 +187,29 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(json_data['Specific_order'][0]['receivers_names'], "Mukasa Derrick")
         self.assertEqual(json_data['Specific_order'][0]['order_status'], "pending")
         self.assertEqual(json_data['Specific_order'][0]['parcel_order_id'], 1)
+
+    # Tests for updating order status by an admin
+    def test_update_specific_order(self):
+        """
+        Method to test update an order status.
+        """
+        result = self.client().put(
+            '/api/v2/parcels/1/status', content_type='application/json',
+            headers={
+                "token": self.user_generated_token
+            },
+            data=json.dumps({"order_status":"delivered"})
+        )
+        self.assertEqual(result.status_code, 200)
+        #fetch updated order to verify whether the order_status has changed to Delivered
+        check_updated_order = self.client().get(
+            '/api/v2/parcels/1',
+            headers={"token": self.admin_generated_token}
+        )
+        self.assertEqual(check_updated_order.status_code, 200)
+        json_data = json.loads(check_updated_order.data)
+        #order_status value should now be delivered
+        self.assertEqual(json_data['Specific_order'][0]['order_status'], "delivered")
        
 
 if __name__ == '__main__':
