@@ -2,9 +2,9 @@
 This module handles view routes
 
 """
+from api.endpoints.users import AuthUsers
 from api.endpoints.orders import OrdersApi
 from api.endpoints.get_specific_user_orders import UserSpecificOrders
-from api.endpoints.users import AuthUsers
 from api.endpoints.update_order_status import UpdateUserOrderStatus
 from api.endpoints.update_order_present_location import UpdateOrderPresentLocation
 

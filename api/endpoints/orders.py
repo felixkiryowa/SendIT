@@ -6,7 +6,6 @@ from flask import jsonify, request
 from flask import json
 from flask import Response
 from flask.views import MethodView
-from api.model.orders import Orders
 from api.token.token_required import token_required
 from api.validators.validate import check_empty_list
 from api.validators.validate import  check_if_there_no_orders

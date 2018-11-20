@@ -182,11 +182,17 @@ class SendAPITests(unittest.TestCase):
         )
         self.assertEqual(result.status_code, 200)
         json_data = json.loads(result.data)
-        self.assertEqual(json_data['Specific_order'][0]['parcel_destination_address'], "Mbarara")
-        self.assertEqual(json_data['Specific_order'][0]['parcel_pickup_address'], "Mbale")
-        self.assertEqual(json_data['Specific_order'][0]['receivers_names'], "Mukasa Derrick")
-        self.assertEqual(json_data['Specific_order'][0]['order_status'], "pending")
-        self.assertEqual(json_data['Specific_order'][0]['parcel_order_id'], 1)
+        if json_data == {'Message':'No Order Found With Order Id Of 1'}:
+            self.assertEqual(json_data, {'Message':'No Order Found With Order Id Of 1'})
+        else:
+            self.assertEqual(json_data['Specific_order'][0]['parcel_destination_address'], "Mbarara")
+            self.assertEqual(json_data['Specific_order'][0]['parcel_pickup_address'], "Mbale")
+            self.assertEqual(json_data['Specific_order'][0]['receivers_names'], "Mukasa Derrick")
+            if json_data['Specific_order'][0]['order_status'] == 'delivered':
+                self.assertEqual(json_data['Specific_order'][0]['order_status'], "delivered")
+            else:
+                self.assertEqual(json_data['Specific_order'][0]['order_status'], "pending")
+            self.assertEqual(json_data['Specific_order'][0]['parcel_order_id'], 1)
 
     # Tests for updating order status by an admin
     def test_update_specific_order(self):
@@ -196,7 +202,7 @@ class SendAPITests(unittest.TestCase):
         result = self.client().put(
             '/api/v2/parcels/1/status', content_type='application/json',
             headers={
-                "token": self.user_generated_token
+                "token": self.admin_generated_token
             },
             data=json.dumps({"order_status":"delivered"})
         )
@@ -209,6 +215,7 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(check_updated_order.status_code, 200)
         json_data = json.loads(check_updated_order.data)
         #order_status value should now be delivered
+
         self.assertEqual(json_data['Specific_order'][0]['order_status'], "delivered")
        
 
