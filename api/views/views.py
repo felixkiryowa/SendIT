@@ -29,10 +29,11 @@ class GetOrderApiUrls:
             view_func=order_view, methods=['GET',]
         )
         app.add_url_rule('/api/v2/parcels', view_func=order_view, methods=['POST',])
-        # app.add_url_rule(
-        #     '/api/v1/users/<specific_user_id>/parcels',
-        #     view_func=user_specific_orders_view, methods=['GET',]
-        # )
+
+        app.add_url_rule(
+            '/api/v1/users/parcels',
+            view_func=user_specific_orders_view, methods=['GET',]
+        )
         app.add_url_rule(
             '/api/v2/parcels/<order_parcel_id>/cancel', view_func=order_view,
             methods=['PUT',]

@@ -141,5 +141,29 @@ class Orders:
         cur.execute("UPDATE orders SET location=%s WHERE parcel_order_id=%s",(new_order_location, parcel_order_id,))
         conn.commit()
         return  Orders.execute_query_get_specific_order(self,get_single_order_sql,parcel_order_id)
+
+    @staticmethod
+    def  get_specific_user_orders(self, user_id):
+        get_all_user_orders_sql =  """
+                SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.order_status,orders.created_at,users.first_name,users.last_name,users.phone_contact
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.senders_user_id=%s
+                ORDER BY orders.parcel_order_id;
+            """
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM orders WHERE senders_user_id =%s",(user_id, ))
+        user_exist = cur.rowcount
+        if user_exist == 0:
+            return jsonify({"Message":"No Orders Found For User With A User Id Of "+ str(user_id)}), 200
+        cur.execute(get_all_user_orders_sql,(user_id,))
+        all_user_orders_data = cur.fetchall()
+        conn.commit()
+        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names',
+            'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
+        results = []
+        for row in all_user_orders_data:
+            results.append(dict(zip(columns, row)))
+        return jsonify({'Specific_order':results}), 200 
         
         

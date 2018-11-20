@@ -167,11 +167,27 @@ class SendAPITests(unittest.TestCase):
             headers={"token": self.admin_generated_token}
         )
         self.assertEqual(check_updated_order.status_code, 200)
-        # json_data = json.loads(check_updated_order.data)
-        data = json.loads(check_updated_order.data.decode('utf-8'))
+        json_data = json.loads(check_updated_order.data)
         #order_status value should now be delivered
-        # self.assertEqual(data['Specific_order']['parcel_destination_address'],2)
-        # self.assertEqual(json_data['Specific_order']['parcel_destination_address'], "Mbarara")
+        # self.assertEqual(json_data['Specific_order'][0]['parcel_destination_address'],2)
+        self.assertEqual(json_data['Specific_order'][0]['parcel_destination_address'], "Mbarara")
+
+    def test_get_specific_order(self):
+        """
+        function to test getting a single order details
+        """
+        result = self.client().get(
+            '/api/v2/parcels/1',
+            headers={"token": self.admin_generated_token}
+        )
+        self.assertEqual(result.status_code, 200)
+        json_data = json.loads(result.data)
+        self.assertEqual(json_data['Specific_order'][0]['parcel_destination_address'], "Mbarara")
+        self.assertEqual(json_data['Specific_order'][0]['parcel_pickup_address'], "Mbale")
+        self.assertEqual(json_data['Specific_order'][0]['receivers_names'], "Mukasa Derrick")
+        self.assertEqual(json_data['Specific_order'][0]['order_status'], "pending")
+        self.assertEqual(json_data['Specific_order'][0]['parcel_order_id'], 1)
+       
 
 if __name__ == '__main__':
     unittest.main()

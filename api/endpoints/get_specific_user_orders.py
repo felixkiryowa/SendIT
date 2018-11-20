@@ -12,15 +12,19 @@ class UserSpecificOrders(MethodView):
     """Class to define an endpoint to get a specific user order"""
     # orders_object = OrdersApi()
     # orders_list = orders_object.orders
-    # @token_required
-    # def get(self, current_user, specific_user_id):
-    #     """function to get a single order for a user"""
-    #     try:
-    #         user_id = int(specific_user_id)
-    #     except:
-    #         return jsonify({'message':'Invalid User Id'}), 400
-    #     user_specific_orders = ORDER_OBJECT.select_specific_order('user_id', user_id)
-    #     return check_if_no_user_orders(user_specific_orders, user_id)
+    @token_required
+    def get(self, current_user):
+        """function to get a single order for a user"""
+        user_type = current_user[0][7]
+        specific_user_id = current_user[0][0]
+        if user_type == 'user':
+            try:
+                user_id = int(specific_user_id)
+            except:
+                return jsonify({'message':'Invalid User Id'}), 400
+            return Orders.get_specific_user_orders(self,user_id)
+        return jsonify({'message':'Cannot Perform That Function!'}), 404
+
     @token_required
     def put(self,current_user, parcel_id):
         """function to enable a user to change the destination address of a specific order"""
