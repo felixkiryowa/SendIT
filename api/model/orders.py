@@ -8,30 +8,7 @@ class Orders:
     """
     Class to define the attributes of a parcel order
     """
-
-    cur.execute(
-        """
-        CREATE TABLE IF NOT EXISTS orders (
-            parcel_order_id SERIAL PRIMARY KEY,
-            senders_user_id INTEGER NOT NULL,
-            order_name VARCHAR(100) NOT NULL,
-            parcel_weight INTEGER NOT NULL,
-            price BIGINT NOT NULL,
-            parcel_pickup_address VARCHAR(100) NOT NULL,
-            parcel_destination_address VARCHAR(100) NOT NULL,
-            order_status VARCHAR(100)  DEFAULT 'pending',
-            receivers_names VARCHAR(100) NOT NULL,
-            receivers_contact VARCHAR(100) NOT NULL,
-            created_at TIMESTAMP DEFAULT NOW(),
-            ordering_time TIME DEFAULT NOW(),
-            location VARCHAR(100) NOT NULL,
-            FOREIGN KEY (senders_user_id)
-                REFERENCES users(user_id)
-                ON UPDATE CASCADE ON DELETE CASCADE
-        )
-        """
-    )
-    
+     
     def __init__(self, *args):
         """This is orders class constructor"""
         self.senders_user_id = args[0]
@@ -42,9 +19,33 @@ class Orders:
         self.parcel_destination_address = args[5]
         self.receivers_names = args[6]
         self.receivers_contact = args[7]
-        self.location = args[8]
+        self.location = args[8] 
         
-    
+    @staticmethod
+    def create_orders_table():
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS orders (
+                parcel_order_id SERIAL PRIMARY KEY,
+                senders_user_id INTEGER NOT NULL,
+                order_name VARCHAR(100) NOT NULL,
+                parcel_weight INTEGER NOT NULL,
+                price BIGINT NOT NULL,
+                parcel_pickup_address VARCHAR(100) NOT NULL,
+                parcel_destination_address VARCHAR(100) NOT NULL,
+                order_status VARCHAR(100)  DEFAULT 'pending',
+                receivers_names VARCHAR(100) NOT NULL,
+                receivers_contact VARCHAR(100) NOT NULL,
+                created_at TIMESTAMP DEFAULT NOW(),
+                ordering_time TIME DEFAULT NOW(),
+                location VARCHAR(100) NOT NULL,
+                FOREIGN KEY (senders_user_id)
+                    REFERENCES users(user_id)
+                    ON UPDATE CASCADE ON DELETE CASCADE
+            )
+            """
+        )
+   
     
     def execute_add_order_query(self):
         sql = """INSERT INTO orders(senders_user_id,order_name,parcel_weight,price,parcel_pickup_address,
