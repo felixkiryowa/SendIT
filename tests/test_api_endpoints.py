@@ -141,5 +141,37 @@ class SendAPITests(unittest.TestCase):
         self.assertEqual(self.order_data["receivers_contact"], "0789564312")  
     #tests on user user_id to get orders of a specific user
 
+    def test_get_all_orders(self):
+        """
+        function to test getting of all registered orders
+        """
+        result = self.client().get('/api/v2/parcels', headers={"token": self.admin_generated_token})
+        self.assertEqual(result.status_code, 200)
+
+    # Tests for updating order status
+    def test_update_a_parcel_destinstion_order(self):
+        """
+        Method to test update an order status.
+        """
+        result = self.client().put(
+            '/api/v2/parcels/1/destination', content_type='application/json',
+            headers={
+                "token": self.user_generated_token
+            },
+            data=json.dumps({"parcel_destination_address":"Mbarara"})
+        )
+        self.assertEqual(result.status_code, 200)
+        #fetch updated order to verify whether the order_status has changed to Delivered
+        check_updated_order = self.client().get(
+            '/api/v2/parcels/1',
+            headers={"token": self.admin_generated_token}
+        )
+        self.assertEqual(check_updated_order.status_code, 200)
+        # json_data = json.loads(check_updated_order.data)
+        data = json.loads(check_updated_order.data.decode('utf-8'))
+        #order_status value should now be delivered
+        # self.assertEqual(data['Specific_order']['parcel_destination_address'],2)
+        # self.assertEqual(json_data['Specific_order']['parcel_destination_address'], "Mbarara")
+
 if __name__ == '__main__':
     unittest.main()
