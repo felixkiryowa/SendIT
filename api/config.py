@@ -23,7 +23,7 @@ class DevelopmentConfig(Config):
     Development configurations
     """
 
-    DATABASE = 'SendIT'
+    # DATABASE_CONNECTION = os.getenv("DATABASE_CONNECTION","postgres://YourUserName:YourPassword@YourHost:5432/YourDatabase")
     DEBUG = True
     TESTING = False
 
