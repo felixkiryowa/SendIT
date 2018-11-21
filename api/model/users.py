@@ -1,5 +1,5 @@
 """This is users class defining the users class model constructor """
-from  api import conn
+from  api import connection
 from api import secret_key
 from flask import jsonify
 from werkzeug.security import generate_password_hash ,check_password_hash
@@ -8,11 +8,11 @@ import datetime
 
 
 
-cur = conn.cursor()
+cursor = connection.cursor()
 
 class AuthUser:
 
-    cur.execute(
+    cursor.execute(
             """
             CREATE TABLE IF NOT EXISTS users  (
                 user_id SERIAL PRIMARY KEY,
@@ -42,30 +42,30 @@ class AuthUser:
         """ insert a new user into the users table """
         sql = """INSERT INTO users(first_name, last_name, email, phone_contact, username, user_password, user_type)
         VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING user_id;"""
-        # create a new cursor
-        cur = conn.cursor()
-        cur.execute(sql, (self.first_name, self.last_name, self.email, self.phone_contact, 
+        # create a new cursorsor
+        cursor = connection.cursor()
+        cursor.execute(sql, (self.first_name, self.last_name, self.email, self.phone_contact, 
         self.username, self.user_password, self.user_type, ))
         # commit the changes to the database
-        conn.commit()
+        connection.commit()
         return jsonify({'Message':'You registered successfully.'}),201
     
     @staticmethod  
-    def execute_user_login_auth(self, username, sent_password,error_message):
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM users WHERE username=%s",(username, ))
-        specific_user = cur.fetchall()
-        user_exist = cur.rowcount
-        if user_exist == 0:
+    def execute_user_login_auth(self, username, login_password,error_message):
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM users WHERE username=%s",(username, ))
+        user_data = cursor.fetchall()
+        user = cursor.rowcount
+        if user == 0:
             return jsonify({"Message":error_message}),401
-        user_id = specific_user[0][0]
-        user_password = specific_user[0][6]
+        user_id = user_data[0][0]
+        user_password = user_data[0][6]
         
-        return AuthUser.generate_token(self,user_id, user_password, sent_password, error_message, specific_user)
+        return AuthUser.generate_token(self,user_id, user_password, login_password, error_message, user_data)
    
     @staticmethod
-    def generate_token(self,user_id,user_password, sent_password, error_message, specific_user):
-        if check_password_hash(user_password, sent_password):
+    def generate_token(self,user_id,user_password, login_password, error_message, user_data):
+        if check_password_hash(user_password, login_password):
             token = jwt.encode(
                 {'user_id':user_id, 
                 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 

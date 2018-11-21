@@ -7,7 +7,7 @@ from validate_email import validate_email
 from flask import jsonify, request, json, Response, make_response
 from werkzeug.security import check_password_hash, generate_password_hash
 from api.model.orders import Orders
-from api import conn
+from api import connection
 
 def check_empty_list(check_list, order_id):
     """

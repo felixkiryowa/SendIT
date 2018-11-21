@@ -5,7 +5,7 @@ from flask import request
 from flask import jsonify
 from flask.views import MethodView
 from werkzeug.security import generate_password_hash
-from api import conn
+from api import connection
 from api.model.users import AuthUser
 from api.validators.validate import user_auth_logic
 from api.validators.validate import  check_for_empty_strings_in_reg_object
@@ -45,8 +45,12 @@ class AuthUsers(MethodView):
        
 
     def check_if_user_exists(self, username, email):
+        """
+        method to check whether a user trying to register already exists in the database such that we dont
+        re-register them again
+        """
         # create a new cursor
-        cur = conn.cursor()
+        cur = connection.cursor()
         # execute the INSERT statement
         cur.execute("SELECT * FROM users WHERE username =%s AND email=%s",(username, email, ))
         fetch_user = cur.rowcount

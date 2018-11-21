@@ -15,9 +15,9 @@ class UserSpecificOrders(MethodView):
     @token_required
     def get(self, current_user):
         """function to get a single order for a user"""
-        user_type = current_user[0][7]
+        user_role = current_user[0][7]
         specific_user_id = current_user[0][0]
-        if user_type == 'user':
+        if user_role == 'user':
             try:
                 user_id = int(specific_user_id)
             except:
@@ -28,10 +28,10 @@ class UserSpecificOrders(MethodView):
     @token_required
     def put(self,current_user, parcel_id):
         """function to enable a user to change the destination address of a specific order"""
-        user_type = current_user[0][7]
+        user_role = current_user[0][7]
         user_id = current_user[0][0]
         #check if user is admin
-        if user_type == 'user':
+        if user_role == 'user':
             try:
                 parcel_id = int(parcel_id)
             except:

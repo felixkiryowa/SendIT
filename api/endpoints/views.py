@@ -2,11 +2,11 @@
 This module handles view routes
 
 """
-from api.endpoints.users import AuthUsers
-from api.endpoints.orders import OrdersApi
-from api.endpoints.get_specific_user_orders import UserSpecificOrders
-from api.endpoints.update_order_status import UpdateUserOrderStatus
-from api.endpoints.update_order_present_location import UpdateOrderPresentLocation
+from api.views.users import AuthUsers
+from api.views.orders import OrdersApi
+from api.views.get_specific_user_orders import UserSpecificOrders
+from api.views.update_order_status import UpdateUserOrderStatus
+from api.views.update_order_present_location import UpdateOrderPresentLocation
 
 class GetOrderApiUrls:
     """
