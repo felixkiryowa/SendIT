@@ -39,21 +39,52 @@ class OrdersApi(MethodView):
     @token_required
     def post(self, current_user):
         """funtion to place a new order"""
-        new_parcel_order = request.get_json()
-        price = new_parcel_order['parcel_weight'] * 50000
-        parcel_location = new_parcel_order['parcel_pickup_address']
-        user_id = current_user[0][0]
-        return ORDER_OBJECT.validate_posted_data(new_parcel_order, user_id, price, parcel_location)
+        parcel_order = request.get_json()
+        return ORDER_OBJECT.validate_posted_data(current_user, parcel_order)
 
-    def validate_posted_data(self, new_parcel_order, user_id, price, parcel_location):
+    def check_posted_user_object_for_keys(self, new_user):
         """
-        function to validate user posted order object
+        method to check for keys in a user posted order object
         """
-        if (check_order_object_keys(new_parcel_order)) == True:
-            Orders(user_id, new_parcel_order['order_name'], new_parcel_order['parcel_weight'], 
-            price, new_parcel_order['parcel_pickup_address'], 
-            new_parcel_order['parcel_destination_address'], new_parcel_order['receivers_names'], 
-            new_parcel_order['receivers_contact'], parcel_location).execute_add_order_query()
+        order_keys = ['order_name', 'parcel_weight', 'parcel_pickup_address', 'parcel_destination_address',  
+        'receivers_names','receivers_contact']
+        if set(order_keys).issubset(new_user):
+            return True
+        return False
+
+    def validate_parcel_weight_is_an_integer(self, parcel_order):
+        """
+        method to check whether parcel weight is an integer
+        """
+        if(isinstance(parcel_order['parcel_weight'], int)):
+            return True
+        return False
+
+    def  validate_posted_data_for_empty_strings(self, parcel_order):
+        """
+        method to validate posted order for empty strings
+        """
+        if (parcel_order['order_name'] != '' and parcel_order['parcel_pickup_address'] 
+        and parcel_order['parcel_destination_address'] != '' and parcel_order['receivers_names'] 
+        and parcel_order['receivers_contact'] != ''):
+            return True
+        return False
+        
+
+    def validate_posted_data(self, current_user, parcel_order):
+        """
+        method to validate user posted order object
+        """
+        if (self.check_posted_user_object_for_keys(parcel_order) and 
+        self.validate_parcel_weight_is_an_integer(parcel_order) and 
+        self.validate_posted_data_for_empty_strings(parcel_order)):
+            price = parcel_order['parcel_weight'] * 50000
+            parcel_location = parcel_order['parcel_pickup_address']
+            user_id = current_user[0][0]
+            Orders(user_id, parcel_order['order_name'], parcel_order['parcel_weight'], 
+            price, parcel_order['parcel_pickup_address'], 
+            parcel_order['parcel_destination_address'], parcel_order['receivers_names'], 
+            parcel_order['receivers_contact'], parcel_location).execute_add_order_query()
             return jsonify({'message':'Successfully created an order'}), 201
         parcel_order_object = "{'order_name': 'phones','parcel_weight': 6,'parcel_pickup_address': 'Kamwokya','parcel_destination_address': 'Mpigi',\
         'receivers_contact': '070786543','receivers_names': 'Mukasa Derrick'}"
@@ -65,6 +96,7 @@ class OrdersApi(MethodView):
             status=400, mimetype="application/json"
             )
         return response
+
 
 #create an object of the class
 ORDER_OBJECT = OrdersApi()
