@@ -15,17 +15,10 @@ omit =
     */run.py 
     */api/token/__init__.py
     */api/views/orders.py
+    */api/views/get_specific_user_orders.py
+    */api/views/update_order_present_location.py
+    */api/views/update_order_status.py
+    */api/views/users.py
     */api/token/token_required.py
-
-
-    api/endpoints/views.py                          22      0   100%
-api/model/orders.py                             86     23    73%
-api/model/users.py                              38      2    95%
-api/views/get_specific_user_orders.py           26      6    77%
-api/views/orders.py                             38      5    87%
-api/views/update_order_present_location.py      15      8    47%
-api/views/update_order_status.py                16      1    94%
-api/views/users.py                              36      1    97%
-tests/test_api_endpoints.py                    110     12    89%
 
     
