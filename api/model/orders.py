@@ -155,7 +155,7 @@ class Orders:
         cur.execute("SELECT * FROM orders WHERE senders_user_id =%s",(user_id, ))
         user_exist = cur.rowcount
         if user_exist == 0:
-            return jsonify({"Message":"No Orders Found For User With A User Id Of "+ str(user_id)}), 200
+            return jsonify({"Message":"No Orders Found For User With A User Id Of "+ str(user_id)}), 404
         cur.execute(get_all_user_orders_sql,(user_id,))
         all_user_orders_data = cur.fetchall()
         conn.commit()

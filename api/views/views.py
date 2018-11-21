@@ -40,7 +40,7 @@ class GetOrderApiUrls:
         app.add_url_rule('/api/v2/parcels', view_func=order_view, methods=['POST',])
 
         app.add_url_rule(
-            '/api/v1/users/parcels',
+            '/api/v2/users/parcels',
             view_func=user_specific_orders_view, methods=['GET',]
         )
         app.add_url_rule(

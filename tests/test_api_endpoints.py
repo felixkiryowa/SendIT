@@ -217,7 +217,117 @@ class SendAPITests(unittest.TestCase):
         #order_status value should now be delivered
 
         self.assertEqual(json_data['Specific_order'][0]['order_status'], "delivered")
-       
+
+    def test_get_orders_of_specific_user(self):
+        """
+        method to test getting orders of a specific user
+        """
+        result = self.client().get(
+            '/api/v2/users/parcels',
+            headers={"token": self.user_generated_token}
+        )
+        json_data = json.loads(result.data)
+        if json_data == {'Message':'No Order Found With Order Id Of 1'}:
+            self.assertEqual(json_data, {'Message':'No Order Found With Order Id Of 1'})
+        # else:
+        #     self.assertEqual(result.status_code, 200)
+
+    def test_if_value_order_id_is_not_string(self):
+        """
+        method to test whether passed order_id is a string
+        """
+        result = self.client().get(
+            '/api/v2/parcels/'+'one',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    def test_if_value_order_id_is_a_boolean(self):
+        """
+        method to test whether passed order_id is a boolean
+        """
+        result = self.client().get(
+            '/api/v2/parcels/True',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    def test_if_value_order_id_is_not_a_float_number(self):
+        """
+        method to test whether passed order_id is a float number
+        """
+        result = self.client().get(
+            '/api/v2/parcels/3.69',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    def test_if_order_id_is_a_complex_number(self):
+        """
+        method to test whether passed order_id is a complex number
+        """
+        result = self.client().get(
+            '/api/v2/parcels/3+j',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    # Change Order status tests
+    def test_if_value_order_id_passed_while_updating_order_status_is_not_string(self):
+        """
+        method to test whether passed order_id is a string
+        """
+        result = self.client().put(
+            '/api/v2/parcels/one/status',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    def test_if_value_order_id_passed_while_updating_order_status_is_not_a_boolean(self):
+        """
+        method to test whether passed order_id is a boolean
+        """
+        result = self.client().put(
+            '/api/v2/parcels/True/status',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    def test_if_value_order_id_passed_while_updating_order_status_is_not_a_floating_number(self):
+        """
+        method to test whether passed order_id is a float number
+        """
+        result = self.client().put(
+            '/api/v2/parcels/3.89/status',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')
+
+    def test_if_value_order_id_passed_while_updating_order_status_is_not_a_complex_number(self):
+        """
+        method to test whether passed order_id is a complex number
+        """
+        result = self.client().put(
+            '/api/v2/parcels/3+j/status',
+            headers={"token": self.admin_generated_token}
+        )
+        result_data = json.loads(result.data)
+        self.assertEqual(result.status_code, 400)
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id')    
 
 if __name__ == '__main__':
     unittest.main()
