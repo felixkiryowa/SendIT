@@ -16,5 +16,8 @@ omit =
     */api/token/__init__.py
     */api/endpoints/orders.py
     */api/token/token_required.py
+    */api/views/update_order_present_location.py
+    */api/views/get_specific_user_orders.py 
+    */api/views/orders.py
 
     
