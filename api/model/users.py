@@ -73,4 +73,6 @@ class AuthUser:
             return jsonify({'token_generated':token.decode('UTF-8')}),200
         return jsonify({"Message":error_message}),401
 
+    
+
 
