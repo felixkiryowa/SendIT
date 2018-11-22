@@ -1,0 +1,22 @@
+Get all orders and a single order
+---
+tags:
+  - Orders
+parameters:
+  - name: token
+    in: header
+    description: Token header required for user authentication
+    required: true
+    type: string
+responses:
+  200:
+    description: You have got all orders
+security:
+  - JWT:
+    description: Pass in jwt token i.e Bearer <jwt>
+    type: apiKey
+    scheme: bearer
+    name: Authorization
+    in: header
+    template: "Bearer {apiKey}"
+    bearerFormat: JWT

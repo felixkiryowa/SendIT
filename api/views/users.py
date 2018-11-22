@@ -2,6 +2,7 @@
 This module defines api views
 """
 import re
+from flasgger import swag_from
 from flask import request
 from flask import jsonify
 from flask.views import MethodView
@@ -14,6 +15,7 @@ from flask import Response
 
 class AuthUsers(MethodView):
     """Class to define user auth end points"""
+    @swag_from('../docs/signup_login.yml')
     def post(self):
         """funtion to register a new user"""
         rule = request.url_rule

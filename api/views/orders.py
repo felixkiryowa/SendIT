@@ -3,6 +3,7 @@ This module defines api views
 
 """
 import re
+from flasgger import swag_from
 from flask import jsonify, request
 from flask import json
 from flask import Response
@@ -14,6 +15,7 @@ from api.model.orders import Orders
 
 class OrdersApi(MethodView):
     """Class to define all the api end points"""
+    @swag_from('../docs/orders.yml')
     @token_required
     def get(self, current_user, parcel_order_id):
         """function to get a single order or to get all the orders"""

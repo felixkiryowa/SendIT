@@ -1,8 +1,6 @@
 
 [![Build Status](https://travis-ci.org/felixkiryowa/SendIT.svg?branch=develop)](https://travis-ci.org/felixkiryowa/SendIT)
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/83fbc29f2b74f182296d/maintainability)](https://codeclimate.com/github/felixkiryowa/SendIT/maintainability)
-
 [![Coverage Status](https://coveralls.io/repos/github/felixkiryowa/SendIT/badge.svg?branch=develop)](https://coveralls.io/github/felixkiryowa/SendIT?branch=develop)
 
 
