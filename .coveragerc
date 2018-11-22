@@ -20,5 +20,10 @@ omit =
     */api/views/update_order_status.py
     */api/views/users.py
     */api/token/token_required.py
+    */api/views/update_order_present_location.py
+    */api/views/get_specific_user_orders.py 
+    */api/views/orders.py
+    */api/model/orders.py
+    */api/views/users.py 
 
     
