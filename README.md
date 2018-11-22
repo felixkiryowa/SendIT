@@ -1,5 +1,8 @@
 
-[![Build Status](https://travis-ci.org/felixkiryowa/SendIT.svg?branch=develop)](https://travis-ci.org/felixkiryowa/SendIT)[![Maintainability](https://api.codeclimate.com/v1/badges/83fbc29f2b74f182296d/maintainability)(https://codeclimate.com/github/felixkiryowa/SendIT/maintainability)
+[![Build Status](https://travis-ci.org/felixkiryowa/SendIT.svg?branch=develop)](https://travis-ci.org/felixkiryowa/SendIT)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/83fbc29f2b74f182296d/maintainability)](https://codeclimate.com/github/felixkiryowa/SendIT/maintainability)
+
 [![Coverage Status](https://coveralls.io/repos/github/felixkiryowa/SendIT/badge.svg?branch=develop)](https://coveralls.io/github/felixkiryowa/SendIT?branch=develop)
 
 
@@ -69,11 +72,11 @@ source env/Scripts/activate
 
 HTTP Method|Endpoint|Functionality
 -----------|--------|-------------
-POST /auth/signup  | Register a user 
-POST /auth/login   | Login a user
-PUT /parcels/<parcel_id>/destination | Change the location  of a specific parcel  delivery order 
-PUT /parcels/<parcel_id>/status  |  Change the status of  a specific parcel  delivery order 
-PUT /parcels/<parcel_id>/presentlocation | Change the present  location of a specific  parcel delivery order
+POST     |  /auth/signup  | Register a user 
+POST     |  /auth/login   | Login a user
+PUT      |  /parcels/<parcel_id>/destination | Change the location  of a specific parcel  delivery order 
+PUT      |  /parcels/<parcel_id>/status  |  Change the status of  a specific parcel  delivery order 
+PUT     |   /parcels/<parcel_id>/presentlocation | Change the present  location of a specific  parcel delivery order
 
 ## Testing 
 
