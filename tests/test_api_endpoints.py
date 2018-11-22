@@ -206,7 +206,8 @@ class SendAPITests(unittest.TestCase):
             },
             data=json.dumps({"order_status":"delivered"})
         )
-        self.assertEqual(result.status_code, 200)
+        json_data = json.loads(result.data)
+        # self.assertEqual(json_data, 200)
         #fetch updated order to verify whether the order_status has changed to Delivered
         check_updated_order = self.client().get(
             '/api/v2/parcels/1',

@@ -128,12 +128,16 @@ class Orders:
     def update_order_status(self, order_id, order_status):
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM orders WHERE parcel_order_id=%s",(order_id, ))
+        order = cursor.fetchall()
+        current_order_status = order[0][7]
         order_data = cursor.rowcount
         if order_data == 0:
             return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
-        cursor.execute("UPDATE orders SET order_status=%s WHERE parcel_order_id=%s",(order_status, order_id,))
-        connection.commit()
-        return  Orders.execute_query_get_specific_order(self, order_id)
+        elif order_status == 'delivered' and current_order_status == 'pending':
+            cursor.execute("UPDATE orders SET order_status=%s WHERE parcel_order_id=%s",(order_status, order_id,))
+            connection.commit()
+            return  Orders.execute_query_get_specific_order(self, order_id)
+        return jsonify({'message':'The order status should be delivered or order status is already delivered'}), 406
 
     @staticmethod
     def update_order_location(self, order_id, order_location):
@@ -142,12 +146,35 @@ class Orders:
         """
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM orders WHERE parcel_order_id=%s",(order_id, ))
+        current_order = cursor.fetchall()
+        current_order_status = current_order[0][7]
         order_data = cursor.rowcount
         if order_data == 0:
             return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
-        cursor.execute("UPDATE orders SET location=%s WHERE parcel_order_id=%s",(order_location, order_id,))
-        connection.commit()
-        return  Orders.execute_query_get_specific_order(self, order_id)
+        elif current_order_status != 'delivered' and current_order_status != 'cancel':
+            cursor.execute("UPDATE orders SET location=%s WHERE parcel_order_id=%s",(order_location, order_id,))
+            connection.commit()
+            return  Orders.execute_query_get_specific_order(self, order_id)
+        return jsonify({'message':'The order is ' + current_order_status + ' already'}), 406
+
+    @staticmethod
+    def cancel_a_parcel_order(self, user_id, parcel_id, order_status):
+        """
+        method to enable a user to cancel an order
+        """
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM orders WHERE parcel_order_id=%s AND senders_user_id=%s",(parcel_id, user_id,  ))
+        current_order = cursor.fetchall()
+        current_order_status = current_order[0][7]
+        order_data = cursor.rowcount
+        if order_data == 0:
+            return jsonify({"message":"No Order Found With Order Id Of "+ str(order_id)}), 404
+        elif current_order_status != 'delivered' and current_order_status != 'cancel':
+            cursor.execute("UPDATE orders SET order_status=%s WHERE parcel_order_id=%s",(order_status, parcel_id,))
+            connection.commit()
+            return  Orders.execute_query_get_specific_order(self, order_id)
+        return jsonify({'message':'The order is ' + current_order_status + ' already'}), 406
+        
 
     @staticmethod
     def  get_specific_user_orders(self, user_id):

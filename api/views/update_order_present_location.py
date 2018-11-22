@@ -6,7 +6,7 @@ from flask import jsonify
 from flask import request
 from flask.views import MethodView
 from api.model.orders import Orders
-from api.token.token_required import token_required
+from api.helpers.token_required import token_required
 
 class UpdateOrderPresentLocation(MethodView):
     """Class to define an endpoint to update a specific user order status"""
@@ -21,7 +21,7 @@ class UpdateOrderPresentLocation(MethodView):
             except:
                 return jsonify({'message':'Invalid Parcel Id'}), 400
             return Orders.update_order_location(self, parcel_id,
-            request.json['location'])
+            request.json['parcel_location'])
         return jsonify({'message':'Cannot Perform That Function!'}), 404
 
     

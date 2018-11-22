@@ -5,9 +5,8 @@ This module defines api end point to enable an admin to update the order status
 from flask import jsonify
 from flask import request
 from flask.views import MethodView
-from api.token.token_required import token_required
 from api.model.orders import Orders
-from api.token.token_required import token_required
+from api.helpers.token_required import token_required
 
 class UpdateUserOrderStatus(MethodView):
     """Class to define an endpoint to update a specific user order status"""

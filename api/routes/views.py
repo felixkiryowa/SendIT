@@ -7,6 +7,7 @@ from api.views.orders import OrdersApi
 from api.views.get_specific_user_orders import UserSpecificOrders
 from api.views.update_order_status import UpdateUserOrderStatus
 from api.views.update_order_present_location import UpdateOrderPresentLocation
+from api.views.cancel_order import CancelOrder
 
 class GetOrderApiUrls:
     """
@@ -20,6 +21,7 @@ class GetOrderApiUrls:
         auth_users_view = AuthUsers.as_view('user_auth')
         update_order_status = UpdateUserOrderStatus.as_view('update_status')
         update_order_present_location = UpdateOrderPresentLocation.as_view('order_location')
+        cancel_order = CancelOrder.as_view('cancel_order')
 
         app.add_url_rule(
             '/api/v2/auth/signup', view_func=auth_users_view,
@@ -44,7 +46,7 @@ class GetOrderApiUrls:
             view_func=user_specific_orders_view, methods=['GET',]
         )
         app.add_url_rule(
-            '/api/v2/parcels/<order_parcel_id>/cancel', view_func=order_view,
+            '/api/v2/parcels/<parcel_id>/cancel', view_func=cancel_order,
             methods=['PUT',]
         )
         app.add_url_rule(

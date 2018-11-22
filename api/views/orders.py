@@ -7,7 +7,7 @@ from flask import jsonify, request
 from flask import json
 from flask import Response
 from flask.views import MethodView
-from api.token.token_required import token_required
+from api.helpers.token_required import token_required
 from api.model.orders import Orders
 
 
