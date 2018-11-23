@@ -41,15 +41,17 @@ class AuthUsers(MethodView):
             username = new_user_data['username'].strip()
             user_password = new_user_data['user_password'].strip()
         except:
-            return jsonify({'message':'One or More Fields Are empty'}),400
+            return jsonify({'message':'One or More Fields Are Missing'}),400
         if (not first_name  or not last_name or not email or not phone_contact or not 
         username or not user_password):
-            return jsonify({'message':'You submitted an empty field'}), 400
+            return jsonify({'message':'One or More Fields Are Empty field'}), 400
         if not (Validators().search_username_are_only_characters(new_user_data['first_name'], 
         new_user_data['last_name'])):
             return jsonify({'message':'One Or More Fields consist of regular expressions'}), 400
         if not (Validators().validate_phone_number_consist_of_digits(new_user_data['phone_contact'])):
             return jsonify({'message': 'Phone contact should consist of only digits'}), 400
+        if not (Validators().validate_length_of_phone_number(new_user_data['phone_contact'])):
+            return jsonify({'message': 'Phone contact should consist of 10 digits'}), 400
         if not (Validators().validate_email(new_user_data)):
             return jsonify({'message':'Invalid email'}), 400
         if (Validators().check_if_user_exists(new_user_data['username'], new_user_data['email'])):

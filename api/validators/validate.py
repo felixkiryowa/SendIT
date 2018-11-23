@@ -75,6 +75,13 @@ class Validators:
         """
         method to check whether a phone contact consist of only digits
         """
-        if(phone_contact.isdigit() and len(phone_contact) == 10):
+        if(phone_contact.isdigit()):
             return True
-        return False 
+        return False
+    def validate_length_of_phone_number(self, phone_contact):
+        """
+        method to validate the length of a phone contact
+        """
+        if(len(phone_contact) == 10):
+            return True
+        return False

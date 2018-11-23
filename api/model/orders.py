@@ -176,7 +176,7 @@ class Orders:
                 return  Orders.execute_query_get_specific_order(self, parcel_id)
             return jsonify({'message':'The order is ' + current_order_status + ' already'}), 406
         return jsonify({'message':'Your Not The Owner Of That Parcel Order ,You Cant Change its status'}), 406
-        
+    
 
     @staticmethod
     def  get_specific_user_orders(self, user_id):
