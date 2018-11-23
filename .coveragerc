@@ -26,6 +26,7 @@ omit =
     */api/model/orders.py
     */api/views/users.py 
     */api/views/cancel_order.py
+    */api/helpers/drop_tables.py
 
 
     
