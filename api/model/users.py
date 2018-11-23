@@ -73,6 +73,39 @@ class AuthUser:
             return jsonify({'token_generated':token.decode('UTF-8')}),200
         return jsonify({"Message":error_message}),401
 
-    
+    @staticmethod
+    def create_default_admin_user():
+        """
+        method to create default admin user
+        """
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS users  (
+                user_id SERIAL PRIMARY KEY,
+                first_name VARCHAR(200) NOT NULL,
+                last_name VARCHAR(200) NOT NULL,
+                email VARCHAR(200) NOT NULL,
+                phone_contact VARCHAR(200) NULL,
+                username VARCHAR(255) NOT NULL UNIQUE, 
+                user_password VARCHAR(255) NOT NULL,
+                user_type VARCHAR(200) NOT NULL
+            )
+            """
+        )
+        admin_password = generate_password_hash("user123")
+        cursor.execute("SELECT * FROM users WHERE username =%s AND email=%s",("mark22", "mark@email.com", ))
+        user = cursor.rowcount
+        if user >= 1:
+            return True
+        sql = """INSERT INTO users(first_name, last_name, email, phone_contact, username, 
+        user_password, user_type)
+        VALUES(%s,%s,%s,%s,%s,%s,%s) RETURNING user_id;"""
+        # create a new cursorsor
+        cursor = connection.cursor()
+        cursor.execute(sql, ("mark", "kajubi", "mark@email.com", "0789906754", 
+        "mark22", admin_password, "admin", ))
+        # commit the changes to the database
+        connection.commit()
 
 

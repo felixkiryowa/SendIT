@@ -4,7 +4,8 @@ This module defines tests of all the API endpoints
 import unittest
 import os
 from flask import json
-
+from api.model.users import AuthUser
+from api.helpers.drop_tables import DropTables
 from api import app
 
 
@@ -16,7 +17,7 @@ class SendAPITests(unittest.TestCase):
         """
         function to define all test setup variables
         """
-        self.test_database = os.getenv('TEST_DATABASE','test_db')
+        AuthUser.create_default_admin_user()
         self.app = app
         self.current_user = 'admin'
         self.client = app.test_client
@@ -40,15 +41,15 @@ class SendAPITests(unittest.TestCase):
         }
      
 
-        self.admin_user = {
-            "first_name":"Mark",
-            "last_name":"Kajubi",
-            "email":"mark@email.com",
-            "phone_contact":"0789906754",
-            "username": "mark22",
-            "user_password": "user123",
-            "user_type":"admin"
-        }
+        # self.admin_user = {
+        #     "first_name":"Mark",
+        #     "last_name":"Kajubi",
+        #     "email":"mark@email.com",
+        #     "phone_contact":"0789906754",
+        #     "username": "mark22",
+        #     "user_password": "user123",
+        #     "user_type":"admin"
+        # }
 
         self.login_credentials_admin = {
             "username":"mark22",
@@ -71,17 +72,17 @@ class SendAPITests(unittest.TestCase):
             )
         )
 
-        self.client().post(
-            '/api/v2/auth/signup', content_type='application/json',
-            data=json.dumps(
-                dict(
-                    first_name=self.admin_user['first_name'], last_name=self.admin_user['last_name'],
-                    email=self.admin_user['email'], phone_contact=self.admin_user['phone_contact'],
-                    username=self.admin_user['username'], user_password=self.admin_user['user_password'],
-                    user_type=self.admin_user['user_type']
-                )
-            )
-        )
+        # self.client().post(
+        #     '/api/v2/auth/signup', content_type='application/json',
+        #     data=json.dumps(
+        #         dict(
+        #             first_name=self.admin_user['first_name'], last_name=self.admin_user['last_name'],
+        #             email=self.admin_user['email'], phone_contact=self.admin_user['phone_contact'],
+        #             username=self.admin_user['username'], user_password=self.admin_user['user_password'],
+        #             user_type=self.admin_user['user_type']
+        #         )
+        #     )
+        # )
 
         user_login_result = self.client().post(
             '/api/v2/auth/login', content_type='application/json',
@@ -328,7 +329,9 @@ class SendAPITests(unittest.TestCase):
         )
         result_data = json.loads(result.data)
         self.assertEqual(result.status_code, 400)
-        self.assertEqual(result_data['message'], 'Invalid Parcel Id')    
+        self.assertEqual(result_data['message'], 'Invalid Parcel Id') 
+
+    
 
 if __name__ == '__main__':
     unittest.main()

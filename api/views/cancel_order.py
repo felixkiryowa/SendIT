@@ -1,6 +1,5 @@
 """
 This module defines api end point to enable an user to cancel an orer
-
 """
 from flask import jsonify
 from flask import request
