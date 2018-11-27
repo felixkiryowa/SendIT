@@ -74,11 +74,7 @@ function authenticateadmins(){
          alert("Invalid Email or Password!");
     }
 }
-//authenticating users
-function authenticateusers(){
-//redirecting to user dashboard
-    window.location.href="users_dashboard.html"; 
-}
+
 
 // function when user clicks on signup
 function signUpUser() {
