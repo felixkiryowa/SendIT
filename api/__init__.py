@@ -2,7 +2,9 @@ import psycopg2
 import os
 from flask import Flask
 from flasgger import Swagger
-app =  Flask(__name__) 
+from flask_cors import CORS
+app =  Flask(__name__)
+CORS(app) 
 secret_key = 'thisisasceretkey'
 
 Swagger(app)
