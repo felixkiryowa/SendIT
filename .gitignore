@@ -4,8 +4,8 @@
 .pytest_cache/
 *.pyc 
 env/
-/api
-/tests
+/api/
+/tests/
 run.py
 
 
