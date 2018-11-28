@@ -1,9 +1,11 @@
 .env
 .vscode/
-/api
+
 .pytest_cache/
 *.pyc 
 env/
+/api
 /tests
+run.py
 
 
