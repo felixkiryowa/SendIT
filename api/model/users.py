@@ -57,7 +57,11 @@ class AuthUser:
         user_data = cursor.fetchall()
         user = cursor.rowcount
         if user == 0:
-            return jsonify({"Message":error_message}),401
+            handle_error = {
+                'message':error_message
+            }
+            return jsonify({'login_message': handle_error}),401
+            # return jsonify({"message":error_message}),401
         user_id = user_data[0][0]
         user_password = user_data[0][6]
         user_role = user_data[0][7]
@@ -76,10 +80,11 @@ class AuthUser:
                 'message':'successfully loggedin',
                 'token_generated':token.decode('UTF-8')
             }
-            handle_error = {
-                'message':error_message
-            }
+            
             return jsonify({'login_message':login_response}),200
+        handle_error = {
+            'message':error_message
+        }
         return jsonify({"login_message": handle_error}),401
 
     @staticmethod

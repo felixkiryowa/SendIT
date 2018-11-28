@@ -28,9 +28,16 @@ function authenticateusers() {
     {
        if(data["login_message"]["message"] == 'successfully loggedin') {
            if(data["login_message"]["user_role"] == 'user') {
+            // Store token generated to the browser localstorage
+            // Store token generated to the browser localstorage
+               console.log(data["login_message"]["token_generated"])
+               localStorage.setItem('token', data["login_message"]["token_generated"]);
                window.location.href = "./users_dashboard.html";
 
            }else {
+            // Store token generated to the browser localstorage
+            console.log(data["login_message"]["token_generated"])
+            localStorage.setItem('token', data["login_message"]["token_generated"]);
             window.location.href = "./admin_dashboard.html";
            }
 
