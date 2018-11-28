@@ -1,4 +1,7 @@
- /* signup form*/
+.login_error_message {
+  color: red;
+}
+/* signup form*/
  .signup_div {
   display: block;
   width: 40%;

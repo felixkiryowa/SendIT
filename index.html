@@ -89,11 +89,12 @@
      <!-- login form -->
      <div class="loginBox" id="site_login_form">
       <h1 class="login_header">Login Here</h1>
+      <P align="center" id="login_error_message" class="login_error_message"></P>
       <form>
-          <p>Email Address</p>
-          <input type="email" name="" id="user_email" placeholder="Enter Email Address" required>
+          <p>Username</p>
+          <input type="email" name="user_name" id="user_name" placeholder="Enter Username" required>
           <p>Password</p>
-          <input type="password" id="user_password" name="" placeholder="Enter Password" required>
+          <input type="password" id="user_password" name="user_password" placeholder="Enter Password" required>
           
       </form>
       <br>
@@ -133,6 +134,6 @@
       
     <!-- signup form -->
   </body>
-  <script src="js/handle_requests.js"></script>
+  <script src="js/auth_users.js"></script>
   <script src="js/sendit.js" ></script>
 </html>

@@ -60,18 +60,27 @@ class AuthUser:
             return jsonify({"Message":error_message}),401
         user_id = user_data[0][0]
         user_password = user_data[0][6]
+        user_role = user_data[0][7]
         
-        return AuthUser.generate_token(self,user_id, user_password, login_password, error_message, user_data)
+        return AuthUser.generate_token(self,user_id, user_password, user_role, login_password, error_message, user_data)
    
     @staticmethod
-    def generate_token(self,user_id,user_password, login_password, error_message, user_data):
+    def generate_token(self,user_id,user_password, user_role, login_password, error_message, user_data):
         if check_password_hash(user_password, login_password):
             token = jwt.encode(
                 {'user_id':user_id, 
                 'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 
                 secret_key, algorithm='HS256')
-            return jsonify({'token_generated':token.decode('UTF-8')}),200
-        return jsonify({"Message":error_message}),401
+            login_response = {
+                'user_role':user_role,
+                'message':'successfully loggedin',
+                'token_generated':token.decode('UTF-8')
+            }
+            handle_error = {
+                'message':error_message
+            }
+            return jsonify({'login_message':login_response}),200
+        return jsonify({"login_message": handle_error}),401
 
     @staticmethod
     def create_default_admin_user():
