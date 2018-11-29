@@ -88,7 +88,7 @@ document.getElementById("register").addEventListener("click",function(){
     var login_user_form = document.getElementById('site_login_form');
     var site_signup_form = document.getElementById('site_signup_form');
     var space_liner = document.getElementById("space_liner");
-    document.body.style.backgroundImage="url(images/image3.jpg)";
+    // document.body.style.backgroundImage="url(images/image3.jpg)";
 
     var i;
     for (i = 0; i < all_sections.length; i++) {
@@ -109,7 +109,7 @@ document.getElementById("enter_account").addEventListener("click",function(){
     var login_user_form = document.getElementById('site_login_form');
     var site_signup_form = document.getElementById('site_signup_form');
     var space_liner = document.getElementById("space_liner");
-    document.body.style.backgroundImage="url(images/image3.jpg)";
+    // document.body.style.backgroundImage="url(images/image3.jpg)";
     var i;
     for (i = 0; i < all_sections.length; i++) {
         all_sections[i].style.display = "none";

@@ -3,8 +3,9 @@
 .pytest_cache/
 *.pyc 
 env/
-/api/
-/tests/
-run.py
+api/
+tests/
+.gitignore
+/run
 
 

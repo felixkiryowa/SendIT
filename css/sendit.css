@@ -1,3 +1,7 @@
+
+.field_errors {
+  display: none;
+}
 .login_error_message {
   color: red;
 }

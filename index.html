@@ -107,26 +107,37 @@
     <!-- signup form -->
     <div class="wrapper signup_div" id="site_signup_form">
                 <header class="header">Sign Up Here</header>
+                <div id="success_signup" style="display:none;padding-left: 5px;">
+                    <p align="center" id="success_message"></p>
+                </div>
+                
+                
                 <article class="main">
                     <div>
                         <p>First Name</p>
-                        <input type="text" name="" placeholder="Enter First Name" required>
+                        <input type="text" name="firstname" id="firstname" placeholder="Enter First Name" required>
+                        <p align="center" class="field_errors" id="error_firstname"></p>
                         <p>Last Name</p>
-                        <input type="text" name="" placeholder="Enter Last Name" required>
+                        <input type="text" name="lastname" id="lastname" placeholder="Enter Last Name" required>
+                        <p align="center" class="field_errors" id="error_lastname"></p>
                         <p>Contact</p>
-                        <input type="text" name="" placeholder="Enter Contact" required>
+                        <input type="text" name="contact" id="contact" placeholder="Enter Contact" required>
+                        <p align="center" class="field_errors" id="error_contact"></p>
                     </div>
                     <div>
                         <p>Email Address</p>
-                        <input type="email" name="" placeholder="Enter Email Address" required>
+                        <input type="email" name="email_address" id="email_address" placeholder="Enter Email Address" required>
+                        <span class="field_errors" id="error_email_address"></span>
                         <p>Password</p>
-                        <input type="password" name="" placeholder="Enter Password" required>
-                        <p>Confirm Password</p>
-                        <input type="password" name="" placeholder="Re-enter Password" required>
+                        <input type="password" name="password" id="password" placeholder="Enter Password" required>
+                        <p align="center" class="field_errors" id="error_password"></p>
+                        <p>Username</p>
+                        <input type="text" name="username" id="username" placeholder="Enter Username" required>
+                        <p align="center" class="field_errors" id="error_username"></p>
                     </div>
                 </article>
                 <footer class="footer">
-                    <p align="center"><button class="signup_submit_button" onclick="signUpUser()" type="submit">Signup</button></p>
+                    <p align="center"><button class="signup_submit_button" id="save_user" onclick="RegisterUser()">Signup</button></p>
                 </footer>
       </div>
 
