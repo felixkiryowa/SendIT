@@ -110,19 +110,23 @@
                 <div id="success_signup" style="display:none;padding-left: 5px;">
                     <p align="center" id="success_message"></p>
                 </div>
+                <div id="all_fields_required" style="display:none;padding-left: 5px;">
+                    <p align="center" id="overall_error_message"></p>
+                </div>
+
                 
                 
                 <article class="main">
                     <div>
                         <p>First Name</p>
                         <input type="text" name="firstname" id="firstname" placeholder="Enter First Name" required>
-                        <p align="center" class="field_errors" id="error_firstname"></p>
+                        <span align="center" class="field_errors" id="error_firstname"></span>
                         <p>Last Name</p>
                         <input type="text" name="lastname" id="lastname" placeholder="Enter Last Name" required>
-                        <p align="center" class="field_errors" id="error_lastname"></p>
+                        <span align="center" class="field_errors" id="error_lastname"></span>
                         <p>Contact</p>
                         <input type="text" name="contact" id="contact" placeholder="Enter Contact" required>
-                        <p align="center" class="field_errors" id="error_contact"></p>
+                        <span align="center" class="field_errors" id="error_contact"></span>
                     </div>
                     <div>
                         <p>Email Address</p>
@@ -130,10 +134,10 @@
                         <span class="field_errors" id="error_email_address"></span>
                         <p>Password</p>
                         <input type="password" name="password" id="password" placeholder="Enter Password" required>
-                        <p align="center" class="field_errors" id="error_password"></p>
+                        <span align="center" class="field_errors" id="error_password"></span>
                         <p>Username</p>
                         <input type="text" name="username" id="username" placeholder="Enter Username" required>
-                        <p align="center" class="field_errors" id="error_username"></p>
+                        <span align="center" class="field_errors" id="error_username"></span>
                     </div>
                 </article>
                 <footer class="footer">

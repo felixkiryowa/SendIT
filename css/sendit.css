@@ -8,7 +8,7 @@
 /* signup form*/
  .signup_div {
   display: block;
-  width: 40%;
+  width: 90%;
   margin: auto;
   float: none;
   padding-top: 20px;
@@ -17,7 +17,7 @@
  
  .create_order_div {
   display: block;
-  width: 40%;
+  width: 90%;
   margin: auto;
   float: none;
   padding-top: 20px;
@@ -322,7 +322,7 @@
   }
   .submit_button:hover {
     cursor: pointer;
-    background: #87007c;
+    background: #000;
     color: #fff;
   
   }
@@ -339,7 +339,7 @@
    }
    .signup_submit_button:hover {
      cursor: pointer;
-     background: #87007c;
+     background: #000;
      color: #fff;
    
    }
@@ -358,7 +358,7 @@
    }
    .save_order_submit_button:hover {
      cursor: pointer;
-     background: #87007c;
+     background: #000;
      color: #fff;
    
    }
@@ -769,6 +769,8 @@
     display: flex;
     /* justify-content: center; */
     border-bottom: 2px solid #aaaaaa;
+    margin-left: 10%;
+    margin-right: 10%;
   
   }
   .modal-content .destination {

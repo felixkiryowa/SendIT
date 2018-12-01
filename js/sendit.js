@@ -176,7 +176,8 @@ var span = document.getElementsByClassName("close")[0];
 var close2  = document.getElementsByClassName("close2")[0];
 var close6  = document.getElementsByClassName("close6")[0];
 var close7  = document.getElementsByClassName("close7")[0];
-function MakeOrder1(){
+function MakeOrder1(pickup_address,destination_address,day,created_at){
+    alert(pickup_address + destination_address + day + created_at);
     modal.style.display = "block";
 }
 
