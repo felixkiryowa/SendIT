@@ -176,9 +176,33 @@ var span = document.getElementsByClassName("close")[0];
 var close2  = document.getElementsByClassName("close2")[0];
 var close6  = document.getElementsByClassName("close6")[0];
 var close7  = document.getElementsByClassName("close7")[0];
-function MakeOrder1(pickup_address,destination_address,day,created_at){
-    alert(pickup_address + destination_address + day + created_at);
-    modal.style.display = "block";
+
+function MakeOrder1(parcel_id){
+    fetch('http://127.0.0.1:5000/api/v2/users/parcels/'+parcel_id,
+    {
+        method:'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "token":  localStorage.getItem("token")
+        },
+        cache:'no-cache'
+    })
+    .then((res) => res.json())
+    .then(data => {
+        modal.style.display = "block";
+        var message = data["order"][0]["order_name"] + "delivery order Details";
+        var parcel_name = document.getElementById("parcel_name");
+        var pickuplocation = document.getElementById("pickuplocation");
+        var place = document.getElementById("place");
+        var created_at = document.getElementById("created_at");
+        parcel_name.innerHTML = message;
+        pickuplocation.innerHTML = data["order"][0]["parcel_pickup_address"];
+        place.innerHTML = data["order"][0]["parcel_destination_address"];
+        created_at.innerHTML = data["order"][0]["created_at"];
+    
+    })
+   
 }
 
 function GoogleMap() {

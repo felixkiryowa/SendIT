@@ -207,11 +207,13 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
                     var string1 = splitting_string[0].toString();
                     var string2 =  splitting_string[1].toString();
                     var ordering_time = data["Specific_order"][i]["ordering_time"];
-
+                    var pickup_address = data["Specific_order"][i]["parcel_pickup_address"];
+                    var destination_address =  data["Specific_order"][i]["parcel_destination_address"];
+                    
                     table +=  
                     '<tr><td>'+data["Specific_order"][i]["order_name"]
                     +'</td><td>'+data["Specific_order"][i]["order_status"]
-                    +'</td><td><button class="order_details_button" onclick="MakeOrder1('+data["Specific_order"][i]["parcel_pickup_address"]+','+data["Specific_order"][i]["parcel_destination_address"]+','+string1.trim()+','+ordering_time.toString()+')">Order Details</button>'
+                    +'</td><td><button class="order_details_button" onclick="MakeOrder1('+data["Specific_order"][i]["parcel_order_id"]+')">Order Details</button>'
                     +'</td><td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button>'
                     +'</td>';
                 }
@@ -220,6 +222,13 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
         }
         
     })
+
+    // var modal = document.getElementById('myModal');
+    // var span = document.getElementsByClassName("close")[0];
+    // function MakeOrder1(pickup_address,destination_address,day){
+    //     alert(pickup_address + destination_address + day);
+    //     modal.style.display = "block";
+    // }
 
 
 

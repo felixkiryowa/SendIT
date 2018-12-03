@@ -227,13 +227,13 @@
             <div class="modal-content">
               <span class="close">&times;</span>
               <div>
-                 <header class="header">Pizza  delivery order Details</header>
+                 <header class="header" id="parcel_name"></header>
               </div>
               <div>
-                  <p style="float:left;">Pick Up Location : <b>Nalukolongo</b></p>
+                  <p style="float:left;">Pick Up Location : <b id="pickuplocation"></b></p>
               </div>
               <div style="height:50px;">
-                <p id="destination_location" style="float:left;">Destination Location : <b id="place">Ntinda</b></p>
+                <p id="destination_location" style="float:left;">Destination Location : <b id="place"></b></p>
                 <br>
                 <!-- User is able to change the destination they had specified ealier for the parcel order from here -->
                 <input type="text" id="newdestination" placeholder="Enter New Destination" class="destination_input"/>
@@ -242,7 +242,7 @@
                 <br>
             </div>
              <div>
-               <p>Date : <b>04/11/2018</b></p>
+               <p>Created On : <b id="created_at"></b></p>
              </div>
              <br>
              <br>
