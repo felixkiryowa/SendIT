@@ -181,14 +181,14 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
 })
     .then((res) => res.json())
     .then(data => {
-        if(data["message"] == 'No Orders Found, Make An Order'){
-            var success_signup = document.getElementById('success_signup');
-            var success_message = document.getElementById('success_message');
-            var message  = 'No Orders Found!!';
-            success_signup.style.display='block';
-            success_message.innerHTML = message;
-            success_message.style.backgroundColor='lightblue';
-            success_message.style.fontStyle='italic';
+        if(data["message"] == 'No Orders Found, You Can Make An Order Now!!!'){
+            var no_orders_found = document.getElementById('no_orders_found');
+            var no_orders_found_message = document.getElementById('no_orders_found_message');
+            var message  = 'No Orders Found, You Can Make An Order Now!!!';
+            no_orders_found.style.display='block';
+            no_orders_found_message.innerHTML = message;
+            // no_orders_found_message.style.backgroundColor='lightblue';
+            no_orders_found_message.style.fontStyle='italic';
         }
         else{
             var i = 0;
@@ -214,7 +214,7 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
                     '<tr><td>'+data["Specific_order"][i]["order_name"]
                     +'</td><td>'+data["Specific_order"][i]["order_status"]
                     +'</td><td><button class="order_details_button" onclick="MakeOrder1('+data["Specific_order"][i]["parcel_order_id"]+')">Order Details</button>'
-                    +'</td><td><button class="order_cancel_button" onclick="CancelOrder()">Cancel Order</button>'
+                    +'</td><td><button class="order_cancel_button" onclick="CancelOrder('+data["Specific_order"][i]["parcel_order_id"]+')">Cancel Order</button>'
                     +'</td>';
                 }
                 document.getElementById("user_orders_table").innerHTML = table+"</table>";
@@ -223,12 +223,51 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
         
     })
 
-    // var modal = document.getElementById('myModal');
-    // var span = document.getElementsByClassName("close")[0];
-    // function MakeOrder1(pickup_address,destination_address,day){
-    //     alert(pickup_address + destination_address + day);
-    //     modal.style.display = "block";
-    // }
 
+    function Update_parcel_order_destination() {
+        var order_number_to_update = document.getElementById("order_number_to_update").value;
+        var new_order_destination = document.getElementById("new_order_destination").value;
+        var parcel_id = parseInt(order_number_to_update);
+
+        var parcel_order_destination  = {
+            "parcel_destination_address":new_order_destination
+        }
+        fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/destination',
+            {
+                method:'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "token":  localStorage.getItem("token")
+                },
+                body: JSON.stringify(parcel_order_destination),
+                cache:'no-cache'
+            })
+            .then((res) => res.json())
+            .then(data => {
+                var change_destination = document.getElementById('change_destination');
+                var destination_error_message = document.getElementById('destination_error_message');
+                 if(data["message"] == 'The order is delivered already so its destination cannot be updated'){
+                    change_destination.style.display='block';
+                    destination_error_message.innerHTML = "The order is delivered already so its destination cannot be updated";
+                    destination_error_message.style.color= '#DC3545'; 
+
+                 }else if(data["message"] == 'The order is cancelled already so its destination cannot be updated'){
+                    change_destination.style.display='block';
+                    destination_error_message.innerHTML = "The order is cancelled already so its destination cannot be updated";
+                    destination_error_message.style.color= '#DC3545'; 
+                 }
+                 else{
+
+                    var success_destination_update = document.getElementById('success_destination_update');
+                    var success_message_destination_update = document.getElementById('success_message_destination_update');
+                    // var message  = 'You Have Successfully Updated The Parcel Delivery Order Destination';
+                    success_destination_update.style.display='block';
+                    success_message_destination_update.innerHTML = data["message"];
+                    success_message_destination_update.style.backgroundColor='lightblue';
+                 }
+            })
+   
+    }
 
 

@@ -57,8 +57,31 @@ function ManageOrders(){
     customer_orders.style.display="block";
 }
 //function to cancel an order
-function CancelOrder(){
-    alert("Order Cancelled !! ");
+function CancelOrder(parcel_id){
+    var order_status  = {
+        "order_status":"cancelled"
+    }
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/cancel',
+    {
+        method:'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "token":  localStorage.getItem("token")
+        },
+        body: JSON.stringify(order_status),
+        cache:'no-cache'
+    })
+    .then((res) => res.json())
+    .then(data => {
+       if(data["message"] == 'The order is delivered already'){
+           alert("The order is delivered already");
+       }else if(data["message"] == 'The order is cancelled already'){
+           alert("The order is cancelled already");
+       }else{
+           alert("You Have Successfully Cancelled The Parcel Delivery Order");
+       }
+    })
 }
 
 //authenticating admins
@@ -191,11 +214,12 @@ function MakeOrder1(parcel_id){
     .then((res) => res.json())
     .then(data => {
         modal.style.display = "block";
-        var message = data["order"][0]["order_name"] + "delivery order Details";
+        var message = data["order"][0]["order_name"] + "  delivery order Details";
         var parcel_name = document.getElementById("parcel_name");
         var pickuplocation = document.getElementById("pickuplocation");
         var place = document.getElementById("place");
         var created_at = document.getElementById("created_at");
+        document.getElementById("order_number").value = data["order"][0]["parcel_order_id"];
         parcel_name.innerHTML = message;
         pickuplocation.innerHTML = data["order"][0]["parcel_pickup_address"];
         place.innerHTML = data["order"][0]["parcel_destination_address"];
@@ -243,25 +267,6 @@ window.onclick = function(event) {
     }
 }
 
-// function to allow user to change destination
-function changeDestination() {
-    var destination = document.getElementById("destination");
-    var destination_location = document.getElementById("destination_location");
-    var place = document.getElementById("place");
-    var newdestination = document.getElementById("newdestination");
-    var save_button_destination = document.getElementById("save_button_destination");
-    var cancel_buttton_destination =  document.getElementById("cancel_buttton_destination");
-    destination.style.display = "none";
-    place.style.display="none";
-    destination_location.style.display = "none";
-    newdestination.style.display = "block";
-    save_button_destination.style.display = "block";
-    cancel_buttton_destination.style.display="block";
-
-    
-}
-
-
 /* When the user clicks on the button,toggle between hiding and showing the dropdown content */
 function viewNotifications() {
     var view_notifications = document.getElementById("view_notifications");
@@ -289,7 +294,9 @@ function OrderDetails(){
     var deliver_order = document.getElementById("delivery_order");
     var order_details = document.getElementById("order_details");
     var order_history = document.getElementById("order_history");
+    var delivery_order_destination = document.getElementById("delivery_order_destination");
     deliver_order.style.display = "none";
+    delivery_order_destination.style.display="none";
     order_history.style.display="none";
     order_details.style.display ="block";
 }
@@ -298,7 +305,8 @@ function OrderHistory() {
     var deliver_order = document.getElementById("delivery_order");
     var order_details = document.getElementById("order_details");
     var order_history = document.getElementById("order_history");
-
+    var delivery_order_destination = document.getElementById("delivery_order_destination");
+    delivery_order_destination.style.display="none";
     deliver_order.style.display = "none";
     order_details.style.display ="none";
     order_history.style.display="block";
@@ -309,10 +317,26 @@ function DashboardHome() {
     var deliver_order = document.getElementById("delivery_order");
     var order_details = document.getElementById("order_details");
     var order_history = document.getElementById("order_history");
-
+    var delivery_order_destination = document.getElementById("delivery_order_destination");
+    delivery_order_destination.style.display="none";
     deliver_order.style.display = "block";
     order_details.style.display ="none";
     order_history.style.display="none";
+}
+
+
+function  changeDestination() {
+    var deliver_order = document.getElementById("delivery_order");
+    var order_details = document.getElementById("order_details");
+    var order_history = document.getElementById("order_history");
+    var delivery_order_destination = document.getElementById("delivery_order_destination");
+    var order_id = document.getElementById("order_number").value;
+    document.getElementById("order_number_to_update").value = order_id;
+    delivery_order_destination.style.display="block";
+    modal.style.display = "none";
+    deliver_order.style.display = "none";
+    order_details.style.display ="none";
+    order_history.style.display="none";  
 }
 
 

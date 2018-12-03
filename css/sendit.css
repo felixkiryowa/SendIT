@@ -362,6 +362,23 @@
      color: #fff;
    
    }
+
+   .update_order_destination_button {
+    border: none;
+    outline: none;
+    height: 40px;
+    width: 100%;
+    background: #630c1b;
+    color: #fff;
+    font-size: 18px;
+   }
+
+   .update_order_destination_button:hover {
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+  
+  }
   /* sign up button */
   
   .loginBox a {

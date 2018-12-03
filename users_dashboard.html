@@ -115,8 +115,34 @@
         <br>
        
       </div>
-    
     <!-- make order  form -->
+    <!-- change parcel order destination -->
+        <div class="delivery_order create_order_div" style="display:none;" id="delivery_order_destination">
+            <header class="header">Update a parcel delivery order destination address</header>
+            <div id="success_destination_update" style="display:none;padding-left: 5px;">
+                <p align="center" id="success_message_destination_update"></p>
+            </div>
+            <div id="change_destination" style="display:none;padding-left: 5px;">
+                <p align="center" id="destination_error_message"></p>
+            </div>
+            <article class="main">
+                <div>
+                    <p>
+                        <input type="text" name="new_order_destination" id="new_order_destination"  placeholder="parcel order destination" required>
+                    </p>
+                    <span align="center" class="field_errors" id="error_new_order_destination"></span>
+                    <input type="hidden" id="order_number_to_update"/>
+                    <br>
+                    <br>
+                    <button class="update_order_destination_button" onclick="Update_parcel_order_destination()">Update Destination</button>
+                </div>
+                 
+            </article>
+        <br>
+        <br>
+
+        </div>
+    <!-- change parcel order destination -->
     <!-- order details -->
     <div class="order_details" id="order_details">
         <header class="table_header">
@@ -130,9 +156,19 @@
 
         </header>
         <article class="table_main" id="user_orders_table">
-            <div id="success_signup" style="display:none;padding-left: 5px;">
-                <p align="center" id="success_message"></p>
+            <div id="no_orders_found" style="display:none;padding-left: 5px;width:1420px;">
+                <p align="center" id="no_orders_found_message">
+
+                </p>
+                <br>
+                <br>
+                <p align="center">
+                    <button style="width:100px; background-color: #630c1b;padding: 10px;border-right: #000;
+                color:white;" onclick="DashboardHome()">
+                    Make Order
+                </button>
             </div>
+                </p>
             <br>
         </article>
     </div>
@@ -235,10 +271,10 @@
               <div style="height:50px;">
                 <p id="destination_location" style="float:left;">Destination Location : <b id="place"></b></p>
                 <br>
-                <!-- User is able to change the destination they had specified ealier for the parcel order from here -->
-                <input type="text" id="newdestination" placeholder="Enter New Destination" class="destination_input"/>
-                <button class="save_button" id="save_button_destination">Save</button>
+               
+                <input type="hidden" id="order_number"/>
                 <button id="destination" onclick="changeDestination()" class="destination">change destination</button>
+
                 <br>
             </div>
              <div>
