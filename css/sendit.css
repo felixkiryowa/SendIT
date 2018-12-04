@@ -1,4 +1,6 @@
-
+.customer_profile {
+  overflow-y: auto;
+}
 .field_errors {
   display: none;
 }

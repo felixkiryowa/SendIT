@@ -80,6 +80,7 @@ function CancelOrder(parcel_id){
            alert("The order is cancelled already");
        }else{
            alert("You Have Successfully Cancelled The Parcel Delivery Order");
+           window.location.href="./users_dashboard.html";
        }
     })
 }
@@ -306,10 +307,77 @@ function OrderHistory() {
     var order_details = document.getElementById("order_details");
     var order_history = document.getElementById("order_history");
     var delivery_order_destination = document.getElementById("delivery_order_destination");
-    delivery_order_destination.style.display="none";
-    deliver_order.style.display = "none";
-    order_details.style.display ="none";
-    order_history.style.display="block";
+    
+
+    fetch('http://127.0.0.1:5000/api/v2/parcels/delivered', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        "token": localStorage.getItem("token")
+    },
+    cache: 'no-cache'
+    
+    })
+    .then((res) => res.json())
+    .then(data => {
+        if(data["message"] == 'No Orders Found, You Can Make An Order Now!!!'){
+            alert("No Customers Orders Profile  Found, You Can Make An Order Now!!!");
+        }
+        else{
+            delivery_order_destination.style.display="none";
+            deliver_order.style.display = "none";
+            order_details.style.display ="none";
+            order_history.style.display="block";
+            var profile_heading = document.getElementById("profile_heading");
+            profile_heading.innerHTML = localStorage.getItem('username') + '  Ordering Profile';
+            var i = 0;
+            var customer_profile = '';           
+                for(i=0; i < data["Specific_order"].length; i++){ 
+                    customer_profile += 
+                    '<div id="invoice-POS"></br>'
+                        +'<center id="top">'
+                            +'<div class="info1">'
+                            +'</div></center>'
+
+                        +'<div id="mid">'
+                            +'<div class="info">'
+                            +'<h4 class="heading"><b>Order Name :</b> '+data["Specific_order"][i]["order_name"]+'</h4>'
+                            +'<h4 class="heading">Sender\'s Contact Information</h4>'
+                            +'<p>'
+                                +'<b>Pick Up Address</b> : ' +data["Specific_order"][i]["parcel_pickup_address"]+'</br>'
+                                +'<b>Email</b> : ' +data["Specific_order"][i]["senders_email"]+'</br>'
+                                +'<b>Phone</b> : ' +data["Specific_order"][i]["senders_phone_contact"]+'</br>'
+                                +'<b>Date</b>  : '+ data["Specific_order"][i]["created_at"] +'<br>'
+                            +'</p>'
+                            +'</div>'
+                        +'</div>'
+                        +'<br>'
+                        +'<div id="bot">'
+                                +'<h2 class="heading">Receiver Contact Information</h2>'
+                                +'<p>'
+                                    +'<b>Destination Address</b> : '+data["Specific_order"][i]["parcel_destination_address"]+'</br>'
+                                    +'<b>Phone</b> : ' +data["Specific_order"][i]["receivers_contact"]+'</br>'
+                                    +'<b>Name</b>  : '+data["Specific_order"][i]["receivers_names"] +'<br>'
+                                +'</p>'
+                                
+                                +'<br>'
+                                +'<br>'
+                                +'<p class="legal"><strong>Thank you for Ordering with SendIT!</strong></p>'
+                                +'<br>'
+                                +'<br>'
+                    
+                            +'</div>'
+                          +'</div>';
+                }
+                document.getElementById("customer_order_profile").innerHTML = customer_profile;
+                // alert(customer_profile);
+            
+        }
+        
+    })
+
+
 }
 
 // function to execute when a user clicks on  home menu link
