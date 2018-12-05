@@ -41,49 +41,9 @@
             </div>
 
         </header>
-        <article class="table_main">
+        <article class="table_main" id="all_customer_orders">
                 <br>
-                <table class="items_table">
-                    <tr>
-                    <th>Order Name</th>	
-                    <th>Weight(kg)</th>
-                    <th>Price(shs)</th>
-                    <th>Order Date / Time</th>
-                    <th>Order Status</th>
-                    <th>Order Location</th>
-                    <th>Pickup Address Details</th>
-                    <th>Destination Address Details</th>
-                    <th>Update Order Status</th>
-                    <th>Update Order Location</th>
-                    </tr>
-                    <tr>
-                        <td>Pizzas</td>
-                        <td>4</td>
-                        <td>40000</td>
-                        <td>02/07/2018 09:20 am</td>
-                        <td>New</td>
-                        <td>Kabuusu</td>		
-                        <td><button class="order_admin_button" onclick="SendersDetails()">View more</button></td>
-                        <td><button class="order_admin_button" onclick="ReceiversDetails()">View more</button></td>
-                        <td><button class="order_admin_button" onclick="updateOrderStatus()">Update status</button></td>
-                        <td><button class="order_admin_button" onclick="UpdateOrderLocation()">Update location</button></td>
-                   </tr>
-                    <tr>
-                        <td>Iphone X</td>
-                        <td>3</td>
-                        <td>60000</td>
-                        <td>02/09/2018 09:20 pm</td>
-                        <td>New</td>
-                        <td>Kibuye</td>		
-                        <td><button class="order_admin_button" onclick="SendersDetails()">View more</button></td>
-                        <td><button class="order_admin_button" onclick="ReceiversDetails()">View more</button></td>
-                        <td><button class="order_admin_button" onclick="updateOrderStatus()">Update status</button></td>
-                        <td><button class="order_admin_button" onclick="UpdateOrderLocation()">Update location</button></td>
-                       
-                    </tr>
-                    
-                </table>
-                <!-- customer orders -->
+                
         </article>
         <aside class="aside aside-1"></aside>
         <aside class="aside aside-2"></aside>
@@ -98,16 +58,20 @@
                 <header class="header">Sender's Details</header>
             </div>
             <div class="senders_div_height">
-                <b>Address</b> : Nalukolongo-Lubaga, plot 203</br>
+                <b>Address</b> :    <b style="padding-left:20px;color:#630c1b;" id="order_pickup_location"></b></br>
             </div>
             <div class="senders_div_height">
-                <b>Email</b> : franciskiryowa68@gmail.com</br>
+                <b>Email </b> :    <b style="padding-left:20px;color:#630c1b;"  id="senders_email"></b></br>
             </div>
             <div class="senders_div_height">
-                <b>Phone</b> : +256700162509</br>
+                <b>Names </b> :    <b style="padding-left:20px;color:#630c1b;"  id="senders_names"></b></br>
             </div>
+            <div class="senders_div_height">
+                <b>Phone Contact </b> :    <b style="padding-left:20px;color:#630c1b;" id="senders_contact"></b></br>
+            </div>
+            <br>
+            <br>
           </div>
-        
         </div> 
     </div>
 
@@ -119,15 +83,17 @@
                 <div>
                     <header class="header">Recivers's Details</header>
                 </div>
-                <div class="receivers_div_height">
-                    <b>Address</b> : Kajjansi, plot 203</br>
+                <div class="senders_div_height">
+                    <b>Address</b> :    <b style="padding-left:20px;color:#630c1b;" id="order_destination_location"></b></br>
                 </div>
-                <div class="receivers_div_height">
-                    <b>Phone</b> : +256700162576</br>
+                <div class="senders_div_height">
+                    <b>Names </b> :    <b style="padding-left:20px;color:#630c1b;"  id="receivers_names"></b></br>
                 </div>
-                <div class="receivers_div_height">
-                    <b>Name</b>  :Juliet Nakimbugwe<br>
+                <div class="senders_div_height">
+                    <b>Phone Contact </b> :    <b style="padding-left:20px;color:#630c1b;" id="receivers_contact"></b></br>
                 </div>
+                <br>
+                <br>
               </div>
             
             </div> 
@@ -141,15 +107,29 @@
                 <div>
                     <header class="header">Update Order Status</header>
                 </div>
+                <div id="success_order_status_update" style="display:none;padding-left: 5px;">
+                    <p align="center" id="success_message_order_status"></p>
+                </div>
+                <div id="change_order_status" style="display:none;padding-left: 5px;">
+                    <p align="center" id="change_order_error_message"></p>
+                </div>
                 <div class="order_status_div_height">
-                    <form>
-                        <input type="text" name="" placeholder="Enter Order Status">
-                        <button type="submit" class="order_admin_button">Update</button>
+                    <form class="update_order_status">
+                        <p style="color:#630c1b;">Order status</p>
+                        <select id="get_status">
+                            <option value="delivered">delivered</option>
+                        </select>
+                        <input type="hidden" id="parcel_order_id"/>
+                        
+                        <button  onclick="updateOrderStatusAdmin(event)" type="submit" class="order_admin_button_update">Update</button>
                     </form>
                 </div>
+           
               </div>
+              
             
             </div> 
+           
         </div>
 
         <!-- update location -->
@@ -160,10 +140,20 @@
                     <div>
                         <header class="header">Update Order Location At Any Point In Time</header>
                     </div>
+                    <div id="success_order_location_update" style="display:none;padding-left: 5px;">
+                        <p align="center" id="success_message_order_location"></p>
+                    </div>
+                    <div id="change_order_location" style="display:none;padding-left: 5px;">
+                        <p align="center" id="change_order_location_error_message"></p>
+                    </div>
                     <div class="order_status_div_height">
-                        <form>
-                            <input type="text" name="" placeholder="Enter Order Location">
-                            <button type="submit" class="order_admin_button">Update</button>
+                        <form class="update_order_status">
+                            <p style="color:#630c1b;">Update Order Location</p>
+                            <input type="text" name="" id="order_location" placeholder="Enter Order Location">
+                            <input type="hidden" id="specific_parcel_order_id"/>
+                            <br>
+                            <br>
+                            <button  onclick="updateOrderLocationAdmin(event)" type="submit" class="order_admin_button_update">Update</button>
                         </form>
                     </div>
                   </div>
@@ -173,5 +163,6 @@
 
   
   </body>
+  <script src="js/parcels.js"></script>
   <script src="js/admin.js" ></script>
 </html>

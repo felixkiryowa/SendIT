@@ -167,7 +167,7 @@ function lengthDefine(inputtext, min, max, element_id) {
 }
 
 
-// function to fetch users
+// function to fetch specific user orders
 
 fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
     method: 'GET',
@@ -223,7 +223,6 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
         
     })
 
-
     function Update_parcel_order_destination() {
         var order_number_to_update = document.getElementById("order_number_to_update").value;
         var new_order_destination = document.getElementById("new_order_destination").value;
@@ -270,4 +269,60 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
    
     }
 
+// Function to fetch all orders
+fetch('http://127.0.0.1:5000/api/v2/parcels', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        "token": localStorage.getItem("token")
+    },
+    cache: 'no-cache'
+    
+})
+    .then((res) => res.json())
+    .then(data => {
+        if(data["message"] == 'No Order Entries Found !!'){
+            var no_orders_found = document.getElementById('no_orders_found');
+            var no_orders_found_message = document.getElementById('no_orders_found_message');
+            var message  = 'No Order Entries Found !!';
+            no_orders_found.style.display='block';
+            no_orders_found_message.innerHTML = message;
+            // no_orders_found_message.style.backgroundColor='lightblue';
+            no_orders_found_message.style.fontStyle='italic';
+        }
+        else{
+            var i = 0;
 
+                var table = '<table class="items_table">'+
+                            '<tr>'+
+                            '<th>Order Name</th>'+
+                            '<th>Weight(kg)</th>'+
+                            '<th>Order Price(shs)</th>'+
+                            '<th>Order Date / Time</th>'+
+                            '<th>Order Status</th>'+
+                            '<th>Order Location</th>'+
+                            '<th>Pickup Address Details</th>'+
+                            '<th>Destination Address Details</th>'+
+                            '<th>Update Order Status</th>'+
+                            '<th>Update Order Location</th>'+
+                            ' </tr>';               
+                for(i=0; i < data["All_orders"].length; i++){
+                    table +=  
+                    '<tr><td>'+data["All_orders"][i]["order_name"]
+                    +'</td><td>'+data["All_orders"][i]["parcel_weight"]
+                    +'</td><td>'+data["All_orders"][i]["price"]
+                    +'</td><td>'+data["All_orders"][i]["created_at"]
+                    +'</td><td>'+data["All_orders"][i]["order_status"]
+                    +'</td><td>'+data["All_orders"][i]["order_current_location"]
+                    +'</td><td><button class="order_admin_button" onclick="SendersDetails('+data["All_orders"][i]["parcel_order_id"]+')">View more</button>'
+                    +'</td><td><button class="order_admin_button" onclick="ReceiversDetails('+data["All_orders"][i]["parcel_order_id"]+')">View more</button>'
+                    +'</td><td><button class="order_admin_button" onclick="updateOrderStatus('+data["All_orders"][i]["parcel_order_id"]+')">Update status</button>'
+                    +'</td><td><button class="order_admin_button" onclick="UpdateOrderLocation('+data["All_orders"][i]["parcel_order_id"]+')">Update location</button>'
+                    +'</td>';
+                }
+                document.getElementById("all_customer_orders").innerHTML = table+"</table>";
+            
+        }
+        
+    })

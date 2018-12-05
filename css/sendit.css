@@ -304,6 +304,12 @@
     width: 100%;
     margin-bottom: 20px;
   }
+
+  .order_status_div_height select {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 30px;
+  }
   .loginBox input[type="email"],input[type="password"],input[type="text"]{
     border: none;
     border-bottom: 1px solid gray;
@@ -674,6 +680,14 @@
     color: #fff;
     border-radius: 3px;
   }
+  .order_admin_button_update {
+    background-color:#4caf50;
+    border:0;
+    width: 140px;
+    height: 34px;
+    color: #fff;
+    border-radius: 3px;
+  }
   
   .senders_div_height {
     height: 50px;
@@ -694,8 +708,8 @@
   }
   .order_status_div_height{
     display: flex;
-    justify-content: center;
-    height: 150px;
+    /* justify-content: center; */
+    height: 200px;
     margin-top: 23px;
   }
   
