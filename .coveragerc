@@ -19,14 +19,18 @@ omit =
     */api/views/update_order_present_location.py
     */api/views/update_order_status.py
     */api/views/users.py
-    */api/token/token_required.py
+    */api/helpers/token_required.py
+    */api/helpers/__init__.py
+    */api/model/black_list_tokens.py
     */api/views/update_order_present_location.py
+    */api/views/get_specific_user_order.py 
     */api/views/get_specific_user_orders.py 
     */api/views/orders.py
     */api/model/orders.py
     */api/views/users.py 
     */api/views/cancel_order.py
     */api/helpers/drop_tables.py
+
 
 
     
