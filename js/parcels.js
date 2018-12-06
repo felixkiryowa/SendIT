@@ -36,7 +36,7 @@ function Make_A_Parcel_delivery_Order() {
                                 "receivers_names": receivers_names, 
                                 "receivers_contact":receivers_contact
                               }
-                              fetch('http://127.0.0.1:5000/api/v2/parcels',
+                              fetch('https://francissendit.herokuapp.com/api/v2/parcels',
                                 {
                                     method:'POST',
                                     headers: {
@@ -169,7 +169,7 @@ function lengthDefine(inputtext, min, max, element_id) {
 
 // function to fetch specific user orders
 
-fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
+fetch('https://francissendit.herokuapp.com/api/v2/users/parcels', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -231,7 +231,7 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
         var parcel_order_destination  = {
             "parcel_destination_address":new_order_destination
         }
-        fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/destination',
+        fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id+'/destination',
             {
                 method:'PUT',
                 headers: {
@@ -270,7 +270,7 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
     }
 
 // Function to fetch all orders
-fetch('http://127.0.0.1:5000/api/v2/parcels', {
+fetch('https://francissendit.herokuapp.com/api/v2/parcels', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -326,3 +326,45 @@ fetch('http://127.0.0.1:5000/api/v2/parcels', {
         }
         
     })
+
+    function logout_user(event) {
+        event.preventDefault();
+        var x = confirm("Are you  sure you want to log out?");
+        if(x){
+          var token = localStorage.getItem('token');
+          var used_token =  {
+            "user_token": token
+          }
+
+          alert(JSON.stringify(used_token));
+
+          fetch('https://francissendit.herokuapp.com/api/v2/auth/blacklisttoken',
+          {
+              method:'POST',
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(used_token),
+              cache:'no-cache'
+          })
+          .then(function(res){
+              return res.json()
+          })
+          .then((result) => {
+
+              if(result["message"] === 'success'){
+                localStorage.removeItem('username');
+                localStorage.removeItem('token');
+
+                window.location.href = "./index.html";
+
+              }
+               
+          })
+
+          
+        }else{
+        //   alert("cancel");
+        }
+    }

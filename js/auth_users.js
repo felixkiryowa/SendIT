@@ -30,20 +30,20 @@ function authenticateusers() {
        if(data["login_message"]["message"] == 'successfully loggedin') {
            if(data["login_message"]["user_role"] == 'user') {
             // Store token generated to the browser localstorage
-               console.log(data["login_message"]["token_generated"]);
                localStorage.setItem('token', data["login_message"]["token_generated"]);
                localStorage.setItem('username', data["login_message"]["username"]);
                window.location.href = "./users_dashboard.html";
 
            }else {
             // Store token generated to the browser localstorage
-            console.log(data["login_message"]["token_generated"]);
             localStorage.setItem('token', data["login_message"]["token_generated"]);
             localStorage.setItem('username', data["login_message"]["username"]);
             window.location.href = "./admin_dashboard.html";
+            
            }
 
-       }else {
+       }
+       else  {
         login_error_message.innerHTML = data["login_message"]["message"];
        }
 

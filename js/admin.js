@@ -4,6 +4,10 @@ var receiversModal = document.getElementById("receiversModal");
 var updateOrderStatusModal = document.getElementById("updateOrderStatusModal");
 var updateLocationStatusModal = document.getElementById("updateLocationStatusModal");
 
+var loggedin_admin_user = document.getElementById("loggedin_admin_user");
+loggedin_admin_user.innerHTML = localStorage.getItem('username');
+
+
 
 // Get the <span> element that closes the modal
 var close1 = document.getElementsByClassName("close1")[0];
@@ -55,7 +59,7 @@ window.onclick = function(event) {
 
 
 function SendersDetails(parcel_id){
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id,
+    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id,
         {
             method:'GET',
             headers: {
@@ -84,7 +88,7 @@ function SendersDetails(parcel_id){
 }
 
 function ReceiversDetails(parcel_id) {
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id,
+    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id,
         {
             method:'GET',
             headers: {
@@ -117,7 +121,7 @@ function updateOrderStatusAdmin(event){
     var new_order_status  = {
         "order_status":get_status
     }
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(parcel_order_id)+'/status',
+    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parseInt(parcel_order_id)+'/status',
         {
             method:'PUT',
             headers: {
@@ -175,7 +179,7 @@ function   updateOrderLocationAdmin(event) {
     var new_order_location  = {
         "parcel_location":order_location
     }
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(specific_parcel_order_id)+'/presentlocation',
+    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parseInt(specific_parcel_order_id)+'/presentlocation',
         {
             method:'PUT',
             headers: {
