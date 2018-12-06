@@ -48,7 +48,6 @@ class AuthUser:
         self.username, self.user_password, self.user_type, ))
         # commit the changes to the database
         connection.commit()
-        return jsonify({'Message':'You registered successfully.'}),201
     
     @staticmethod  
     def execute_user_login_auth(self, username, login_password,error_message):
@@ -57,21 +56,37 @@ class AuthUser:
         user_data = cursor.fetchall()
         user = cursor.rowcount
         if user == 0:
-            return jsonify({"Message":error_message}),401
+            handle_error = {
+                'message':error_message
+            }
+            return jsonify({'login_message': handle_error}),401
+            # return jsonify({"message":error_message}),401
         user_id = user_data[0][0]
         user_password = user_data[0][6]
+        user_role = user_data[0][7]
+        username = user_data[0][5]
         
-        return AuthUser.generate_token(self,user_id, user_password, login_password, error_message, user_data)
+        return AuthUser.generate_token(self,user_id, user_password, user_role, username, login_password, error_message, user_data)
    
     @staticmethod
-    def generate_token(self,user_id,user_password, login_password, error_message, user_data):
+    def generate_token(self, user_id, user_password, user_role, username, login_password, error_message, user_data):
         if check_password_hash(user_password, login_password):
             token = jwt.encode(
                 {'user_id':user_id, 
-                'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, 
+                'exp':datetime.datetime.utcnow() + datetime.timedelta(minutes=60)}, 
                 secret_key, algorithm='HS256')
-            return jsonify({'token_generated':token.decode('UTF-8')}),200
-        return jsonify({"Message":error_message}),401
+            login_response = {
+                'username':username,
+                'user_role':user_role,
+                'message':'successfully loggedin',
+                'token_generated':token.decode('UTF-8')
+            }
+            
+            return jsonify({'login_message':login_response}),200
+        handle_error = {
+            'message':error_message
+        }
+        return jsonify({"login_message": handle_error}),401
 
     @staticmethod
     def create_default_admin_user():

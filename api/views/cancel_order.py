@@ -26,4 +26,19 @@ class CancelOrder(MethodView):
             return jsonify({'message':'You are only allowed to cancel an order'}), 406 
         return jsonify({'message':'You Cannot Perform That Function!'}), 404
 
+    @token_required
+    def get(self, current_user):
+        """function to get a single order for a user"""
+        user_role = current_user[0][7]
+        specific_user_id = current_user[0][0]
+        if user_role == 'user':
+            try:
+                user_id = int(specific_user_id)
+            except:
+                return jsonify({'message':'Invalid User Id'}), 400
+            return Orders.get_user_delivered_orders(self,user_id)
+        return jsonify({'message':'Cannot Perform That Function!'}), 404
+
+    
+
     

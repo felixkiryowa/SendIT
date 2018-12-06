@@ -67,7 +67,7 @@ class AuthUsers(MethodView):
         new_user_data['phone_contact'], new_user_data['username'], 
         generate_password_hash(new_user_data['user_password']), user_role
         ).execute_add_new_user_query()
-        return jsonify({'Message':'You registered successfully.'}),201 
+        return jsonify({'message':'You registered successfully, Please Login'}),201
         
 
    

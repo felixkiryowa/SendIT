@@ -5,9 +5,11 @@ This module handles view routes
 from api.views.users import AuthUsers
 from api.views.orders import OrdersApi
 from api.views.get_specific_user_orders import UserSpecificOrders
+from api.views.get_specific_user_order import UserSpecificOrder
 from api.views.update_order_status import UpdateUserOrderStatus
 from api.views.update_order_present_location import UpdateOrderPresentLocation
 from api.views.cancel_order import CancelOrder
+from api.views.blacklist_tokens import BlacklistToken
 
 class GetOrderApiUrls:
     """
@@ -18,10 +20,12 @@ class GetOrderApiUrls:
         """function defining all the api routes """
         order_view = OrdersApi.as_view('order_api')
         user_specific_orders_view = UserSpecificOrders.as_view('user_orders')
+        specific_order_view = UserSpecificOrder.as_view('user_order')
         auth_users_view = AuthUsers.as_view('user_auth')
         update_order_status = UpdateUserOrderStatus.as_view('update_status')
         update_order_present_location = UpdateOrderPresentLocation.as_view('order_location')
         cancel_order = CancelOrder.as_view('cancel_order')
+        blacklist_token = BlacklistToken.as_view('blacklist_tokens')
 
         app.add_url_rule(
             '/api/v2/auth/signup', view_func=auth_users_view,
@@ -29,6 +33,11 @@ class GetOrderApiUrls:
         )
         app.add_url_rule(
             '/api/v2/auth/login', view_func=auth_users_view,
+            methods=['POST',]
+        )
+
+        app.add_url_rule(
+            '/api/v2/auth/blacklisttoken', view_func=blacklist_token,
             methods=['POST',]
         )
         app.add_url_rule(
@@ -46,8 +55,16 @@ class GetOrderApiUrls:
             view_func=user_specific_orders_view, methods=['GET',]
         )
         app.add_url_rule(
+            '/api/v2/users/parcels/<parcel_id>',
+            view_func=specific_order_view, methods=['GET',]
+        )
+        app.add_url_rule(
             '/api/v2/parcels/<parcel_id>/cancel', view_func=cancel_order,
             methods=['PUT',]
+        )
+        app.add_url_rule(
+            '/api/v2/parcels/delivered', view_func=cancel_order,
+            methods=['GET',]
         )
         app.add_url_rule(
             '/api/v2/parcels/<parcel_id>/status', view_func=update_order_status,

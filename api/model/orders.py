@@ -68,18 +68,19 @@ class Orders:
         method to query for all orders in the database
         """
         orders =  """
-            SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
-            orders.receivers_names,orders.receivers_contact,orders.created_at,
-            orders.order_status,orders.created_at,users.first_name,users.last_name,users.phone_contact
-            FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id ORDER BY orders.parcel_order_id;
+
+        SELECT orders.parcel_order_id,orders.senders_user_id,orders.order_name,orders.parcel_weight,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.order_status,orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.location,users.first_name,users.last_name,users.phone_contact
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id  WHERE orders.order_status=%s AND NOT orders.order_status=%s AND NOT orders.order_status=%s ORDER BY orders.parcel_order_id;
         """
         cursor = connection.cursor()
-        cursor.execute(orders)
+        cursor.execute(orders,('pending','delivered','cancelled',))
         orders_data = cursor.fetchall()
         if not orders_data:
-            return jsonify({"Message":"No Order Entries Found !!"}), 200
-        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names',
-        'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
+            return jsonify({"message":"No Order Entries Found !!"}), 200
+        columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
+            'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders firstname','senders lastname','senders phone contact')
         results = []
         for row in orders_data:
             results.append(dict(zip(columns, row)))
@@ -91,19 +92,19 @@ class Orders:
         method to query a single specific order from the database
         """
         order =  """
-            SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
-            orders.receivers_names,orders.receivers_contact,orders.created_at,
-            orders.order_status,orders.created_at,users.first_name,users.last_name,users.phone_contact
-            FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.parcel_order_id=%s
-            ORDER BY orders.parcel_order_id;
+
+         SELECT orders.parcel_order_id,orders.senders_user_id,orders.order_name,orders.parcel_weight,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.order_status,orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.location,users.first_name,users.last_name,users.phone_contact,users.email
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.parcel_order_id=%s ORDER BY orders.parcel_order_id;
         """
         cursor = connection.cursor()
         cursor.execute(order,(order_id, ))
         order_data = cursor.fetchall()
         if not order_data:
             return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
-        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names',
-        'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
+        columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
+            'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders_firstname','senders_lastname','senders_phonecontact','senders_email')
         results = []
         for row in order_data:
             results.append(dict(zip(columns, row)))
@@ -117,12 +118,18 @@ class Orders:
         """
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM orders WHERE parcel_order_id=%s and senders_user_id =%s",(order_id, user_id, ))
+        current_order = cursor.fetchall()
+        current_order_status = current_order[0][7]
         order_data = cursor.rowcount
         if order_data == 0:
             return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
-        cursor.execute("UPDATE orders SET parcel_destination_address=%s WHERE parcel_order_id=%s",(order_destination, order_id,))
-        connection.commit()
-        return  Orders.execute_query_get_specific_order(self, order_id)
+        elif current_order_status != 'delivered' and current_order_status != 'cancelled':
+            cursor.execute("UPDATE orders SET parcel_destination_address=%s WHERE parcel_order_id=%s",(order_destination, order_id,))
+            connection.commit()
+            # return  Orders.execute_query_get_specific_order(self, order_id)
+            return jsonify({'message':'You Have Successfully Updated The Parcel Delivery Order Destination'});
+        return jsonify({'message':'The order is ' + current_order_status + ' already so its destination cannot be updated'}), 406
+        
 
     @staticmethod
     def update_order_status(self, order_id, order_status):
@@ -137,7 +144,7 @@ class Orders:
             cursor.execute("UPDATE orders SET order_status=%s WHERE parcel_order_id=%s",(order_status, order_id,))
             connection.commit()
             return  Orders.execute_query_get_specific_order(self, order_id)
-        return jsonify({'message':'The order status should be delivered or order status is already delivered'}), 406
+        return jsonify({'message':'The parcel order  is already '+current_order_status}), 406
 
     @staticmethod
     def update_order_location(self, order_id, order_location):
@@ -151,7 +158,7 @@ class Orders:
         order_data = cursor.rowcount
         if order_data == 0:
             return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
-        elif current_order_status != 'delivered' and current_order_status != 'cancel':
+        elif current_order_status != 'delivered' and current_order_status != 'cancelled':
             cursor.execute("UPDATE orders SET location=%s WHERE parcel_order_id=%s",(order_location, order_id,))
             connection.commit()
             return  Orders.execute_query_get_specific_order(self, order_id)
@@ -169,11 +176,12 @@ class Orders:
             current_order_status = current_order[0][7]
             order_data = cursor.rowcount
             if order_data == 0:
-                return jsonify({"message":"No Order Found With Order Id Of "+ str(order_id)}), 404
-            elif current_order_status != 'delivered' and current_order_status != 'cancel':
+                return jsonify({"message":"No Order Found With Order Id Of "+ str(parcel_id)}), 404
+            elif current_order_status != 'delivered' and current_order_status != 'cancelled':
                 cursor.execute("UPDATE orders SET order_status=%s WHERE parcel_order_id=%s",(order_status, parcel_id,))
                 connection.commit()
-                return  Orders.execute_query_get_specific_order(self, parcel_id)
+                # return  Orders.execute_query_get_specific_order(self, parcel_id)
+                return jsonify({'message':'You Have Successfully Cancelled The Parcel Delivery Order'});
             return jsonify({'message':'The order is ' + current_order_status + ' already'}), 406
         return jsonify({'message':'Your Not The Owner Of That Parcel Order ,You Cant Change its status'}), 406
     
@@ -184,25 +192,91 @@ class Orders:
         method to get a specific user orders from the database
         """
         orders_query =  """
-                SELECT orders.parcel_order_id,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
-                orders.receivers_names,orders.receivers_contact,orders.created_at,
-                orders.order_status,orders.created_at,users.first_name,users.last_name,users.phone_contact
-                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.senders_user_id=%s
+                SELECT orders.parcel_order_id,orders.senders_user_id,orders.order_name,orders.parcel_weight,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.order_status,orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.location,users.first_name,users.last_name,users.phone_contact
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.senders_user_id=%s AND NOT orders.order_status=%s AND NOT orders.order_status=%s
                 ORDER BY orders.parcel_order_id;
             """
+        order_status = "cancelled"
+        delivered = "delivered"
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM orders WHERE senders_user_id =%s",(user_id, ))
         user_exist = cursor.rowcount
         if user_exist == 0:
-            return jsonify({"Message":"No Orders Found For User With A User Id Of "+ str(user_id)}), 404
-        cursor.execute(orders_query, (user_id,))
+            return jsonify({"message":"No Orders Found, You Can Make An Order Now!!!"}), 404
+        cursor.execute(orders_query, (user_id, order_status,delivered,))
+        existing_orders = cursor.rowcount
+        if existing_orders != 0:
+            all_user_orders_data = cursor.fetchall()
+            connection.commit()
+            columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
+            'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders firstname','senders lastname','senders phone contact')
+            results = []
+            for row in all_user_orders_data:
+                results.append(dict(zip(columns, row)))
+            return jsonify({'Specific_order':results}), 200 
+        return jsonify({"message":"No Orders Found, You Can Make An Order Now!!!"}), 404
+
+
+    @staticmethod
+    def get_user_delivered_orders(self, user_id):
+        """
+        method to get a specific user delivered orders from the database
+        """
+        orders_query =  """
+                SELECT orders.parcel_order_id,orders.senders_user_id,orders.order_name,orders.parcel_weight,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.order_status,orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.location,users.first_name,users.last_name,users.phone_contact,users.email
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.senders_user_id=%s AND orders.order_status=%s
+                ORDER BY orders.parcel_order_id;
+            """
+        delivered = "delivered"
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM orders WHERE senders_user_id =%s",(user_id, ))
+        user_exist = cursor.rowcount
+        if user_exist == 0:
+            return jsonify({"message":"No Orders Found, You Can Make An Order Now!!!"}), 404
+        cursor.execute(orders_query, (user_id, delivered,))
+        existing_orders = cursor.rowcount
+        if existing_orders != 0:
+            all_user_orders_data = cursor.fetchall()
+            connection.commit()
+            columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
+            'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders_firstname','senders_lastname','senders_phone_contact', 'senders_email')
+            results = []
+            for row in all_user_orders_data:
+                results.append(dict(zip(columns, row)))
+            return jsonify({'Specific_order':results}), 200 
+        return jsonify({"message":"No Orders Found, You Can Make An Order Now!!!"}), 404
+
+
+
+    @staticmethod
+    def  get_single_user_order(self, user_id, order_parcel_id):
+        """
+        method to get a specific user order from the database
+        """
+        orders_query =  """
+                SELECT orders.parcel_order_id,orders.senders_user_id,orders.order_name,orders.parcel_weight,orders.price,orders.parcel_pickup_address,orders.parcel_destination_address,
+                orders.order_status,orders.receivers_names,orders.receivers_contact,orders.created_at,
+                orders.location,users.first_name,users.last_name,users.phone_contact
+                FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE orders.senders_user_id=%s AND orders.parcel_order_id=%s
+                ORDER BY orders.parcel_order_id;
+            """
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM orders WHERE senders_user_id =%s AND parcel_order_id=%s",(user_id,order_parcel_id, ))
+        user_exist = cursor.rowcount
+        if user_exist == 0:
+            return jsonify({"message":"No Orders Found, Make An Order"}), 404
+        cursor.execute(orders_query, (user_id,order_parcel_id,))
         all_user_orders_data = cursor.fetchall()
         connection.commit()
-        columns = ('parcel_order_id','price','parcel_pickup_address','parcel_destination_address','receivers_names',
-            'receivers_contact','created_at','order_status','senders firstname','senders lastname','senders phone contact')
+        columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
+        'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders firstname','senders lastname','senders phone contact')
         results = []
         for row in all_user_orders_data:
             results.append(dict(zip(columns, row)))
-        return jsonify({'Specific_order':results}), 200 
+        return jsonify({'order':results}), 200 
         
         

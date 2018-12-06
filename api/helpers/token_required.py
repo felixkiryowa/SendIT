@@ -25,6 +25,10 @@ def token_required(f):
         try:
             data = jwt.decode(token, secret_key, algorithm='HS256' )
             cur = connection.cursor()
+            cur.execute("SELECT used_token FROM tokensblacklisted WHERE used_token=%s",(token,))
+            used_token = cur.fetchone()
+            if used_token:
+                return jsonify({'message':'Token black listed'}), 401
             cur.execute("SELECT * FROM users WHERE user_id=%s",(data['user_id'], ))
             current_user = cur.fetchall()
         except:

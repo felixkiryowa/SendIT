@@ -104,11 +104,10 @@ class SendAPITests(unittest.TestCase):
             )
         )
         self.result = json.loads(user_login_result.data)
-        self.user_generated_token = self.result['token_generated']
+        self.user_generated_token = self.result['login_message']['token_generated']
         self.result2 = json.loads(admin_login_result.data)
-        self.admin_generated_token = self.result2['token_generated']
+        self.admin_generated_token = self.result2['login_message']['token_generated']
 
-        
     # Tests for addng a new order
     def test_if_data_posted_is_in_form_of_json(self):
         """
