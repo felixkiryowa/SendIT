@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <title>SendIT users dashboard</title>
     <link href="css/sendit.css" rel="stylesheet">
+    <script>
+        if(!localStorage.getItem('token')){
+            window.location.href = "./index.html";
+        }
+    </script>
   </head>
 
   <body class="users_page_body"  onload="loadFunctionOnLoadingPage()">

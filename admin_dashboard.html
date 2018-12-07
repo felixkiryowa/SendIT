@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <title>SendIT admin dashboard</title>
     <link href="css/sendit.css" rel="stylesheet">
+    <script>
+        if(!localStorage.getItem('token')){
+            window.location.href = "./index.html";
+        }
+    </script>
   </head>
   <body>
      <nav  id="site_navbar">
