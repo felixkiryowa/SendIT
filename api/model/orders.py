@@ -102,7 +102,7 @@ class Orders:
         cursor.execute(order,(order_id, ))
         order_data = cursor.fetchall()
         if not order_data:
-            return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
+            return jsonify({"message":"No Order Found With That Order Id"}), 404
         columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
             'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders_firstname','senders_lastname','senders_phonecontact','senders_email')
         results = []
@@ -278,5 +278,25 @@ class Orders:
         for row in all_user_orders_data:
             results.append(dict(zip(columns, row)))
         return jsonify({'order':results}), 200 
+
+
+    def execute_query_get_order_statistics(self):
+        """
+        method to get order statistics
+        """
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM orders WHERE order_status =%s",('pending', ))
+        pending = cursor.rowcount
+        cursor.execute("SELECT * FROM orders WHERE order_status =%s",('delivered', ))
+        delivered = cursor.rowcount
+        cursor.execute("SELECT * FROM orders WHERE order_status =%s",('cancelled', ))
+        cancelled = cursor.rowcount
+        Orders_statistics = {
+            "pending":pending,
+            "delivered":delivered,
+            "cancelled":cancelled
+        }
+        return jsonify({"message":Orders_statistics})
+
         
         

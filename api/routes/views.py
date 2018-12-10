@@ -10,6 +10,7 @@ from api.views.update_order_status import UpdateUserOrderStatus
 from api.views.update_order_present_location import UpdateOrderPresentLocation
 from api.views.cancel_order import CancelOrder
 from api.views.blacklist_tokens import BlacklistToken
+from api.views.get_order_statistics import OrdersStatistics
 
 class GetOrderApiUrls:
     """
@@ -26,6 +27,7 @@ class GetOrderApiUrls:
         update_order_present_location = UpdateOrderPresentLocation.as_view('order_location')
         cancel_order = CancelOrder.as_view('cancel_order')
         blacklist_token = BlacklistToken.as_view('blacklist_tokens')
+        order_stats = OrdersStatistics.as_view('stats')
 
         app.add_url_rule(
             '/api/v2/auth/signup', view_func=auth_users_view,
@@ -43,6 +45,10 @@ class GetOrderApiUrls:
         app.add_url_rule(
             '/api/v2/parcels', defaults={'parcel_order_id': None},
             view_func=order_view, methods=['GET',]
+        )
+        app.add_url_rule(
+            '/api/v2/stats',
+            view_func=order_stats, methods=['GET',]
         )
         app.add_url_rule(
             '/api/v2/parcels/<parcel_order_id>',
