@@ -182,8 +182,8 @@ class SendAPITests(unittest.TestCase):
         )
         # self.assertEqual(result.status_code, 200)
         json_data = json.loads(result.data)
-        if json_data == {'Message':'No Order Found With Order Id Of 1'}:
-            self.assertEqual(json_data, {'Message':'No Order Found With Order Id Of 1'})
+        if json_data == {'message': 'No Order Found With That Order Id'}:
+            self.assertEqual(json_data, {'message': 'No Order Found With That Order Id'})
         else:
             self.assertEqual(json_data['Specific_order'][0]['parcel_destination_address'], "Mbarara")
             self.assertEqual(json_data['Specific_order'][0]['parcel_pickup_address'], "Mbale")
