@@ -23,7 +23,7 @@ On the Administrator side
 They go to this link  https://felixkiryowa.github.io/SendIT/admin_dashboard.html
 They are able to perform all their actions on the website using that dashboard.
 
-## Built Using
+## Built Using the following
 - [HTML](https://html.com/) - Markup language
 - [CSS](https://css-tricks.com/) - Style sheet language 
 - [JavaScript](https://www.javascript.com/) - High-level, interpreted programming language
