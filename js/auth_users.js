@@ -75,7 +75,6 @@ function RegisterUser(){
     // Check each input in the order that it appears in the form.
     if (inputAlphabet(firstname, "* Only alphabets required *", "error_firstname")) {
         if(inputAlphabet(lastname, "* Only alphabets required *", "error_lastname")){
-            if (lengthDefine(username, 6, 8, "error_username")) {
                 if (emailValidation(email_address, "* Ivalid email address *")) {
                     if (textAlphanumeric(password, "* Include  numbers and letters in password *", "error_password") && 
                     passwordLength(password, 6, 8)) {
@@ -128,7 +127,6 @@ function RegisterUser(){
 
                     }
                 }
-            }
             
         }
        
