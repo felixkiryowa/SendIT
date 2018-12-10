@@ -59,7 +59,7 @@ window.onclick = function(event) {
 
 
 function SendersDetails(parcel_id){
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id,
+    fetch('https://senditui.herokuapp.com/api/v2/parcels/'+parcel_id,
         {
             method:'GET',
             headers: {
@@ -88,7 +88,7 @@ function SendersDetails(parcel_id){
 }
 
 function ReceiversDetails(parcel_id) {
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id,
+    fetch('https://senditui.herokuapp.com/api/v2/parcels/'+parcel_id,
         {
             method:'GET',
             headers: {
@@ -121,7 +121,7 @@ function updateOrderStatusAdmin(event){
     var new_order_status  = {
         "order_status":get_status
     }
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(parcel_order_id)+'/status',
+    fetch('https://senditui.herokuapp.com/api/v2/parcels/'+parseInt(parcel_order_id)+'/status',
         {
             method:'PUT',
             headers: {
@@ -181,7 +181,7 @@ function   updateOrderLocationAdmin(event) {
     var new_order_location  = {
         "parcel_location":order_location
     }
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(specific_parcel_order_id)+'/presentlocation',
+    fetch('https://senditui.herokuapp.com/api/v2/parcels/'+parseInt(specific_parcel_order_id)+'/presentlocation',
         {
             method:'PUT',
             headers: {
@@ -230,7 +230,7 @@ function   updateOrderLocationAdmin(event) {
 
 }
 
-fetch('http://127.0.0.1:5000/api/v2/stats', {
+fetch('https://senditui.herokuapp.com/api/v2/stats', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -279,7 +279,7 @@ function SearchSpecificOrder(event) {
     var searched_order = document.getElementById("searched_order");
     
     var search_term = document.getElementById("search_term").value;
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(search_term), {
+    fetch('https://senditui.herokuapp.com/api/v2/parcels/'+parseInt(search_term), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

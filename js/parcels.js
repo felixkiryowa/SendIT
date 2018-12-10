@@ -36,7 +36,7 @@ function Make_A_Parcel_delivery_Order() {
                                 "receivers_names": receivers_names, 
                                 "receivers_contact":receivers_contact
                               }
-                              fetch('http://127.0.0.1:5000/api/v2/parcels',
+                              fetch('https://senditui.herokuapp.com/api/v2/parcels',
                                 {
                                     method:'POST',
                                     headers: {
@@ -170,7 +170,7 @@ function lengthDefine(inputtext, min, max, element_id) {
 
 // function to fetch specific user orders
 
-fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
+fetch('https://senditui.herokuapp.com/api/v2/users/parcels', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -235,7 +235,7 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
         var parcel_order_destination  = {
             "parcel_destination_address":new_order_destination
         }
-        fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/destination',
+        fetch('https://senditui.herokuapp.com/api/v2/parcels/'+parcel_id+'/destination',
             {
                 method:'PUT',
                 headers: {
@@ -275,7 +275,7 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
     }
 
 // Function to fetch all orders
-fetch('http://127.0.0.1:5000/api/v2/parcels', {
+fetch('https://senditui.herokuapp.com/api/v2/parcels', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -343,7 +343,7 @@ fetch('http://127.0.0.1:5000/api/v2/parcels', {
             "user_token": token
           }
 
-          fetch('http://127.0.0.1:5000/api/v2/auth/blacklisttoken',
+          fetch('https://senditui.herokuapp.com/api/v2/auth/blacklisttoken',
           {
               method:'POST',
               headers: {
