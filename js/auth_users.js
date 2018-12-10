@@ -86,7 +86,7 @@ function RegisterUser(){
                                     "username":username,
                                     "user_password":password
                                   }
-                                  fetch('http://127.0.0.1:5000//api/v2/auth/signup',
+                                  fetch('http://127.0.0.1:5000/api/v2/auth/signup',
                                     {
                                         method:'POST',
                                         headers: {
