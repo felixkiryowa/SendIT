@@ -76,8 +76,6 @@ function RegisterUser(){
     if (inputAlphabet(firstname, "* Only alphabets required *", "error_firstname")) {
         if(inputAlphabet(lastname, "* Only alphabets required *", "error_lastname")){
                 if (emailValidation(email_address, "* Ivalid email address *")) {
-                    if (textAlphanumeric(password, "* Include  numbers and letters in password *", "error_password") && 
-                    passwordLength(password, 6, 8)) {
                         if(textNumeric(contact, "* Phone contact consists of only numbers *", "error_contact")){
                             if (textAlphanumeric(username, "* Username consists of both numbers and characters *", "error_username")) {
                                 var new_user  = {
@@ -125,7 +123,6 @@ function RegisterUser(){
                             }
                         }
 
-                    }
                 }
             
         }
