@@ -59,7 +59,7 @@ window.onclick = function(event) {
 
 
 function SendersDetails(parcel_id){
-    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id,
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id,
         {
             method:'GET',
             headers: {
@@ -88,7 +88,7 @@ function SendersDetails(parcel_id){
 }
 
 function ReceiversDetails(parcel_id) {
-    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id,
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id,
         {
             method:'GET',
             headers: {
@@ -121,7 +121,7 @@ function updateOrderStatusAdmin(event){
     var new_order_status  = {
         "order_status":get_status
     }
-    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parseInt(parcel_order_id)+'/status',
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(parcel_order_id)+'/status',
         {
             method:'PUT',
             headers: {
@@ -173,13 +173,15 @@ function updateOrderStatusAdmin(event){
 function   updateOrderLocationAdmin(event) {
     event.preventDefault();
     var order_location = document.getElementById("order_location").value;
-    alert(order_location);
     var specific_parcel_order_id= document.getElementById("specific_parcel_order_id").value;
     
+    if(order_location == ''){
+        alert("Order Location field cannot be empty!!");
+    }else {
     var new_order_location  = {
         "parcel_location":order_location
     }
-    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parseInt(specific_parcel_order_id)+'/presentlocation',
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(specific_parcel_order_id)+'/presentlocation',
         {
             method:'PUT',
             headers: {
@@ -224,5 +226,113 @@ function   updateOrderLocationAdmin(event) {
                 }, 5000) 
              }
         })
+    }
 
+}
+
+fetch('http://127.0.0.1:5000/api/v2/stats', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        "token": localStorage.getItem("token")
+    },
+    cache: 'no-cache'
+    
+    })
+    .then((res) => res.json())
+    .then(data => {
+        var pending_orders = document.getElementById("pending_orders");
+        var delivered_orders = document.getElementById("delivered_orders");
+        var cancelled_orders = document.getElementById("cancelled_orders");
+
+        pending_orders.innerHTML = data["message"]["pending"];
+        cancelled_orders.innerHTML = data["message"]["cancelled"];
+        delivered_orders.innerHTML = data["message"]["delivered"];  
+        
+    })
+
+function View_Order_statistics(event) {
+    event.preventDefault();
+    var all_orders_in_database = document.getElementById("all_orders_in_database");
+    var parcel_order_statistics = document.getElementById("parcel_order_statistics");
+    all_orders_in_database.style.display = 'none';
+    searched_order.style.display = 'none';
+    parcel_order_statistics.style.display = 'block';
+    
+}
+
+function Dashboard_home(event) {
+    event.preventDefault();
+    var all_orders_in_database = document.getElementById("all_orders_in_database");
+    var parcel_order_statistics = document.getElementById("parcel_order_statistics");
+    all_orders_in_database.style.display = 'block';
+    parcel_order_statistics.style.display = 'none';
+    searched_order.style.display = 'none';
+}
+
+
+function SearchSpecificOrder(event) {
+    event.preventDefault();
+    var all_orders_in_database = document.getElementById("all_orders_in_database");
+    var parcel_order_statistics = document.getElementById("parcel_order_statistics");
+    var searched_order = document.getElementById("searched_order");
+    
+    var search_term = document.getElementById("search_term").value;
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(search_term), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+                "token": localStorage.getItem("token")
+            },
+            cache: 'no-cache'
+            
+        })
+    .then((res) => res.json())
+    .then(data => {
+        if(data["message"] == 'No Order Found With That Order Id'){
+            
+            alert("No Order Found With That Searched  Order Id");
+        }
+        else{
+            searched_order.style.display = 'block';
+            all_orders_in_database.style.display = 'none';
+            parcel_order_statistics.style.display = 'none';
+            var i = 0;
+
+                var table = '<table class="items_table">'+
+                            '<tr>'+
+                            '<th>Order ID</th>'+
+                            '<th>Order Name</th>'+
+                            '<th>Weight(kg)</th>'+
+                            '<th>Order Price(shs)</th>'+
+                            '<th>Order Date / Time</th>'+
+                            '<th>Order Status</th>'+
+                            '<th>Order Location</th>'+
+                            '<th>Pickup Address Details</th>'+
+                            '<th>Destination Address Details</th>'+
+                            '<th>Update Order Status</th>'+
+                            '<th>Update Order Location</th>'+
+                            ' </tr>';               
+                for(i=0; i < data["Specific_order"].length; i++){
+                    table +=  
+                    '<tr><td>'+data["Specific_order"][i]["parcel_order_id"]
+                    +'</td><td>'+data["Specific_order"][i]["order_name"]
+                    +'</td><td>'+data["Specific_order"][i]["parcel_weight"]
+                    +'</td><td>'+data["Specific_order"][i]["price"]
+                    +'</td><td>'+data["Specific_order"][i]["created_at"]
+                    +'</td><td>'+data["Specific_order"][i]["order_status"]
+                    +'</td><td>'+data["Specific_order"][i]["order_current_location"]
+                    +'</td><td><button class="order_admin_button" onclick="SendersDetails('+data["Specific_order"][i]["parcel_order_id"]+')">View more</button>'
+                    +'</td><td><button class="order_admin_button" onclick="ReceiversDetails('+data["Specific_order"][i]["parcel_order_id"]+')">View more</button>'
+                    +'</td><td><button class="order_admin_button" onclick="updateOrderStatus('+data["Specific_order"][i]["parcel_order_id"]+')">Update status</button>'
+                    +'</td><td><button class="order_admin_button" onclick="UpdateOrderLocation('+data["Specific_order"][i]["parcel_order_id"]+')">Update location</button>'
+                    +'</td>';
+                }
+                document.getElementById("specific_customer_order").innerHTML = table+"</table>";
+            
+        }
+        
+    })
 }

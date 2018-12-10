@@ -605,6 +605,13 @@
     color:#630c1b;
     
   }
+
+  .statistics_header {
+    padding-top:10px;
+    font-size: 22px;
+    color:#630c1b;
+    
+  }
   .table_history_header {
     display: flex;
     margin: 0;
@@ -946,13 +953,15 @@
   }
   
   .stat {
-    background-color: #630c1b;
-    padding: 10px;border-right: #000;
+    /* background-color: #630c1b; */
+    padding: 10px;
+    border-right: #000;
     color:white;
+    width: 1200px;
   }
   
   .admin{
-    display:flex;justify-content: center;
+    display:flex;
   }
   /* orders by admnin */
   .admin_order_details {
@@ -981,3 +990,14 @@
     margin-bottom: 20px;
   }
   /* orders by admin */
+
+  .statistics_div {
+    display: flex;  
+    flex-flow: row wrap;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    display:block;
+    height: 420px;
+    width: 1000px;
+    margin: auto;
+  }

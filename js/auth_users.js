@@ -1,6 +1,6 @@
 // function to  handle user login into the application
 function authenticateusers() {
-    var url = 'https://francissendit.herokuapp.com/api/v2/auth/login';
+    var url = 'http://127.0.0.1:5000/api/v2/auth/login';
 
     var username = document.getElementById('user_name').value;
     var password = document.getElementById('user_password').value;
@@ -89,7 +89,7 @@ function RegisterUser(){
                                     "username":username,
                                     "user_password":password
                                   }
-                                  fetch('https://francissendit.herokuapp.com/api/v2/auth/signup',
+                                  fetch('http://127.0.0.1:5000/api/v2/auth/signup',
                                     {
                                         method:'POST',
                                         headers: {

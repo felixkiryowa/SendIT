@@ -61,7 +61,7 @@ function CancelOrder(parcel_id){
     var order_status  = {
         "order_status":"cancelled"
     }
-    fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id+'/cancel',
+    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/cancel',
     {
         method:'PUT',
         headers: {
@@ -202,7 +202,7 @@ var close6  = document.getElementsByClassName("close6")[0];
 var close7  = document.getElementsByClassName("close7")[0];
 
 function MakeOrder1(parcel_id){
-    fetch('https://francissendit.herokuapp.com/api/v2/users/parcels/'+parcel_id,
+    fetch('http://127.0.0.1:5000/api/v2/users/parcels/'+parcel_id,
     {
         method:'GET',
         headers: {
@@ -309,7 +309,7 @@ function OrderHistory() {
     var delivery_order_destination = document.getElementById("delivery_order_destination");
     
 
-    fetch('https://francissendit.herokuapp.com/api/v2/parcels/delivered', {
+    fetch('http://127.0.0.1:5000/api/v2/parcels/delivered', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -330,7 +330,7 @@ function OrderHistory() {
             order_details.style.display ="none";
             order_history.style.display="block";
             var profile_heading = document.getElementById("profile_heading");
-            profile_heading.innerHTML = localStorage.getItem('username') + '  Ordering Profile';
+            profile_heading.innerHTML = localStorage.getItem('username') + '  Ordering Profile Delivered Orders';
             var i = 0;
             var customer_profile = '';           
                 for(i=0; i < data["Specific_order"].length; i++){ 

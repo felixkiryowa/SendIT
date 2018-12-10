@@ -36,7 +36,7 @@ function Make_A_Parcel_delivery_Order() {
                                 "receivers_names": receivers_names, 
                                 "receivers_contact":receivers_contact
                               }
-                              fetch('https://francissendit.herokuapp.com/api/v2/parcels',
+                              fetch('http://127.0.0.1:5000/api/v2/parcels',
                                 {
                                     method:'POST',
                                     headers: {
@@ -65,18 +65,19 @@ function Make_A_Parcel_delivery_Order() {
                                         success_message.innerHTML = message;
                                         success_message.style.backgroundColor='lightblue';
 
-                                        document.getElementById('order_name').value = '';
-                                        document.getElementById('parcel_weight').value = '';
-                                        document.getElementById('parcel_pickup_address').value = '';
-                                        document.getElementById('parcel_destination_address').value = '';
-                                        document.getElementById('receivers_names').value = '';
-                                        document.getElementById('receivers_contact').value = '';
-
-
-                            
+                        
                                         setTimeout(function(){
+                                            document.getElementById('order_name').value = '';
+                                            document.getElementById('parcel_weight').value = '';
+                                            document.getElementById('parcel_pickup_address').value = '';
+                                            document.getElementById('parcel_destination_address').value = '';
+                                            document.getElementById('receivers_names').value = '';
+                                            document.getElementById('receivers_contact').value = '';
                                             success_signup.style.display='none';
+                                            window.location.href = "./users_dashboard.html";
+                                            
                                         }, 3000)
+                                        
                             
                                     }
                                     else{
@@ -169,7 +170,7 @@ function lengthDefine(inputtext, min, max, element_id) {
 
 // function to fetch specific user orders
 
-fetch('https://francissendit.herokuapp.com/api/v2/users/parcels', {
+fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -226,12 +227,15 @@ fetch('https://francissendit.herokuapp.com/api/v2/users/parcels', {
     function Update_parcel_order_destination() {
         var order_number_to_update = document.getElementById("order_number_to_update").value;
         var new_order_destination = document.getElementById("new_order_destination").value;
+        if(new_order_destination == ''){
+            alert("New Destination field  is Required");
+        }else {
         var parcel_id = parseInt(order_number_to_update);
 
         var parcel_order_destination  = {
             "parcel_destination_address":new_order_destination
         }
-        fetch('https://francissendit.herokuapp.com/api/v2/parcels/'+parcel_id+'/destination',
+        fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/destination',
             {
                 method:'PUT',
                 headers: {
@@ -266,11 +270,12 @@ fetch('https://francissendit.herokuapp.com/api/v2/users/parcels', {
                     success_message_destination_update.style.backgroundColor='lightblue';
                  }
             })
+        }
    
     }
 
 // Function to fetch all orders
-fetch('https://francissendit.herokuapp.com/api/v2/parcels', {
+fetch('http://127.0.0.1:5000/api/v2/parcels', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -296,6 +301,7 @@ fetch('https://francissendit.herokuapp.com/api/v2/parcels', {
 
                 var table = '<table class="items_table">'+
                             '<tr>'+
+                            '<th>Order ID</th>'+
                             '<th>Order Name</th>'+
                             '<th>Weight(kg)</th>'+
                             '<th>Order Price(shs)</th>'+
@@ -309,7 +315,8 @@ fetch('https://francissendit.herokuapp.com/api/v2/parcels', {
                             ' </tr>';               
                 for(i=0; i < data["All_orders"].length; i++){
                     table +=  
-                    '<tr><td>'+data["All_orders"][i]["order_name"]
+                    '<tr><td>'+data["All_orders"][i]["parcel_order_id"]
+                    +'</td><td>'+data["All_orders"][i]["order_name"]
                     +'</td><td>'+data["All_orders"][i]["parcel_weight"]
                     +'</td><td>'+data["All_orders"][i]["price"]
                     +'</td><td>'+data["All_orders"][i]["created_at"]
@@ -336,9 +343,7 @@ fetch('https://francissendit.herokuapp.com/api/v2/parcels', {
             "user_token": token
           }
 
-          alert(JSON.stringify(used_token));
-
-          fetch('https://francissendit.herokuapp.com/api/v2/auth/blacklisttoken',
+          fetch('http://127.0.0.1:5000/api/v2/auth/blacklisttoken',
           {
               method:'POST',
               headers: {

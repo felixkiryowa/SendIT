@@ -14,6 +14,8 @@
      <nav  id="site_navbar">
         <ul class="container">
             <li><a class="site_heading">Send-IT</a></li>
+            <li><a href="#" onclick="Dashboard_home(event)">Home</a></li>
+            <li><a href="#" onclick="View_Order_statistics(event)">Parcel Order Statistics</a></li>
             <li class="logout" id="enter_account"><a href="#" onclick="logout_user(event)" >Logout<b class="logged_user">(<b   style="color:white;"  id="loggedin_admin_user"></b>)</b></a></li>
         </ul> 
         <ul class="smaller_screen">
@@ -30,18 +32,18 @@
      <br>
      <div class="admin">
         <div class="stat">
-           ADMIN DASHBOARD
+           <b><p style="color:black;">ADMIN DASHBOARD</p></b>
         </div>
      </div>
      <br>
     <!-- order details -->
-    <div class="admin_order_details" id="">
+    <div class="admin_order_details" id="all_orders_in_database">
         <header class="table_header">
             All Received  Orders
             <div class="search_div">
                 <form>
-                    <input type="text" name="" placeholder="Search For Order">
-                    <button type="submit" class="search_button">search</button>
+                    <input type="text" name="" id="search_term" placeholder="Search For Order">
+                    <button type="submit" onclick="SearchSpecificOrder(event)" class="search_button">search</button>
                 </form>
             </div>
 
@@ -54,6 +56,45 @@
         <aside class="aside aside-2"></aside>
     </div>
     <!-- order details -->
+    <!--statistics-->
+    <div class="statistics_div" id="parcel_order_statistics" style="display:none;">
+        <p class="statistics_header" align="center">Parcel Order Statistics</p>
+        <article class="table_main">
+            <br>
+            <div style="display: inline;padding:80px;font-size:20px;background-color:black;color:white;margin:0 auto;">
+                <p align="center"> 
+                    <b style="font-size:70px;color:#630c1b;" id="pending_orders"></b> <br>
+                    Pending Orders
+                </p>
+            </div>
+            <div style="display: inline;padding:80px;font-size:20px;background-color:black;color:white;margin:0 auto;">
+               <p align="center"> 
+                    <b style="font-size:70px;color:#630c1b;" id="delivered_orders"></b> <br>
+                    Delivered Orders
+                </p>
+            </div>
+            <div style="display: inline;padding:80px;font-size:20px;background-color:black;color:white;margin:0 auto;">
+              <p align="center"> 
+                    <b style="font-size:70px;color:#630c1b;" id="cancelled_orders"></b> <br>
+                    Cancelled Orders
+                </p>
+            </div>
+        </article>
+    </div>
+    <!--statistics-->
+    <!--get specific order-->
+     <div class="admin_order_details" id="searched_order" style="display:none;">
+        <header class="table_header">
+            Searched order
+        </header>
+        <article class="table_main" id="specific_customer_order">
+                <br>
+                
+        </article>
+        <aside class="aside aside-1"></aside>
+        <aside class="aside aside-2"></aside>
+    </div>
+    <!--get specific order-->
      <!-- The senders modal -->
      <div id="sendersModal" class="modal">
         <!-- Modal content -->
