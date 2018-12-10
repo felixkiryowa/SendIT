@@ -1,6 +1,6 @@
 // function to  handle user login into the application
 function authenticateusers() {
-    var url = 'https://senditui.herokuapp.com/api/v2/auth/login';
+    var url = 'https://francissendit.herokuapp.com/api/v2/auth/login';
 
     var username = document.getElementById('user_name').value;
     var password = document.getElementById('user_password').value;
@@ -89,7 +89,7 @@ function RegisterUser(){
                                     "username":username,
                                     "user_password":password
                                   }
-                                  fetch('https://senditui.herokuapp.com/api/v2/auth/signup',
+                                  fetch('https://francissendit.herokuapp.com/api/v2/auth/signup',
                                     {
                                         method:'POST',
                                         headers: {
