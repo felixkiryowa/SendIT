@@ -175,7 +175,7 @@ var close6  = document.getElementsByClassName("close6")[0];
 var close7  = document.getElementsByClassName("close7")[0];
 
 function MakeOrder1(parcel_id){
-    fetch('http://127.0.0.1:5000/api/v2/users/parcels/'+parcel_id,
+    fetch('https://francissendit.herokuapp.com/api/v2/users/parcels/'+parcel_id,
     {
         method:'GET',
         headers: {
@@ -282,7 +282,7 @@ function OrderHistory() {
     var delivery_order_destination = document.getElementById("delivery_order_destination");
     
 
-    fetch('http://127.0.0.1:5000/api/v2/parcels/delivered', {
+    fetch('https://francissendit.herokuapp.com/api/v2/parcels/delivered', {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
