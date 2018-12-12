@@ -56,34 +56,7 @@ function ManageOrders(){
     EditItem.style.display="none";
     customer_orders.style.display="block";
 }
-//function to cancel an order
-function CancelOrder(parcel_id){
-    var order_status  = {
-        "order_status":"cancelled"
-    }
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/cancel',
-    {
-        method:'PUT',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "token":  localStorage.getItem("token")
-        },
-        body: JSON.stringify(order_status),
-        cache:'no-cache'
-    })
-    .then((res) => res.json())
-    .then(data => {
-       if(data["message"] == 'The order is delivered already'){
-           alert("The order is delivered already");
-       }else if(data["message"] == 'The order is cancelled already'){
-           alert("The order is cancelled already");
-       }else{
-           alert("You Have Successfully Cancelled The Parcel Delivery Order");
-           window.location.href="./users_dashboard.html";
-       }
-    })
-}
+
 
 //authenticating admins
 function authenticateadmins(){

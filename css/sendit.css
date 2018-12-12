@@ -13,7 +13,6 @@
   width: 90%;
   margin: auto;
   float: none;
-  padding-top: 20px;
   height: auto;
  }
  
@@ -340,7 +339,7 @@
     border: none;
     outline: none;
     height: 40px;
-    width: 80%;
+    width: 85%;
     background: #630c1b;
     color: #fff;
     font-size: 18px;
@@ -358,7 +357,7 @@
     border: none;
     outline: none;
     height: 40px;
-    width: 80%;
+    width: 85%;
     background: #630c1b;
     color: #fff;
     font-size: 18px;

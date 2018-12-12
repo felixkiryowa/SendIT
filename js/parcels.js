@@ -67,6 +67,10 @@ function Make_A_Parcel_delivery_Order() {
 
                         
                                         setTimeout(function(){
+                                            var deliver_order = document.getElementById("delivery_order");
+                                            var order_details = document.getElementById("order_details");
+                                            var order_history = document.getElementById("order_history");
+                                            var delivery_order_destination = document.getElementById("delivery_order_destination");
                                             document.getElementById('order_name').value = '';
                                             document.getElementById('parcel_weight').value = '';
                                             document.getElementById('parcel_pickup_address').value = '';
@@ -74,7 +78,13 @@ function Make_A_Parcel_delivery_Order() {
                                             document.getElementById('receivers_names').value = '';
                                             document.getElementById('receivers_contact').value = '';
                                             success_signup.style.display='none';
-                                            window.location.href = "./users_dashboard.html";
+                                            // window.location.href = "./users_dashboard.html";
+                                            get_specific_user_orders();
+                                            
+                                            delivery_order_destination.style.display="none";
+                                            deliver_order.style.display = "none";
+                                            order_details.style.display ="block";
+                                            order_history.style.display="none";
                                             
                                         }, 3000)
                                         
@@ -170,16 +180,17 @@ function lengthDefine(inputtext, min, max, element_id) {
 
 // function to fetch specific user orders
 
-fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-        "token": localStorage.getItem("token")
-    },
-    cache: 'no-cache'
-    
-})
+    function get_specific_user_orders(){
+        fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+                "token": localStorage.getItem("token")
+            },
+            cache: 'no-cache'
+            
+        })
     .then((res) => res.json())
     .then(data => {
         if(data["message"] == 'No Orders Found, You Can Make An Order Now!!!'){
@@ -223,6 +234,12 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
         }
         
     })
+
+    }
+
+    get_specific_user_orders();
+
+
 
     function Update_parcel_order_destination() {
         var order_number_to_update = document.getElementById("order_number_to_update").value;
@@ -268,11 +285,75 @@ fetch('http://127.0.0.1:5000/api/v2/users/parcels', {
                     success_destination_update.style.display='block';
                     success_message_destination_update.innerHTML = data["message"];
                     success_message_destination_update.style.backgroundColor='lightblue';
+
+                    setTimeout(function(){
+                        var deliver_order = document.getElementById("delivery_order");
+                        var order_details = document.getElementById("order_details");
+                        var order_history = document.getElementById("order_history");
+                        var delivery_order_destination = document.getElementById("delivery_order_destination");
+                        document.getElementById('new_order_destination').value = '';
+                        
+                        success_message_destination_update.style.display='none';
+                        // window.location.href = "./users_dashboard.html";
+                        get_specific_user_orders();
+                        
+                        delivery_order_destination.style.display="none";
+                        deliver_order.style.display = "none";
+                        order_details.style.display ="block";
+                        order_history.style.display="none";
+                        
+                    }, 3000)
                  }
             })
         }
    
     }
+
+//function to cancel an order
+function CancelOrder(parcel_id){
+    var x = confirm("Are you  sure you want to cancel an order?");
+    if(x) {
+        var order_status  = {
+            "order_status":"cancelled"
+        }
+        fetch('http://127.0.0.1:5000/api/v2/parcels/'+parcel_id+'/cancel',
+        {
+            method:'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "token":  localStorage.getItem("token")
+            },
+            body: JSON.stringify(order_status),
+            cache:'no-cache'
+        })
+        .then((res) => res.json())
+        .then(data => {
+           if(data["message"] == 'The order is delivered already'){
+               alert("The order is delivered already");
+           }else if(data["message"] == 'The order is cancelled already'){
+               alert("The order is cancelled already");
+           }else{
+               alert("You Have Successfully Cancelled The Parcel Delivery Order");
+            //    window.location.href="./users_dashboard.html";
+            var deliver_order = document.getElementById("delivery_order");
+            var order_details = document.getElementById("order_details");
+            var order_history = document.getElementById("order_history");
+            var delivery_order_destination = document.getElementById("delivery_order_destination");
+            // window.location.href = "./users_dashboard.html";
+            get_specific_user_orders();
+            
+            delivery_order_destination.style.display="none";
+            deliver_order.style.display = "none";
+            order_details.style.display ="block";
+            order_history.style.display="none";
+           }
+        })
+    }else {
+        
+    }
+   
+}
 
 // Function to fetch all orders
 fetch('http://127.0.0.1:5000/api/v2/parcels', {

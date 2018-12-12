@@ -10,6 +10,11 @@ function authenticateusers() {
         "username":username,
         "password":password
    }
+
+   if(username.length == 0 || password.length == 0) {
+    login_error_message.innerHTML = 'All Fields Are Required !!';
+
+   }else {
    fetch(url, {
        method:'POST',
        headers: {
@@ -43,6 +48,7 @@ function authenticateusers() {
        }
 
    })
+  }
    
 }
 
@@ -60,6 +66,7 @@ function RegisterUser(){
     var email_address = document.getElementById('email_address').value;
     var password = document.getElementById('password').value;
     var username = document.getElementById('username').value;
+    var confrim_password = document.getElementById("confrim_password").value;
     
     var all_fields_required = document.getElementById('all_fields_required');
     var overall_error_message = document.getElementById('overall_error_message');
@@ -78,6 +85,8 @@ function RegisterUser(){
                 if (emailValidation(email_address, "* Ivalid email address *")) {
                         if(textNumeric(contact, "* Phone contact consists of only numbers *", "error_contact")){
                             if (textAlphanumeric(username, "* Username consists of both numbers and characters *", "error_username")) {
+                                 if(check_password_confrimation(password,confrim_password,"Passwords Do Not Match",
+                                 "error_confrim_password")){
                                 var new_user  = {
                                     "first_name":firstname, 
                                     "last_name":lastname, 
@@ -120,6 +129,7 @@ function RegisterUser(){
                                     
                                     })
                                 return true;
+                                }
                             }
                         }
 
@@ -142,6 +152,17 @@ function RegisterUser(){
             document.getElementById(element_id).style.color= '#DC3545'; 
             
             return false;
+        }
+    }
+    // Function to check confirm password
+    function check_password_confrimation(inputtext1,inputtext2, alertMsg, element_id) {
+        if (inputtext1 === inputtext2) {
+            return true;
+        } else {
+            document.getElementById(element_id).style.display = 'block';
+            document.getElementById(element_id).innerHTML = alertMsg;
+            document.getElementById(element_id).style.color= '#DC3545';
+        return false;
         }
     }
     // Function that checks whether input text is an alphabetic character or not.
