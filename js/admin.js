@@ -278,14 +278,18 @@ function SearchSpecificOrder(event) {
     var parcel_order_statistics = document.getElementById("parcel_order_statistics");
     var searched_order = document.getElementById("searched_order");
     
-    var search_term = document.getElementById("search_term").value;
-    fetch('http://127.0.0.1:5000/api/v2/parcels/'+parseInt(search_term), {
-            method: 'GET',
+    var search_key = document.getElementById("search_term").value;
+    var search_item  = {
+        "search_term":search_key
+    }
+    fetch('http://127.0.0.1:5000/api/v2/filter/orders', {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json',
                 "token": localStorage.getItem("token")
             },
+            body: JSON.stringify(search_item),
             cache: 'no-cache'
             
         })
