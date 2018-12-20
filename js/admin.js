@@ -281,7 +281,7 @@ function SearchSpecificOrder(event) {
     var search_item  = {
         "search_term":search_key
     }
-    fetch('http://127.0.0.1:5000/api/v2/filter/orders', {
+    fetch('https://francissendit.herokuapp.com/api/v2/filter/orders', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
