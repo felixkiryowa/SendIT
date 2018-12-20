@@ -1,6 +1,10 @@
 """This is orders class defining the orders class model constructor """
+import psycopg2
 from api import connection
 from flask import jsonify
+from flask_mail import Message
+from api import mail
+
 
 cursor = connection.cursor()
 
@@ -110,6 +114,33 @@ class Orders:
             results.append(dict(zip(columns, row)))
         return jsonify({'Specific_order':results}), 200 
 
+    @staticmethod 
+    def execute_query_to_filter_out_orders(self,search_term):
+        """
+        method to filter out orders from the database
+        """
+        order =  """
+        SELECT orders.parcel_order_id,orders.senders_user_id,orders.order_name,orders.parcel_weight,orders.price,orders.parcel_pickup_address,
+        orders.parcel_destination_address,
+        orders.order_status,orders.receivers_names,orders.receivers_contact,orders.created_at,
+        orders.location,users.first_name,users.last_name,users.phone_contact,users.email
+        FROM orders INNER JOIN users ON users.user_id = orders.senders_user_id WHERE  orders.order_name ILIKE '%%' || %s || '%%'
+        OR orders.parcel_pickup_address ILIKE '%%' || %s || '%%' OR orders.parcel_destination_address ILIKE '%%' || %s || '%%' 
+        OR orders.receivers_names ILIKE '%%' || %s || '%%' OR orders.receivers_contact ILIKE '%%' || %s || '%%';
+        """
+        cursor = connection.cursor()
+        cursor.execute(order,(search_term, search_term, search_term, search_term, search_term, ))
+        order_data = cursor.fetchall()
+        if not order_data:
+            return jsonify({"message":"No Orders Found"}), 404
+        columns = ('parcel_order_id','senders_user_id','order_name','parcel_weight','price','parcel_pickup_address','parcel_destination_address',
+            'order_status','receivers_names','receivers_contact','created_at','order_current_location','senders_firstname','senders_lastname','senders_phonecontact','senders_email')
+        results = []
+        for row in order_data:
+            results.append(dict(zip(columns, row)))
+        return jsonify({'Specific_order':results}), 200 
+        
+
     
     @staticmethod
     def update_order_destination(self, order_id, order_destination, user_id):
@@ -155,12 +186,24 @@ class Orders:
         cursor.execute("SELECT * FROM orders WHERE parcel_order_id=%s",(order_id, ))
         current_order = cursor.fetchall()
         current_order_status = current_order[0][7]
+        current_order_name = current_order[0][2]
+        order_owner_id = current_order[0][1]
+        cursor.execute("SELECT * FROM users WHERE user_id=%s",(order_owner_id, ))
+        current_user = cursor.fetchall()
+        owner_email = current_user[0][3]
+        print(owner_email)
         order_data = cursor.rowcount
         if order_data == 0:
             return jsonify({"Message":"No Order Found With Order Id Of "+ str(order_id)}), 404
         elif current_order_status != 'delivered' and current_order_status != 'cancelled':
+            msg = Message(current_order_name + "  Order Notification",
+                  sender="fkiryowa@nwt.ug",
+                  recipients=[owner_email])
+            msg.body = "The current location of your parcel order is " + order_location
+            # mail.send(msg)
             cursor.execute("UPDATE orders SET location=%s WHERE parcel_order_id=%s",(order_location, order_id,))
             connection.commit()
+            mail.send(msg)
             return  Orders.execute_query_get_specific_order(self, order_id)
         return jsonify({'message':'The order is ' + current_order_status + ' already'}), 406
 

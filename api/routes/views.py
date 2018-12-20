@@ -11,6 +11,7 @@ from api.views.update_order_present_location import UpdateOrderPresentLocation
 from api.views.cancel_order import CancelOrder
 from api.views.blacklist_tokens import BlacklistToken
 from api.views.get_order_statistics import OrdersStatistics
+from api.views.filter_orders import FilterOrders
 
 class GetOrderApiUrls:
     """
@@ -28,6 +29,7 @@ class GetOrderApiUrls:
         cancel_order = CancelOrder.as_view('cancel_order')
         blacklist_token = BlacklistToken.as_view('blacklist_tokens')
         order_stats = OrdersStatistics.as_view('stats')
+        filter_orders = FilterOrders.as_view('filters')
 
         app.add_url_rule(
             '/api/v2/auth/signup', view_func=auth_users_view,
@@ -35,6 +37,11 @@ class GetOrderApiUrls:
         )
         app.add_url_rule(
             '/api/v2/auth/login', view_func=auth_users_view,
+            methods=['POST',]
+        )
+
+        app.add_url_rule(
+            '/api/v2/filter/orders', view_func=filter_orders,
             methods=['POST',]
         )
 
