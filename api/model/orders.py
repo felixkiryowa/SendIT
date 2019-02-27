@@ -18,14 +18,14 @@ class Orders:
         CREATE TABLE IF NOT EXISTS orders (
             parcel_order_id SERIAL PRIMARY KEY,
             senders_user_id INTEGER NOT NULL,
-            order_name VARCHAR(100) NOT NULL,
+            order_name VARCHAR(100) NULL,
             parcel_weight INTEGER NOT NULL,
             price BIGINT NOT NULL,
             parcel_pickup_address VARCHAR(100) NOT NULL,
             parcel_destination_address VARCHAR(100) NOT NULL,
             order_status VARCHAR(100)  DEFAULT 'pending',
-            receivers_names VARCHAR(100) NOT NULL,
-            receivers_contact VARCHAR(100) NOT NULL,
+            receivers_names VARCHAR(100)  NULL,
+            receivers_contact VARCHAR(100)  NULL,
             created_at TIMESTAMP DEFAULT NOW(),
             ordering_time TIME DEFAULT NOW(),
             location VARCHAR(100) NOT NULL,
@@ -39,14 +39,11 @@ class Orders:
     def __init__(self, *args):
         """This is orders class constructor"""
         self.senders_user_id = args[0]
-        self.order_name = args[1]
-        self.parcel_weight = args[2]
-        self.price = args[3]
-        self.parcel_pickup_address = args[4]
-        self.parcel_destination_address = args[5]
-        self.receivers_names = args[6]
-        self.receivers_contact = args[7]
-        self.location = args[8]
+        self.parcel_weight = args[1]
+        self.price = args[2]
+        self.parcel_pickup_address = args[3]
+        self.parcel_destination_address = args[4]
+        self.location = args[5]
         
     
     
@@ -54,15 +51,15 @@ class Orders:
         """
         method to excute query to add a new order to the database
         """
-        sql = """INSERT INTO orders(senders_user_id,order_name,parcel_weight,price,parcel_pickup_address,
-        parcel_destination_address,receivers_names,receivers_contact,location)
-                VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s) RETURNING parcel_order_id;"""
+        sql = """INSERT INTO orders(senders_user_id,parcel_weight,price,parcel_pickup_address,
+        parcel_destination_address,location)
+                VALUES(%s,%s,%s,%s,%s,%s) RETURNING parcel_order_id;"""
         # create a new cursorsor
         cursor = connection.cursor()
         # execute the INSERT statement
-        cursor.execute(sql, (self.senders_user_id, self.order_name, self.parcel_weight, self.price, 
-        self.parcel_pickup_address, self.parcel_destination_address, self.receivers_names, 
-        self.receivers_contact,self.location))
+        cursor.execute(sql, (self.senders_user_id, self.parcel_weight, self.price, 
+        self.parcel_pickup_address, self.parcel_destination_address,
+        self.location))
         # commit the changes to the database
         connection.commit()
 
@@ -258,7 +255,7 @@ class Orders:
             results = []
             for row in all_user_orders_data:
                 results.append(dict(zip(columns, row)))
-            return jsonify({'Specific_order':results}), 200 
+            return jsonify(results), 200 
         return jsonify({"message":"No Orders Found, You Can Make An Order Now!!!"}), 404
 
 

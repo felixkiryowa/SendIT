@@ -36,15 +36,16 @@ class OrdersApi(MethodView):
         """funtion to place a new order"""
         parcel_order = request.get_json()
         return ORDER_OBJECT.validate_posted_data(current_user, parcel_order)
+
+
     def check_posted_user_object_for_keys(self, new_user):
         """
         method to check for keys in a user posted order object
         """
         order_keys = [
-            'order_name', 'parcel_weight',
+            'parcel_weight',
             'parcel_pickup_address',
-            'parcel_destination_address',
-            'receivers_names', 'receivers_contact'
+            'parcel_destination_address'
         ]
         if set(order_keys).issubset(new_user):
             return True
@@ -62,10 +63,10 @@ class OrdersApi(MethodView):
         """
         method to validate posted order for empty strings
         """
-        if (parcel_order['order_name'] != '' and
+        if (
             parcel_order['parcel_pickup_address']
-            and parcel_order['parcel_destination_address'] != '' and parcel_order['receivers_names']
-            and parcel_order['receivers_contact'] != ''
+            and parcel_order['parcel_destination_address'] != '' 
+            
         ):
             return True
         return False
@@ -77,9 +78,8 @@ class OrdersApi(MethodView):
         #create a regular expression object to be used in matching
         regex = re.compile(r'[@_!#$%^&*()<>?/\|}{~:]') 
         #check if a posted order data contails regular expressions
-        if (regex.search(parcel_order['order_name']) is None and regex.search(parcel_order['parcel_pickup_address']) is None 
-        and regex.search(parcel_order['parcel_destination_address']) is None and regex.search(parcel_order['receivers_names']) is None
-        and regex.search(parcel_order['receivers_contact']) is None):       
+        if (regex.search(parcel_order['parcel_pickup_address']) is None 
+        and regex.search(parcel_order['parcel_destination_address']) is None):       
             return True  
         return False 
 
@@ -100,26 +100,24 @@ class OrdersApi(MethodView):
         if (self.check_posted_user_object_for_keys(parcel_order) and 
         self.validate_parcel_weight_is_an_integer(parcel_order) and 
         self.validate_posted_data_for_empty_strings(parcel_order) and 
-        self.search_regular_expression_characters(parcel_order) and 
-        self.validate_phone_number_consist_of_digits(parcel_order)):
+        self.search_regular_expression_characters(parcel_order)):
             price = parcel_order['parcel_weight'] * 50000
             parcel_location = parcel_order['parcel_pickup_address']
             user_id = current_user[0][0]
-            Orders(user_id, parcel_order['order_name'], parcel_order['parcel_weight'], 
+            Orders(user_id, parcel_order['parcel_weight'], 
             price, parcel_order['parcel_pickup_address'], 
-            parcel_order['parcel_destination_address'], parcel_order['receivers_names'], 
-            parcel_order['receivers_contact'], parcel_location).execute_add_order_query()
+            parcel_order['parcel_destination_address'], 
+            parcel_location).execute_add_order_query()
             return jsonify({'message':'Successfully created an order'}), 201
-        parcel_order_object = "{'order_name': 'phones','parcel_weight': 6,'parcel_pickup_address': 'Kamwokya','parcel_destination_address': 'Mpigi',\
-        'receivers_contact': '070786543','receivers_names': 'Mukasa Derrick'}"
-        bad_order_object = {
-        "Invalid_order_object":parcel_order_object
-        }
-        response = Response(
-            json.dumps(bad_order_object),
-            status=400, mimetype="application/json"
-            )
-        return response
+        # parcel_order_object = "{'parcel_weight': 6,'parcel_pickup_address': 'Kamwokya','parcel_destination_address': 'Mpigi','message':'Order Not Successfully created, Please Retry'}"
+        # bad_order_object = {
+        # "Invalid_order_object":parcel_order_object
+        # }
+        # response = Response(
+        #     json.dumps(bad_order_object),
+        #     status=400, mimetype="application/json"
+        #     )
+        return jsonify({'message':'Order Not Successfully created, Please Retry'}), 400
 
 
 #create an object of the class
